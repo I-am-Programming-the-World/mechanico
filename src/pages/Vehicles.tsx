@@ -1,0 +1,234 @@
+import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { getVehicles, saveVehicles, Vehicle } from '@/lib/storage';
+import Layout from '@/components/Layout';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Car, Plus, Edit, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+
+const Vehicles = () => {
+  const { user } = useAuth();
+  const [vehicles, setVehicles] = useState(getVehicles());
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
+  const [formData, setFormData] = useState({
+    make: '',
+    model: '',
+    year: new Date().getFullYear(),
+    licensePlate: '',
+    color: '',
+    mileage: 0,
+  });
+
+  const userVehicles = vehicles.filter(v => v.ownerId === user?.id);
+
+  const handleSave = () => {
+    if (!user) return;
+
+    if (editingVehicle) {
+      const updatedVehicles = vehicles.map(v =>
+        v.id === editingVehicle.id ? { ...v, ...formData } : v
+      );
+      setVehicles(updatedVehicles);
+      saveVehicles(updatedVehicles);
+      toast.success('خودرو به‌روزرسانی شد');
+    } else {
+      const newVehicle: Vehicle = {
+        id: Date.now().toString(),
+        ownerId: user.id,
+        ...formData,
+      };
+      const updatedVehicles = [...vehicles, newVehicle];
+      setVehicles(updatedVehicles);
+      saveVehicles(updatedVehicles);
+      toast.success('خودرو جدید اضافه شد');
+    }
+
+    setIsDialogOpen(false);
+    resetForm();
+  };
+
+  const handleDelete = (vehicleId: string) => {
+    const updatedVehicles = vehicles.filter(v => v.id !== vehicleId);
+    setVehicles(updatedVehicles);
+    saveVehicles(updatedVehicles);
+    toast.success('خودرو حذف شد');
+  };
+
+  const handleEdit = (vehicle: Vehicle) => {
+    setEditingVehicle(vehicle);
+    setFormData({
+      make: vehicle.make,
+      model: vehicle.model,
+      year: vehicle.year,
+      licensePlate: vehicle.licensePlate,
+      color: vehicle.color,
+      mileage: vehicle.mileage,
+    });
+    setIsDialogOpen(true);
+  };
+
+  const resetForm = () => {
+    setEditingVehicle(null);
+    setFormData({
+      make: '',
+      model: '',
+      year: new Date().getFullYear(),
+      licensePlate: '',
+      color: '',
+      mileage: 0,
+    });
+  };
+
+  return (
+    <Layout>
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">خودروهای من</h1>
+            <p className="text-muted-foreground mt-2">
+              مدیریت اطلاعات خودروهای خود
+            </p>
+          </div>
+          <Dialog open={isDialogOpen} onOpenChange={(open) => {
+            setIsDialogOpen(open);
+            if (!open) resetForm();
+          }}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="h-4 w-4 mr-2" />
+                افزودن خودرو
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  {editingVehicle ? 'ویرایش خودرو' : 'افزودن خودرو جدید'}
+                </DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>سازنده</Label>
+                    <Input
+                      value={formData.make}
+                      onChange={(e) => setFormData({ ...formData, make: e.target.value })}
+                      placeholder="ایران خودرو"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>مدل</Label>
+                    <Input
+                      value={formData.model}
+                      onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+                      placeholder="پژو ۲۰۶"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>سال ساخت</Label>
+                    <Input
+                      type="number"
+                      value={formData.year}
+                      onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>رنگ</Label>
+                    <Input
+                      value={formData.color}
+                      onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                      placeholder="سفید"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label>پلاک</Label>
+                  <Input
+                    value={formData.licensePlate}
+                    onChange={(e) => setFormData({ ...formData, licensePlate: e.target.value })}
+                    placeholder="۱۲ ب ۳۴۵ ایران ۶۷"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>کارکرد (کیلومتر)</Label>
+                  <Input
+                    type="number"
+                    value={formData.mileage}
+                    onChange={(e) => setFormData({ ...formData, mileage: parseInt(e.target.value) })}
+                  />
+                </div>
+                <Button onClick={handleSave} className="w-full">
+                  {editingVehicle ? 'به‌روزرسانی' : 'افزودن'}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {userVehicles.length === 0 ? (
+            <Card className="md:col-span-2">
+              <CardContent className="py-12 text-center">
+                <Car className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">هنوز خودرویی اضافه نشده است</p>
+              </CardContent>
+            </Card>
+          ) : (
+            userVehicles.map((vehicle) => (
+              <Card key={vehicle.id} className="shadow-card hover:shadow-primary transition-all">
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Car className="h-5 w-5 text-primary" />
+                      {vehicle.make} {vehicle.model}
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" onClick={() => handleEdit(vehicle)}>
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleDelete(vehicle.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">سال ساخت:</span>
+                      <p className="font-medium">{vehicle.year}</p>
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">رنگ:</span>
+                      <p className="font-medium">{vehicle.color}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-muted-foreground">پلاک:</span>
+                      <p className="font-medium text-lg">{vehicle.licensePlate}</p>
+                    </div>
+                    <div className="col-span-2">
+                      <span className="text-muted-foreground">کارکرد:</span>
+                      <p className="font-medium">{vehicle.mileage.toLocaleString('fa-IR')} کیلومتر</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
+      </div>
+    </Layout>
+  );
+};
+
+export default Vehicles;

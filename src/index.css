@@ -1,3 +1,5 @@
+@import url("https://cdn.jsdelivr.net/npm/vazirmatn@33.003/dist/font-face.min.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -93,13 +95,34 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
     direction: rtl;
+    font-family: "Vazirmatn", "IRANSans", "Segoe UI", Tahoma, sans-serif;
+    font-feature-settings: "ss02" 1, "cv10" 1;
   }
 
   html {
     scroll-behavior: smooth;
   }
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: 9999px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: none;
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.4);
 }
 
 @layer utilities {

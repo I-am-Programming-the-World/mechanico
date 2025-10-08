@@ -1,18 +1,21 @@
-import { ReactNode } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { ReactNode, useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { 
-  LayoutDashboard, 
-  Calendar, 
-  Car, 
-  Settings as SettingsIcon, 
-  LogOut, 
-  Users, 
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
+import {
+  LayoutDashboard,
+  Calendar,
+  Car,
+  Settings as SettingsIcon,
+  LogOut,
+  Users,
   FileText,
   Star,
   DollarSign,
-  Package
+  Package,
+  Menu,
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -23,6 +26,7 @@ const Layout = ({ children }: LayoutProps) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -43,84 +47,109 @@ const Layout = ({ children }: LayoutProps) => {
     { icon: SettingsIcon, label: 'تنظیمات', path: '/settings', roles: ['customer', 'provider', 'admin'] },
   ];
 
-  const filteredMenu = menuItems.filter(item => 
-    user && item.roles.includes(user.role)
-  );
+  const filteredMenu = menuItems.filter(item => user && item.roles.includes(user.role));
 
   return (
     <div className="min-h-screen bg-background" dir="rtl">
-      {/* Header */}
+      <a href="#main-content" className="skip-link">پرش به محتوای اصلی</a>
       <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-6">
+        <div className="container flex h-16 flex-wrap items-center justify-between gap-4 px-3 sm:px-4">
+          <div className="flex items-center gap-4">
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              aria-label={isMobileMenuOpen ? 'بستن منوی ناوبری' : 'باز کردن منوی ناوبری'}
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
             <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
               مکانیکو
             </h1>
-            <nav className="hidden md:flex gap-1">
+            <nav className="hidden md:flex gap-1" aria-label="منوی اصلی">
               {filteredMenu.map((item) => {
                 const Icon = item.icon;
-                const isActive = location.pathname === item.path;
                 return (
-                  <Button
+                  <NavLink
                     key={item.path}
-                    variant={isActive ? "default" : "ghost"}
-                    size="sm"
-                    onClick={() => navigate(item.path)}
-                    className="gap-2"
+                    to={item.path}
+                    className={({ isActive }) =>
+                      cn(
+                        'flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                        isActive ? 'bg-primary text-primary-foreground shadow-sm' : 'hover:bg-muted text-foreground'
+                      )
+                    }
+                    aria-label={item.label}
                   >
                     <Icon className="h-4 w-4" />
-                    {item.label}
-                  </Button>
+                    <span>{item.label}</span>
+                  </NavLink>
                 );
               })}
             </nav>
           </div>
-          
+
           <div className="flex items-center gap-4">
-            <div className="text-sm">
-              <p className="font-medium">{user?.fullName}</p>
+            <div className="text-sm text-right">
+              <p className="font-medium" aria-live="polite">{user?.fullName}</p>
               <p className="text-xs text-muted-foreground">
                 {user?.role === 'admin' ? 'مدیر' : user?.role === 'provider' ? 'ارائه‌دهنده' : 'مشتری'}
               </p>
             </div>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="h-4 w-4 mr-2" />
+            <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2">
+              <LogOut className="h-4 w-4" />
               خروج
             </Button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Navigation */}
-      <nav className="md:hidden border-b border-border bg-card">
-        <div className="container flex overflow-x-auto px-4 py-2 gap-2">
-          {filteredMenu.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            return (
-              <Button
-                key={item.path}
-                variant={isActive ? "default" : "ghost"}
-                size="sm"
-                onClick={() => navigate(item.path)}
-                className="gap-2 whitespace-nowrap"
-              >
-                <Icon className="h-4 w-4" />
-                {item.label}
-              </Button>
-            );
-          })}
-        </div>
-      </nav>
+      <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+        <SheetTrigger asChild>
+          <span className="sr-only">منوی ناوبری</span>
+        </SheetTrigger>
+        <SheetContent side="right" className="w-72">
+          <SheetHeader>
+            <SheetTitle>ناوبری</SheetTitle>
+          </SheetHeader>
+          <nav className="mt-6 flex flex-col gap-2" aria-label="منوی موبایل">
+            {filteredMenu.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center justify-between rounded-lg px-4 py-2 text-base transition-colors',
+                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                      isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-muted text-foreground'
+                    )
+                  }
+                  aria-label={item.label}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <span className="flex items-center gap-3">
+                    <Icon className="h-4 w-4" />
+                    {item.label}
+                  </span>
+                  <span className="sr-only">رفتن به {item.label}</span>
+                </NavLink>
+              );
+            })}
+          </nav>
+        </SheetContent>
+      </Sheet>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main id="main-content" className="container mx-auto px-3 py-8 sm:px-4">
         {children}
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-border bg-card mt-auto">
-        <div className="container px-4 py-6">
+        <div className="container px-3 py-6 sm:px-4">
           <p className="text-center text-sm text-muted-foreground">
             © ۱۴۰۴ مکانیکو - پلتفرم جامع خدمات خودرو
           </p>

@@ -11,9 +11,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Separator } from '@/components/ui/separator';
 import { Settings as SettingsIcon, User, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { toast } from 'sonner';
+import { useData } from '@/contexts/DataContext';
 
 const Settings = () => {
   const { user } = useAuth();
+  const { resetDemoData } = useData();
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
@@ -36,7 +38,7 @@ const Settings = () => {
         </div>
 
         <Tabs defaultValue="profile" className="space-y-4">
-          <TabsList>
+          <TabsList className="flex flex-wrap gap-2">
             <TabsTrigger value="profile" className="gap-2">
               <User className="h-4 w-4" />
               پروفایل
@@ -105,7 +107,7 @@ const Settings = () => {
                 <CardDescription>مدیریت نحوه دریافت اعلان‌ها</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="space-y-0.5">
                     <Label>اعلان‌های ایمیل</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌ها از طریق ایمیل</p>
@@ -116,7 +118,7 @@ const Settings = () => {
                   />
                 </div>
                 <Separator />
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="space-y-0.5">
                     <Label>اعلان‌های پیامکی</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌ها از طریق پیامک</p>
@@ -127,7 +129,7 @@ const Settings = () => {
                   />
                 </div>
                 <Separator />
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="space-y-0.5">
                     <Label>اعلان‌های Push</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌های فوری در مرورگر</p>
@@ -141,19 +143,19 @@ const Settings = () => {
                 <div className="space-y-4">
                   <h4 className="font-medium">اعلان درباره:</h4>
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
                       <Label>رزروهای جدید</Label>
                       <Switch defaultChecked />
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
                       <Label>تغییر وضعیت رزروها</Label>
                       <Switch defaultChecked />
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
                       <Label>نظرات جدید</Label>
                       <Switch defaultChecked />
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
                       <Label>یادآوری سرویس</Label>
                       <Switch defaultChecked />
                     </div>
@@ -306,6 +308,23 @@ const Settings = () => {
                     <p className="text-sm text-muted-foreground">پشتیبان‌گیری روزانه از داده‌ها</p>
                   </div>
                   <Switch defaultChecked />
+                </div>
+                <Separator />
+                <div className="space-y-2">
+                  <Label>بازنشانی داده‌های آزمایشی</Label>
+                  <p className="text-sm text-muted-foreground">
+                    با این گزینه می‌توانید تمام داده‌های نمونه ذخیره‌شده در مرورگر را پاک کرده و از ابتدا شروع کنید.
+                  </p>
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={() => {
+                      resetDemoData();
+                      toast.success('داده‌های نمونه بازنشانی شد');
+                    }}
+                  >
+                    بازنشانی داده‌ها
+                  </Button>
                 </div>
                 <Button onClick={handleSave}>ذخیره تغییرات</Button>
               </CardContent>

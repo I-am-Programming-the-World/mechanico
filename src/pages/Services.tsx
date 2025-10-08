@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { getServices, getBookings, getVehicles, saveBookings, Booking } from '@/lib/storage';
+import type { Booking } from '@/lib/storage';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,12 +11,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Clock, DollarSign, Calendar, Car } from 'lucide-react';
 import { toast } from 'sonner';
+import { useData } from '@/contexts/DataContext';
+import { formatDurationMinutes } from '@/lib/utils';
 
 const Services = () => {
   const { user } = useAuth();
-  const services = getServices();
-  const [bookings, setBookings] = useState(getBookings());
-  const vehicles = getVehicles();
+  const { services, vehicles, addBooking, users } = useData();
+  const defaultProviderId = user?.role === 'provider'
+    ? user.id
+    : users.find((u) => u.role === 'provider')?.id ?? user?.id ?? '';
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>('');
   const [bookingForm, setBookingForm] = useState({
@@ -39,24 +42,18 @@ const Services = () => {
 
     const scheduledAt = new Date(`${bookingForm.scheduledDate}T${bookingForm.scheduledTime}`);
     
-    const newBooking: Booking = {
-      id: Date.now().toString(),
+    const newBooking: Booking = addBooking({
       customerId: user.id,
-      providerId: '2', // Default provider for demo
+      providerId: defaultProviderId,
       vehicleId: bookingForm.vehicleId,
       serviceId: selectedService,
       scheduledAt: scheduledAt.toISOString(),
       status: 'pending',
       price: service.basePrice,
       notes: bookingForm.notes,
-      createdAt: new Date().toISOString(),
-    };
+    });
 
-    const updatedBookings = [...bookings, newBooking];
-    setBookings(updatedBookings);
-    saveBookings(updatedBookings);
-    
-    toast.success('رزرو با موفقیت ثبت شد');
+    toast.success(`رزرو ${newBooking.id} با موفقیت ثبت شد`);
     setIsDialogOpen(false);
     resetForm();
   };
@@ -114,7 +111,7 @@ const Services = () => {
                       <Clock className="h-4 w-4" />
                       <span>زمان</span>
                     </div>
-                    <span className="font-medium">{service.duration} دقیقه</span>
+                    <span className="font-medium">{formatDurationMinutes(service.duration)}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2 text-muted-foreground">
@@ -160,7 +157,7 @@ const Services = () => {
                           </Select>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-4 md:grid-cols-2">
                           <div className="space-y-2">
                             <Label>تاریخ</Label>
                             <Input
@@ -197,7 +194,7 @@ const Services = () => {
                           </div>
                           <div className="flex items-center justify-between text-sm">
                             <span>مدت زمان:</span>
-                            <span className="font-semibold">{service.duration} دقیقه</span>
+                            <span className="font-semibold">{formatDurationMinutes(service.duration)}</span>
                           </div>
                         </div>
 

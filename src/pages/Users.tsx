@@ -1,35 +1,30 @@
-import { useState } from 'react';
-import { getUsers, saveUsers } from '@/lib/storage';
+import type { User as UserRecord } from '@/lib/storage';
 import Layout from '@/components/Layout';
 import { Card, CardContent } from '@/components/ui/card';
+import { DataTable } from '@/components/DataTable';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { BadgeProps } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CheckCircle, XCircle, User, Shield, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
+import { useData } from '@/contexts/DataContext';
+import { formatNumber } from '@/lib/utils';
 
 const Users = () => {
-  const [users, setUsers] = useState(getUsers());
+  const { users, updateUserApproval } = useData();
 
   const handleApprove = (userId: string) => {
-    const updatedUsers = users.map(u =>
-      u.id === userId ? { ...u, isApproved: true } : u
-    );
-    setUsers(updatedUsers);
-    saveUsers(updatedUsers);
+    updateUserApproval(userId, true);
     toast.success('کاربر تأیید شد');
   };
 
   const handleReject = (userId: string) => {
-    const updatedUsers = users.map(u =>
-      u.id === userId ? { ...u, isApproved: false } : u
-    );
-    setUsers(updatedUsers);
-    saveUsers(updatedUsers);
+    updateUserApproval(userId, false);
     toast.success('تأیید کاربر لغو شد');
   };
 
-  const getRoleIcon = (role: string) => {
+  const getRoleIcon = (role: UserRecord['role']) => {
     switch (role) {
       case 'admin':
         return <Shield className="h-4 w-4" />;
@@ -40,8 +35,8 @@ const Users = () => {
     }
   };
 
-  const getRoleLabel = (role: string) => {
-    const labels: Record<string, string> = {
+  const getRoleLabel = (role: UserRecord['role']) => {
+    const labels: Record<UserRecord['role'], string> = {
       admin: 'مدیر',
       provider: 'ارائه‌دهنده',
       customer: 'مشتری',
@@ -49,15 +44,14 @@ const Users = () => {
     return labels[role] || role;
   };
 
-  const getRoleBadgeVariant = (role: string): any => {
-    switch (role) {
-      case 'admin':
-        return 'destructive';
-      case 'provider':
-        return 'default';
-      default:
-        return 'secondary';
-    }
+  const roleBadgeVariants: Record<UserRecord['role'], NonNullable<BadgeProps['variant']>> = {
+    admin: 'destructive',
+    provider: 'default',
+    customer: 'secondary',
+  };
+
+  const getRoleBadgeVariant = (role: UserRecord['role']) => {
+    return roleBadgeVariants[role];
   };
 
   return (
@@ -75,7 +69,7 @@ const Users = () => {
             <CardContent className="pt-6">
               <div className="text-center space-y-2">
                 <User className="h-8 w-8 text-primary mx-auto" />
-                <p className="text-2xl font-bold">{users.length}</p>
+                <p className="text-2xl font-bold">{formatNumber(users.length)}</p>
                 <p className="text-sm text-muted-foreground">کل کاربران</p>
               </div>
             </CardContent>
@@ -84,7 +78,7 @@ const Users = () => {
             <CardContent className="pt-6">
               <div className="text-center space-y-2">
                 <User className="h-8 w-8 text-secondary mx-auto" />
-                <p className="text-2xl font-bold">{users.filter(u => u.role === 'customer').length}</p>
+                <p className="text-2xl font-bold">{formatNumber(users.filter(u => u.role === 'customer').length)}</p>
                 <p className="text-sm text-muted-foreground">مشتریان</p>
               </div>
             </CardContent>
@@ -93,7 +87,7 @@ const Users = () => {
             <CardContent className="pt-6">
               <div className="text-center space-y-2">
                 <Wrench className="h-8 w-8 text-accent mx-auto" />
-                <p className="text-2xl font-bold">{users.filter(u => u.role === 'provider').length}</p>
+                <p className="text-2xl font-bold">{formatNumber(users.filter(u => u.role === 'provider').length)}</p>
                 <p className="text-sm text-muted-foreground">ارائه‌دهندگان</p>
               </div>
             </CardContent>
@@ -102,7 +96,7 @@ const Users = () => {
             <CardContent className="pt-6">
               <div className="text-center space-y-2">
                 <CheckCircle className="h-8 w-8 text-success mx-auto" />
-                <p className="text-2xl font-bold">{users.filter(u => u.isApproved).length}</p>
+                <p className="text-2xl font-bold">{formatNumber(users.filter(u => u.isApproved).length)}</p>
                 <p className="text-sm text-muted-foreground">تأیید شده</p>
               </div>
             </CardContent>
@@ -111,7 +105,8 @@ const Users = () => {
 
         <Card className="shadow-card">
           <CardContent className="p-0">
-            <Table>
+            <DataTable>
+              <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>نام کامل</TableHead>
@@ -174,7 +169,8 @@ const Users = () => {
                   </TableRow>
                 ))}
               </TableBody>
-            </Table>
+              </Table>
+            </DataTable>
           </CardContent>
         </Card>
       </div>

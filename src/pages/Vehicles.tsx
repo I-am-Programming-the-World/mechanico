@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { getVehicles, saveVehicles, Vehicle } from '@/lib/storage';
+import type { Vehicle } from '@/lib/storage';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,10 +9,12 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Car, Plus, Edit, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useData } from '@/contexts/DataContext';
+import { formatNumber } from '@/lib/utils';
 
 const Vehicles = () => {
   const { user } = useAuth();
-  const [vehicles, setVehicles] = useState(getVehicles());
+  const { vehicles, addVehicle, updateVehicle, deleteVehicle } = useData();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
   const [formData, setFormData] = useState({
@@ -30,21 +32,15 @@ const Vehicles = () => {
     if (!user) return;
 
     if (editingVehicle) {
-      const updatedVehicles = vehicles.map(v =>
-        v.id === editingVehicle.id ? { ...v, ...formData } : v
-      );
-      setVehicles(updatedVehicles);
-      saveVehicles(updatedVehicles);
+      updateVehicle(editingVehicle.id, formData);
       toast.success('خودرو به‌روزرسانی شد');
     } else {
       const newVehicle: Vehicle = {
-        id: Date.now().toString(),
         ownerId: user.id,
         ...formData,
+        id: crypto.randomUUID(),
       };
-      const updatedVehicles = [...vehicles, newVehicle];
-      setVehicles(updatedVehicles);
-      saveVehicles(updatedVehicles);
+      addVehicle(newVehicle);
       toast.success('خودرو جدید اضافه شد');
     }
 
@@ -53,9 +49,7 @@ const Vehicles = () => {
   };
 
   const handleDelete = (vehicleId: string) => {
-    const updatedVehicles = vehicles.filter(v => v.id !== vehicleId);
-    setVehicles(updatedVehicles);
-    saveVehicles(updatedVehicles);
+    deleteVehicle(vehicleId);
     toast.success('خودرو حذف شد');
   };
 
@@ -87,7 +81,7 @@ const Vehicles = () => {
   return (
     <Layout>
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold">خودروهای من</h1>
             <p className="text-muted-foreground mt-2">
@@ -99,8 +93,8 @@ const Vehicles = () => {
             if (!open) resetForm();
           }}>
             <DialogTrigger asChild>
-              <Button>
-                <Plus className="h-4 w-4 mr-2" />
+              <Button className="gap-2">
+                <Plus className="h-4 w-4" />
                 افزودن خودرو
               </Button>
             </DialogTrigger>
@@ -111,7 +105,7 @@ const Vehicles = () => {
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label>سازنده</Label>
                     <Input
@@ -129,7 +123,7 @@ const Vehicles = () => {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label>سال ساخت</Label>
                     <Input
@@ -183,12 +177,12 @@ const Vehicles = () => {
             userVehicles.map((vehicle) => (
               <Card key={vehicle.id} className="shadow-card hover:shadow-primary transition-all">
                 <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
+                  <CardTitle className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <Car className="h-5 w-5 text-primary" />
                       {vehicle.make} {vehicle.model}
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       <Button size="sm" variant="outline" onClick={() => handleEdit(vehicle)}>
                         <Edit className="h-4 w-4" />
                       </Button>
@@ -203,10 +197,10 @@ const Vehicles = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="grid gap-2 text-sm md:grid-cols-2">
                     <div>
                       <span className="text-muted-foreground">سال ساخت:</span>
-                      <p className="font-medium">{vehicle.year}</p>
+                      <p className="font-medium">{formatNumber(vehicle.year)}</p>
                     </div>
                     <div>
                       <span className="text-muted-foreground">رنگ:</span>
@@ -218,7 +212,7 @@ const Vehicles = () => {
                     </div>
                     <div className="col-span-2">
                       <span className="text-muted-foreground">کارکرد:</span>
-                      <p className="font-medium">{vehicle.mileage.toLocaleString('fa-IR')} کیلومتر</p>
+                      <p className="font-medium">{formatNumber(vehicle.mileage)} کیلومتر</p>
                     </div>
                   </div>
                 </CardContent>

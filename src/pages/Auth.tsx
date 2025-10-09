@@ -100,7 +100,7 @@ const Auth = () => {
             <p className="text-sm text-center text-muted-foreground">
               ورود سریع با حساب نمونه:
             </p>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
               <Button
                 variant="outline"
                 size="sm"

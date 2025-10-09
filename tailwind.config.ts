@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -7,7 +8,12 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1.5rem",
+        sm: "1rem",
+        lg: "2rem",
+        xl: "2.5rem",
+      },
       screens: {
         "2xl": "1400px",
       },
@@ -58,7 +64,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'Vazir', 'system-ui', 'sans-serif'],
+        sans: ['"Lalezar"', '"Vazirmatn"', '"IRANSans"', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -82,12 +88,34 @@ export default {
             height: "0",
           },
         },
+        "page-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(16px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "card-pop": {
+          "0%": {
+            opacity: "0",
+            transform: "scale(0.98)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "scale(1)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "page-in": "page-in 0.35s ease-out",
+        "card-pop": "card-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

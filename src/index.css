@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lalezar&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -93,13 +95,51 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
     direction: rtl;
+    text-align: right;
+    font-family: "Lalezar", "Vazirmatn", "IRANSans", "Segoe UI", Tahoma, sans-serif;
+    font-feature-settings: "ss02" 1, "cv10" 1;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    @apply transition-all duration-300 ease-in-out;
   }
 
   html {
     scroll-behavior: smooth;
   }
+
+  html[data-animations="off"] *,
+  html[data-animations="off"] *::before,
+  html[data-animations="off"] *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: 9999px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: none;
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.4);
 }
 
 @layer utilities {

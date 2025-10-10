@@ -1,34 +1,40 @@
-import { useState } from 'react';
-import { getInvoices, getExpenses, getBookings, saveInvoices, saveExpenses } from '@/lib/storage';
+import { useMemo, useState } from 'react';
+import type { Invoice, Expense } from '@/lib/storage';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { DataTable } from '@/components/DataTable';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import type { BadgeProps } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { DollarSign, TrendingUp, TrendingDown, FileText, Plus, Download } from 'lucide-react';
+import { DollarSign, TrendingUp, TrendingDown, FileText, Plus, Download, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useData } from '@/contexts';
+import { formatCurrency, formatMillions } from '@/lib/utils';
 
 const Accounting = () => {
-  const [invoices, setInvoices] = useState(getInvoices());
-  const [expenses, setExpenses] = useState(getExpenses());
-  const bookings = getBookings();
-  const [newExpense, setNewExpense] = useState({
+  const { invoices, expenses, addExpense, updateInvoiceStatus } = useData();
+  type NewExpenseForm = Pick<Expense, 'category' | 'description' | 'amount' | 'paymentMethod'>;
+  const [newExpense, setNewExpense] = useState<NewExpenseForm>({
     category: '',
     description: '',
     amount: 0,
     paymentMethod: '',
   });
 
-  const totalIncome = invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.total, 0);
-  const totalExpenses = expenses.reduce((sum, e) => sum + e.amount, 0);
+  const totalIncome = useMemo(() => invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.total, 0), [invoices]);
+  const totalExpenses = useMemo(() => expenses.reduce((sum, e) => sum + e.amount, 0), [expenses]);
   const netProfit = totalIncome - totalExpenses;
-  const pendingPayments = invoices.filter(i => i.status === 'sent' || i.status === 'overdue').reduce((sum, i) => sum + i.total, 0);
+  const pendingPayments = useMemo(
+    () => invoices.filter(i => i.status === 'sent' || i.status === 'overdue').reduce((sum, i) => sum + i.total, 0),
+    [invoices]
+  );
 
   const monthlyData = [
     { month: 'فروردین', income: 12500000, expense: 8200000, profit: 4300000 },
@@ -45,46 +51,53 @@ const Accounting = () => {
       return;
     }
 
-    const expense = {
-      id: Date.now().toString(),
+    addExpense({
       ...newExpense,
       date: new Date().toISOString(),
       createdAt: new Date().toISOString(),
-    };
-
-    const updatedExpenses = [...expenses, expense];
-    setExpenses(updatedExpenses);
-    saveExpenses(updatedExpenses);
+      invoiceNumber: '',
+      providerId: undefined,
+    });
     setNewExpense({ category: '', description: '', amount: 0, paymentMethod: '' });
     toast.success('هزینه با موفقیت ثبت شد');
   };
 
-  const getInvoiceStatus = (status: string) => {
-    const variants: Record<string, any> = {
-      paid: 'default',
-      sent: 'secondary',
-      overdue: 'destructive',
-      draft: 'outline',
-      cancelled: 'destructive',
-    };
-    return variants[status] || 'secondary';
+  const handleMarkInvoiceAsPaid = (invoiceId: string) => {
+    updateInvoiceStatus(invoiceId, 'paid');
+    toast.success('وضعیت صورتحساب به پرداخت‌شده تغییر کرد');
   };
 
-  const getStatusLabel = (status: string) => {
-    const labels: Record<string, string> = {
-      paid: 'پرداخت شده',
-      sent: 'ارسال شده',
-      overdue: 'معوق',
-      draft: 'پیش‌نویس',
-      cancelled: 'لغو شده',
-    };
-    return labels[status] || status;
+  const invoiceStatusVariants: Record<
+    Invoice['status'],
+    NonNullable<BadgeProps['variant']>
+  > = {
+    paid: 'default',
+    sent: 'secondary',
+    overdue: 'destructive',
+    draft: 'outline',
+    cancelled: 'destructive',
+  };
+
+  const getInvoiceStatus = (status: Invoice['status']) => {
+    return invoiceStatusVariants[status] ?? 'secondary';
+  };
+
+  const invoiceStatusLabels: Record<Invoice['status'], string> = {
+    paid: 'پرداخت شده',
+    sent: 'ارسال شده',
+    overdue: 'معوق',
+    draft: 'پیش‌نویس',
+    cancelled: 'لغو شده',
+  };
+
+  const getStatusLabel = (status: Invoice['status']) => {
+    return invoiceStatusLabels[status] ?? status;
   };
 
   return (
     <Layout>
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold">حسابداری مالی</h1>
             <p className="text-muted-foreground mt-2">مدیریت درآمد، هزینه‌ها و صورتحساب‌ها</p>
@@ -102,9 +115,7 @@ const Accounting = () => {
               <TrendingUp className="h-5 w-5 text-success" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-success">
-                {(totalIncome / 1000000).toFixed(1)} م
-              </div>
+              <div className="text-3xl font-bold text-success">{formatMillions(totalIncome)} م</div>
               <p className="text-xs text-muted-foreground mt-1">تومان</p>
             </CardContent>
           </Card>
@@ -115,9 +126,7 @@ const Accounting = () => {
               <TrendingDown className="h-5 w-5 text-destructive" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-destructive">
-                {(totalExpenses / 1000000).toFixed(1)} م
-              </div>
+              <div className="text-3xl font-bold text-destructive">{formatMillions(totalExpenses)} م</div>
               <p className="text-xs text-muted-foreground mt-1">تومان</p>
             </CardContent>
           </Card>
@@ -128,9 +137,7 @@ const Accounting = () => {
               <DollarSign className="h-5 w-5 text-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-primary">
-                {(netProfit / 1000000).toFixed(1)} م
-              </div>
+              <div className="text-3xl font-bold text-primary">{formatMillions(netProfit)} م</div>
               <p className="text-xs text-muted-foreground mt-1">تومان</p>
             </CardContent>
           </Card>
@@ -141,9 +148,7 @@ const Accounting = () => {
               <FileText className="h-5 w-5 text-warning" />
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-warning">
-                {(pendingPayments / 1000000).toFixed(1)} م
-              </div>
+              <div className="text-3xl font-bold text-warning">{formatMillions(pendingPayments)} م</div>
               <p className="text-xs text-muted-foreground mt-1">تومان</p>
             </CardContent>
           </Card>
@@ -159,8 +164,8 @@ const Accounting = () => {
                 <LineChart data={monthlyData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tickFormatter={formatCurrency} />
+                  <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
                   <Legend />
                   <Line type="monotone" dataKey="income" stroke="hsl(var(--success))" strokeWidth={2} name="درآمد" />
                   <Line type="monotone" dataKey="expense" stroke="hsl(var(--destructive))" strokeWidth={2} name="هزینه" />
@@ -179,8 +184,8 @@ const Accounting = () => {
                 <BarChart data={monthlyData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tickFormatter={formatCurrency} />
+                  <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
                   <Legend />
                   <Bar dataKey="income" fill="hsl(var(--success))" name="درآمد" radius={[8, 8, 0, 0]} />
                   <Bar dataKey="expense" fill="hsl(var(--destructive))" name="هزینه" radius={[8, 8, 0, 0]} />
@@ -191,7 +196,7 @@ const Accounting = () => {
         </div>
 
         <Tabs defaultValue="invoices" className="space-y-4">
-          <TabsList>
+          <TabsList className="flex flex-wrap gap-2">
             <TabsTrigger value="invoices">صورتحساب‌ها</TabsTrigger>
             <TabsTrigger value="expenses">هزینه‌ها</TabsTrigger>
           </TabsList>
@@ -202,7 +207,8 @@ const Accounting = () => {
                 <CardTitle>صورتحساب‌ها</CardTitle>
               </CardHeader>
               <CardContent className="p-0">
-                <Table>
+                <DataTable>
+                  <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>شماره فاکتور</TableHead>
@@ -219,28 +225,41 @@ const Accounting = () => {
                         <TableCell className="font-medium">{invoice.invoiceNumber}</TableCell>
                         <TableCell>{new Date(invoice.date).toLocaleDateString('fa-IR')}</TableCell>
                         <TableCell>{new Date(invoice.dueDate).toLocaleDateString('fa-IR')}</TableCell>
-                        <TableCell>{invoice.total.toLocaleString()} تومان</TableCell>
+                        <TableCell>{formatCurrency(invoice.total)} تومان</TableCell>
                         <TableCell>
                           <Badge variant={getInvoiceStatus(invoice.status)}>
                             {getStatusLabel(invoice.status)}
                           </Badge>
                         </TableCell>
                         <TableCell>
-                          <Button size="sm" variant="outline">
-                            مشاهده
-                          </Button>
+                          <div className="flex items-center gap-2">
+                            <Button size="sm" variant="outline">
+                              مشاهده
+                            </Button>
+                            {invoice.status !== 'paid' && (
+                              <Button
+                                size="sm"
+                                className="gap-1"
+                                onClick={() => handleMarkInvoiceAsPaid(invoice.id)}
+                              >
+                                <CheckCircle2 className="h-4 w-4" />
+                                تسویه
+                              </Button>
+                            )}
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                  </Table>
+                </DataTable>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="expenses">
             <Card className="shadow-card">
-              <CardHeader className="flex flex-row items-center justify-between">
+              <CardHeader className="flex flex-wrap items-center justify-between gap-4">
                 <CardTitle>هزینه‌ها</CardTitle>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -309,7 +328,8 @@ const Accounting = () => {
                 </Dialog>
               </CardHeader>
               <CardContent className="p-0">
-                <Table>
+                <DataTable>
+                  <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>دسته‌بندی</TableHead>
@@ -326,13 +346,14 @@ const Accounting = () => {
                           <Badge variant="outline">{expense.category}</Badge>
                         </TableCell>
                         <TableCell>{expense.description}</TableCell>
-                        <TableCell className="font-medium">{expense.amount.toLocaleString()} تومان</TableCell>
+                        <TableCell className="font-medium">{formatCurrency(expense.amount)} تومان</TableCell>
                         <TableCell>{new Date(expense.date).toLocaleDateString('fa-IR')}</TableCell>
                         <TableCell>{expense.paymentMethod}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
-                </Table>
+                  </Table>
+                </DataTable>
               </CardContent>
             </Card>
           </TabsContent>

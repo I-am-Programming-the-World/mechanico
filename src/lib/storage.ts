@@ -130,7 +130,7 @@ export interface InventoryItem {
   location: string;
 }
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   USERS: 'mechanico_users',
   VEHICLES: 'mechanico_vehicles',
   SERVICES: 'mechanico_services',
@@ -647,4 +647,9 @@ export const getInventory = (): InventoryItem[] => {
 
 export const saveInventory = (inventory: InventoryItem[]) => {
   localStorage.setItem(STORAGE_KEYS.INVENTORY, JSON.stringify(inventory));
+};
+
+export const resetStorage = () => {
+  Object.values(STORAGE_KEYS).forEach((key) => localStorage.removeItem(key));
+  initializeDummyData();
 };

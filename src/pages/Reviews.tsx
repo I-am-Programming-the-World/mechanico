@@ -1,15 +1,13 @@
-import { getReviews, getUsers, getBookings } from '@/lib/storage';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Star } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts';
+import { useData } from '@/contexts';
 
 const Reviews = () => {
   const { user } = useAuth();
-  const reviews = getReviews();
-  const users = getUsers();
-  const bookings = getBookings();
+  const { reviews, users } = useData();
 
   const relevantReviews = reviews.filter(r => 
     user?.role === 'provider' ? r.providerId === user.id : true
@@ -66,14 +64,16 @@ const Reviews = () => {
               const customer = users.find(u => u.id === review.customerId);
               const provider = users.find(u => u.id === review.providerId);
 
+              const fallbackInitial = customer?.fullName?.charAt(0) ?? 'م';
+
               return (
-                <Card key={review.id} className="shadow-card hover:shadow-primary transition-all">
+                <Card key={review.id} className="shadow-card hover:shadow-primary transition-all" aria-label={`نظر ثبت شده توسط ${customer?.fullName ?? 'مشتری ناشناس'}`}>
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex gap-4">
                         <Avatar>
                           <AvatarFallback>
-                            {customer?.fullName.charAt(0)}
+                            {fallbackInitial}
                           </AvatarFallback>
                         </Avatar>
                         <div className="space-y-1">

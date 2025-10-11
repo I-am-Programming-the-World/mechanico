@@ -11,14 +11,7 @@ const TabsList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={cn(
-      // Align tab triggers to the start (right in RTL) instead of centering.
-      // Centered alignment looked off in RTL layouts because the first tab
-      // should appear on the rightmost side. `justify-start` respects the
-      // container's writing direction defined on the parent.
-      "inline-flex h-10 items-center justify-start rounded-md bg-muted p-1 text-muted-foreground",
-      className,
-    )}
+    className={cn("inline-flex h-10 w-full items-center justify-end rounded-md bg-muted p-1 text-muted-foreground")}
     {...props}
   />
 ));

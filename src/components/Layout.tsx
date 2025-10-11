@@ -62,7 +62,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen bg-background" dir="rtl">
       <a href="#main-content" className="skip-link">پرش به محتوای اصلی</a>
       <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-        <div className="container flex h-16 flex-wrap items-center justify-between gap-4 px-3 sm:px-4">
+        <div className="container flex h-16 items-center justify-between gap-3 sm:gap-4 px-3 sm:px-4">
           <div className="flex items-center gap-4">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
@@ -110,7 +110,7 @@ const Layout = ({ children }: LayoutProps) => {
             <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
               مکانیکو
             </h1>
-            <nav className="hidden md:flex gap-1" aria-label="منوی اصلی">
+            <nav className="hidden md:flex flex-row-reverse items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 whitespace-nowrap" aria-label="منوی اصلی">
               {filteredMenu.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -119,7 +119,7 @@ const Layout = ({ children }: LayoutProps) => {
                     to={item.path}
                     className={({ isActive }) =>
                       cn(
-                        'flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors',
+                        'flex items-center gap-2 rounded-full px-3 py-2 text-sm md:text-[0.95rem] transition-colors',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                         isActive ? 'bg-primary text-primary-foreground shadow-sm' : 'hover:bg-muted text-foreground'
                       )

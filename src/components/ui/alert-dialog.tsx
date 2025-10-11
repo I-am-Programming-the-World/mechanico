@@ -44,12 +44,25 @@ const AlertDialogContent = React.forwardRef<
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 
 const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
+  <div
+    // Align alert dialog headings to the right for RTL users. The previous
+    // implementation used `sm:text-left`, causing Persian text to align
+    // incorrectly.
+    className={cn("flex flex-col space-y-2 text-center sm:text-right", className)}
+    {...props}
+  />
 );
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
 const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
+  <div
+    // In RTL mode the order of actions should be reversed horizontally. Use
+    // `flex-row-reverse` on small screens and swap justify settings. Also
+    // leverage `space-x-reverse` to flip spacing direction. On mobile
+    // (default) maintain the vertical reverse order.
+    className={cn("flex flex-col-reverse sm:flex-row-reverse sm:justify-start sm:space-x-2 sm:space-x-reverse", className)}
+    {...props}
+  />
 );
 AlertDialogFooter.displayName = "AlertDialogFooter";
 

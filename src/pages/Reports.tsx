@@ -129,7 +129,12 @@ const Reports = () => {
         </div>
 
         <Tabs defaultValue="sales" className="space-y-4">
-          <TabsList className="flex flex-wrap gap-2">
+        {/*
+          Align tab triggers to the right. `justify-end` ensures the first tab
+          appears on the rightmost side in RTL layouts, providing a more
+          intuitive reading experience.
+        */}
+        <TabsList className="flex flex-wrap justify-end gap-2">
             <TabsTrigger value="sales">فروش و درآمد</TabsTrigger>
             <TabsTrigger value="services">خدمات</TabsTrigger>
             <TabsTrigger value="customers">مشتریان</TabsTrigger>
@@ -146,10 +151,17 @@ const Reports = () => {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={350}>
-                  <LineChart data={salesData}>
+                  {/*
+                    Line chart adjusted for RTL contexts. The internal SVG is
+                    forced into a left‑to‑right direction to ensure tooltips
+                    behave correctly. The months on the horizontal axis are
+                    reversed so the first month appears at the far right. The
+                    vertical axis is moved to the right.
+                  */}
+                  <LineChart data={salesData} style={{ direction: 'ltr' }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis tickFormatter={formatNumber} />
+                    <XAxis dataKey="month" reversed />
+                    <YAxis tickFormatter={formatNumber} orientation="right" />
                     <Tooltip formatter={(value: number) => `${formatNumber(value)} تومان`} />
                     <Legend />
                     <Line type="monotone" dataKey="revenue" stroke="hsl(var(--primary))" strokeWidth={3} name="درآمد" />
@@ -165,10 +177,15 @@ const Reports = () => {
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={salesData}>
+                    {/*
+                      Bar chart adjusted for RTL: set LTR direction on the
+                      internal SVG to correct tooltip positioning, reverse the X axis
+                      order, and move the Y axis to the right.
+                    */}
+                    <BarChart data={salesData} style={{ direction: 'ltr' }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      <YAxis tickFormatter={formatNumber} />
+                      <XAxis dataKey="month" reversed />
+                      <YAxis tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
                       <Bar dataKey="bookings" fill="hsl(var(--secondary))" name="رزروها" radius={[8, 8, 0, 0]} />
                     </BarChart>
@@ -182,10 +199,10 @@ const Reports = () => {
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={salesData}>
+                    <BarChart data={salesData} style={{ direction: 'ltr' }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      <YAxis tickFormatter={formatNumber} />
+                      <XAxis dataKey="month" reversed />
+                      <YAxis tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
                       <Bar dataKey="customers" fill="hsl(var(--accent))" name="مشتریان" radius={[8, 8, 0, 0]} />
                     </BarChart>
@@ -202,10 +219,10 @@ const Reports = () => {
               </CardHeader>
               <CardContent>
                 <ResponsiveContainer width="100%" height={350}>
-                  <BarChart data={servicePerformance}>
+                  <BarChart data={servicePerformance} style={{ direction: 'ltr' }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="service" />
-                    <YAxis tickFormatter={formatNumber} />
+                    <XAxis dataKey="service" reversed />
+                    <YAxis tickFormatter={formatNumber} orientation="right" />
                     <Tooltip
                       formatter={(value: number, name: string) =>
                         name === 'درآمد' ? `${formatNumber(value)} تومان` : formatNumber(value)

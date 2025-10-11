@@ -161,10 +161,17 @@ const Accounting = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={monthlyData}>
+                {/*
+                  Render the line chart in a left‑to‑right context to prevent
+                  tooltip misplacement in RTL containers. We set
+                  `reversed` on the X axis so months render from right to left
+                  (فروردین to شهریور) while maintaining visual consistency. The
+                  Y axis is moved to the right side using `orientation="right"`.
+                */}
+                <LineChart data={monthlyData} style={{ direction: 'ltr' }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis tickFormatter={formatCurrency} />
+                  <XAxis dataKey="month" reversed />
+                  <YAxis tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
                   <Legend />
                   <Line type="monotone" dataKey="income" stroke="hsl(var(--success))" strokeWidth={2} name="درآمد" />
@@ -181,10 +188,15 @@ const Accounting = () => {
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={monthlyData}>
+                {/*
+                  Bar chart adjusted for RTL: set `direction: 'ltr'` on the
+                  container to fix internal tooltip positioning, reverse the
+                  horizontal axis and move the vertical axis to the right.
+                */}
+                <BarChart data={monthlyData} style={{ direction: 'ltr' }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis tickFormatter={formatCurrency} />
+                  <XAxis dataKey="month" reversed />
+                  <YAxis tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
                   <Legend />
                   <Bar dataKey="income" fill="hsl(var(--success))" name="درآمد" radius={[8, 8, 0, 0]} />
@@ -196,7 +208,14 @@ const Accounting = () => {
         </div>
 
         <Tabs defaultValue="invoices" className="space-y-4">
-          <TabsList className="flex flex-wrap gap-2">
+        {/*
+          Align tab triggers to the right for RTL languages. Using
+          `justify-end` places the first tab flush against the right edge of
+          the container, which matches Persian reading order. Without this the
+          tab list would default to centering content or left‑aligning,
+          producing an awkward layout under `dir="rtl"`.
+        */}
+        <TabsList className="flex flex-wrap justify-end gap-2">
             <TabsTrigger value="invoices">صورتحساب‌ها</TabsTrigger>
             <TabsTrigger value="expenses">هزینه‌ها</TabsTrigger>
           </TabsList>

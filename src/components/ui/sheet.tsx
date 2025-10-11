@@ -68,12 +68,26 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
+  <div
+    // Use text-right on small screens to better align RTL titles and
+    // descriptions. Previously the header used `sm:text-left` which left
+    // headings misaligned for Persian content.
+    className={cn("flex flex-col space-y-2 text-center sm:text-right", className)}
+    {...props}
+  />
 );
 SheetHeader.displayName = "SheetHeader";
 
 const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
+  <div
+    // Reverse the order of footer buttons horizontally for RTL layouts. We use
+    // flex-row-reverse so the primary action appears at the visual right. The
+    // `space-x-reverse` utility flips horizontal spacing so buttons maintain
+    // consistent gaps. On mobile (default), the stack order is preserved via
+    // flex-col-reverse.
+    className={cn("flex flex-col-reverse sm:flex-row-reverse sm:justify-start sm:space-x-2 sm:space-x-reverse", className)}
+    {...props}
+  />
 );
 SheetFooter.displayName = "SheetFooter";
 

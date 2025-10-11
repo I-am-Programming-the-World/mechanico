@@ -91,7 +91,6 @@ const Auth = () => {
               type="submit"
               className="w-full"
               disabled={isLoading}
-            >
               {isLoading ? 'در حال ورود...' : 'ورود'}
             </Button>
           </form>
@@ -105,21 +104,18 @@ const Auth = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => fillDemoCredentials('admin')}
-              >
                 مدیر
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => fillDemoCredentials('provider')}
-              >
                 مکانیک
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => fillDemoCredentials('customer')}
-              >
                 مشتری
               </Button>
             </div>

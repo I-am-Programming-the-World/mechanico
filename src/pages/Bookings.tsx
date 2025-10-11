@@ -125,7 +125,7 @@ const Bookings = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance">رزروها</h1>
+          <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">رزروها</h1>
           <p className="text-muted-foreground mt-2">
             مدیریت و پیگیری رزروهای {user?.role === 'customer' ? 'شما' : 'مشتریان'}
           </p>
@@ -167,7 +167,6 @@ const Bookings = () => {
                       <Select
                         value={formState.customerId}
                         onValueChange={(value) => setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))}
-                      >
                         <SelectTrigger id="customerId">
                           <SelectValue placeholder="انتخاب مشتری" />
                         </SelectTrigger>
@@ -188,7 +187,6 @@ const Bookings = () => {
                       <Select
                         value={formState.providerId}
                         onValueChange={(value) => setFormState((prev) => ({ ...prev, providerId: value }))}
-                      >
                         <SelectTrigger id="providerId">
                           <SelectValue placeholder="انتخاب ارائه‌دهنده" />
                         </SelectTrigger>
@@ -215,7 +213,6 @@ const Bookings = () => {
                           price: service ? service.basePrice.toString() : prev.price,
                         }));
                       }}
-                    >
                       <SelectTrigger id="serviceId">
                         <SelectValue placeholder="انتخاب خدمت" />
                       </SelectTrigger>
@@ -234,7 +231,6 @@ const Bookings = () => {
                     <Select
                       value={formState.vehicleId}
                       onValueChange={(value) => setFormState((prev) => ({ ...prev, vehicleId: value }))}
-                    >
                       <SelectTrigger id="vehicleId">
                         <SelectValue placeholder="انتخاب خودرو" />
                       </SelectTrigger>
@@ -344,7 +340,6 @@ const Bookings = () => {
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive"
                                 aria-label={`حذف رزرو ${booking.id}`}
-                              >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -425,14 +420,12 @@ const Bookings = () => {
                         <Button
                           size="sm"
                           onClick={() => handleStatusChange(booking.id, 'confirmed')}
-                        >
                           تأیید رزرو
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleStatusChange(booking.id, 'cancelled')}
-                        >
                           رد کردن
                         </Button>
                       </div>
@@ -442,7 +435,6 @@ const Bookings = () => {
                       <Button
                         size="sm"
                         onClick={() => handleStatusChange(booking.id, 'in-progress')}
-                      >
                         شروع خدمت
                       </Button>
                     )}
@@ -451,7 +443,6 @@ const Bookings = () => {
                       <Button
                         size="sm"
                         onClick={() => handleStatusChange(booking.id, 'completed')}
-                      >
                         اتمام خدمت
                       </Button>
                     )}

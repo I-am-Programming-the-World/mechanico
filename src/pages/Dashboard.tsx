@@ -97,7 +97,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-          >
+<h1 className="font-display text-balance text-2xl md:text-3xl font-bold">
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -105,7 +105,7 @@ const Dashboard = () => {
           </p>
         </div>
 
-        \1\2<motion.div initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} transition={{duration:0.35}}><Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+        <motion.div initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} transition={{duration:0.35}}><Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کل رزروها' : 'رزروهای من'}

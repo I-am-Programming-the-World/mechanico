@@ -3,7 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, DollarSign, Users, Star, TrendingUp, Car } from 'lucide-react';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, Defs, Gradient } from 'recharts';
+import { BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Layout from '@/components/Layout';
 import { formatMillions, formatNumber } from '@/lib/utils';
 
@@ -11,7 +11,6 @@ const Dashboard = () => {
   const { user } = useAuth();
   const { bookings, services, users, reviews, vehicles } = useData();
 
-  // Calculate statistics
   const totalBookings = bookings.length;
   const completedBookings = bookings.filter(b => b.status === 'completed').length;
   const totalRevenue = bookings.filter(b => b.status === 'completed').reduce((sum, b) => sum + b.price, 0);
@@ -19,7 +18,6 @@ const Dashboard = () => {
     ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
     : 0;
 
-  // User-specific stats
   const userBookings = bookings.filter(b =>
     user?.role === 'customer' ? b.customerId === user.id : b.providerId === user.id
   );
@@ -28,7 +26,6 @@ const Dashboard = () => {
     user?.role === 'provider' ? r.providerId === user.id : r.customerId === user.id
   );
 
-  // Chart data
   const statusData = useMemo(() => ([
     { name: 'در انتظار', value: bookings.filter(b => b.status === 'pending').length, fill: 'hsl(var(--warning))' },
     { name: 'تأیید شده', value: bookings.filter(b => b.status === 'confirmed').length, fill: 'hsl(var(--primary))' },
@@ -84,7 +81,6 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className="space-y-8">
-        {/* Header */}
         <div>
           <h1 className="text-3xl font-bold">
             خوش آمدید، {user?.fullName}
@@ -94,7 +90,6 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -170,7 +165,6 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Charts */}
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="shadow-card">
             <CardHeader>
@@ -188,9 +182,9 @@ const Dashboard = () => {
                       <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" axisLine={false} tickLine={false} />
-                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -218,6 +212,8 @@ const Dashboard = () => {
                       cy="50%"
                       labelLine={false}
                       outerRadius={100}
+                      innerRadius={70}
+                      paddingAngle={5}
                       fill="#8884d8"
                       dataKey="value"
                       stroke="hsl(var(--background))"
@@ -241,9 +237,9 @@ const Dashboard = () => {
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={servicePopularity}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
                   <Legend />
                   <Bar

@@ -97,7 +97,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-          \1\2 font-display text-balance\3>
+          >
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -176,8 +176,7 @@ const Dashboard = () => {
                 از {formatNumberFa(user?.role === 'admin' ? reviews.length : userReviews.length)} نظر
               </p>
             </CardContent>
-          </Card>
-        </div>
+          </Card></motion.div>
 
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
@@ -265,8 +264,7 @@ const Dashboard = () => {
                     dataKey="count"
                     fill="hsl(var(--secondary))"
                     name="تعداد رزرو"
-                    radius={[8, 8, 0, 0]}
-                   radius=[8, 8, 0, 0] />
+                    radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
       </ChartContainer>

@@ -2,9 +2,26 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
-));
+const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        // Modern card styling: apply a larger radius, subtle border, frosted glass
+        // effect and a deeper shadow. According to the Interaction Design
+        // Foundation, glassmorphism combines semi‑transparent backgrounds,
+        // backdrop blur and thin borders to create depth【987096273964087†L96-L113】. We
+        // use `bg-card/75` to set the card background opacity to 75 %,
+        // `backdrop-blur-md` for the frosted glass effect, and lighten the border.
+        // A larger shadow adds to the sense of layering without being too
+        // overpowering.
+        "rounded-xl border border-border/40 bg-card/75 backdrop-blur-md text-card-foreground shadow-lg dark:bg-card/50 dark:border-border/30",
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(

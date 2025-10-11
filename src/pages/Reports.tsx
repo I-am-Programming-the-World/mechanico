@@ -160,7 +160,7 @@ const Reports = () => {
                     reversed so the first month appears at the far right. The
                     vertical axis is moved to the right.
                   */}
-                  <LineChart data={salesData} style={{ direction: 'ltr' }}>
+                  <LineChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={salesData} style={{ direction: 'ltr' }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                     <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />

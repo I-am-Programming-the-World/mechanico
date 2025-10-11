@@ -177,7 +177,7 @@ const Dashboard = () => {
             <CardContent>
               <ChartContainer>
         <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={monthlyData}>
+                <AreaChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={monthlyData}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
@@ -185,8 +185,8 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis tick={{ textAnchor: "end" }} dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis tick={{ textAnchor: "end" }} tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="month" axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -244,8 +244,8 @@ const Dashboard = () => {
         <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={servicePopularity}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis tick={{ textAnchor: "end" }} dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis tick={{ textAnchor: "end" }} tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="name" axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
                   <Legend verticalAlign="top" align="right" />
                   <Bar

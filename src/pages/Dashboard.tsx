@@ -2,8 +2,20 @@ import { useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+const Sparkline: React.FC<{ data: any[]; dataKey: string }> = ({ data, dataKey }) => (
+  <div className="h-10 w-24">
+    <RC2 width="100%" height="100%">
+      <AC2 data={data}>
+        <A2 type="monotone" dataKey={dataKey} stroke="hsl(var(--primary))" fill="hsl(var(--primary))/30" />
+      </AC2>
+    </RC2>
+  </div>
+)
+
 import { Calendar, DollarSign, Users, Star, TrendingUp, Car } from 'lucide-react';
 import { BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ResponsiveContainer as RC2, Area as A2, AreaChart as AC2 } from 'recharts';
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import Layout from '@/components/Layout';
 import { formatMillions, formatNumber } from '@/lib/utils';

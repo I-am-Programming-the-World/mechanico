@@ -82,7 +82,7 @@ const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
     // Use text-right on small screens to better align RTL titles and
     // descriptions. Previously the header used `sm:text-left` which left
     // headings misaligned for Persian content.
-    className={cn("flex flex-col space-y-2 text-center sm:text-right", className)}
+    className={cn("flex flex-col space-y-2 text-center sm:text-right max-h-[85vh] overflow-y-auto", className)}
     {...props}
   />
 );

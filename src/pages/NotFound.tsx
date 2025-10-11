@@ -15,7 +15,7 @@ const NotFound = () => {
           <span className="inline-flex items-center justify-center rounded-full bg-destructive/10 px-4 py-2 text-sm font-semibold text-destructive">
             خطای ۴۰۴
           </span>
-          <h1 className="text-4xl font-bold text-foreground">صفحه مورد نظر یافت نشد</h1>
+          \1\2 font-display text-balance mb-4 md:mb-6\3>صفحه مورد نظر یافت نشد</h1>
           <p className="max-w-xl text-lg text-muted-foreground">
             مسیر <span className="font-mono text-sm text-foreground/70">{location.pathname}</span> در نسخه نمایشی مکانیکو موجود نیست. از لینک‌های زیر برای ادامه استفاده کنید.
           </p>

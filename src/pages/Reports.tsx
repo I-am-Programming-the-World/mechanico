@@ -61,7 +61,7 @@ const Reports = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold font-display text-balance">گزارشات و تحلیل‌ها</h1>
+            \1\2 font-display text-balance mb-4 md:mb-6\3>گزارشات و تحلیل‌ها</h1>
             <p className="text-muted-foreground mt-2">گزارش‌های جامع کسب‌وکار</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -161,7 +161,13 @@ const Reports = () => {
                     vertical axis is moved to the right.
                   */}
                   <LineChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={salesData} style={{ direction: 'ltr' }}>
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <defs>
+  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
+    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+  </linearGradient>
+</defs>
+<CartesianGrid strokeDasharray="3 3" />
                     <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                     <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                     <Tooltip formatter={(value: number) => `${formatNumber(value)} تومان`} />
@@ -187,11 +193,17 @@ const Reports = () => {
                       order, and move the Y axis to the right.
                     */}
                     <BarChart data={salesData} style={{ direction: 'ltr' }}>
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <defs>
+  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
+    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+  </linearGradient>
+</defs>
+<CartesianGrid strokeDasharray="3 3" />
                       <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                       <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
-                      <Bar dataKey="bookings" fill="hsl(var(--secondary))" name="رزروها" radius={[8, 8, 0, 0]} />
+                      <Bar dataKey="bookings" fill="hsl(var(--secondary))" name="رزروها" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
                     </BarChart>
                   </ResponsiveContainer>
       </ChartContainer>
@@ -206,11 +218,17 @@ const Reports = () => {
                   <ChartContainer>
         <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={salesData} style={{ direction: 'ltr' }}>
-                      <CartesianGrid strokeDasharray="3 3" />
+                      <defs>
+  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
+    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+  </linearGradient>
+</defs>
+<CartesianGrid strokeDasharray="3 3" />
                       <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                       <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
-                      <Bar dataKey="customers" fill="hsl(var(--accent))" name="مشتریان" radius={[8, 8, 0, 0]} />
+                      <Bar dataKey="customers" fill="hsl(var(--accent))" name="مشتریان" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
                     </BarChart>
                   </ResponsiveContainer>
       </ChartContainer>
@@ -228,7 +246,13 @@ const Reports = () => {
                 <ChartContainer>
         <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={servicePerformance} style={{ direction: 'ltr' }}>
-                    <CartesianGrid strokeDasharray="3 3" />
+                    <defs>
+  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
+    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
+  </linearGradient>
+</defs>
+<CartesianGrid strokeDasharray="3 3" />
                     <XAxis tick={{ textAnchor: "end" }} dataKey="service" reversed />
                     <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                     <Tooltip
@@ -237,8 +261,8 @@ const Reports = () => {
                       }
                     />
                     <Legend verticalAlign="top" align="right" />
-                    <Bar dataKey="revenue" fill="hsl(var(--primary))" name="درآمد" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="count" fill="hsl(var(--secondary))" name="تعداد" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="revenue" fill="hsl(var(--primary))" name="درآمد" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
+                    <Bar dataKey="count" fill="hsl(var(--secondary))" name="تعداد" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
                   </BarChart>
                 </ResponsiveContainer>
       </ChartContainer>

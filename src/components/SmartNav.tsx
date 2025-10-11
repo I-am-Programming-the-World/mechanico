@@ -8,6 +8,8 @@ export type NavItem = {
   to: string
   label: string
   icon?: React.ReactNode
+  /** Higher numbers = keep visible longer. Default 0. */
+  priority?: number
 }
 
 type SmartNavProps = {
@@ -44,6 +46,7 @@ export default function SmartNav({ items, className, reserveEnd = 92 }: SmartNav
   }, [ordered.length])
 
   function calc() {
+    const widthMap = new Map<string, number>();
     const root = containerRef.current
     const list = listRef.current
     if (!root || !list) return
@@ -52,10 +55,31 @@ export default function SmartNav({ items, className, reserveEnd = 92 }: SmartNav
     // next frame after state applies
     requestAnimationFrame(() => {
       const rootWidth = root.clientWidth - reserveEnd // leave space for profile
+      const overflowBtnWidth = 80
       let used = 0
       const lis = Array.from(list.children) as HTMLElement[]
+      lis.forEach((li) => {
+        const key = li.getAttribute('data-key') || ''
+        widthMap.set(key, li.offsetWidth)
+      })
       // items are visually right-to-left in RTL because of flex-row-reverse
-      for (let i = 0; i < lis.length; i++) {
+      // choose items in priority order, but preserve original order when rendering
+      const orderedKeys = ordered.map(i => i.to)
+      const sortedKeys = [...ordered].sort((a,b)=> (b.priority||0)-(a.priority||0)).map(i=>i.to)
+      let usedByPriority = 0
+      const keep = new Set<string>()
+      for (let i=0;i<sortedKeys.length;i++) {
+        const k = sortedKeys[i]
+        const w = (widthMap.get(k) || 96)
+        // If adding this would overflow, account for overflow button width too
+        if (usedByPriority + w + (keep.size < ordered.length ? overflowBtnWidth : 0) > rootWidth) {
+          break
+        }
+        keep.add(k)
+        usedByPriority += w
+      }
+      setVisibleCount(keep.size)
+      return
         const li = lis[i]
         used += li.offsetWidth
         if (used > rootWidth) {
@@ -83,7 +107,7 @@ export default function SmartNav({ items, className, reserveEnd = 92 }: SmartNav
         dir="rtl"
       >
         {visible.map((item) => (
-          <li key={item.to}>
+          <li key={item.to} data-key={item.to}>
             <NavPill to={item.to} active={location.pathname === item.to}>
               {item.icon && <span className="rtl:ml-2 ltr:mr-2">{item.icon}</span>}
               <span className="max-w-[14ch] overflow-hidden text-ellipsis">{item.label}</span>

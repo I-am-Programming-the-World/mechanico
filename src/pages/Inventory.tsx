@@ -76,7 +76,7 @@ const Inventory = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold">مدیریت موجودی انبار</h1>
+            \1\2 font-display text-balance mb-4 md:mb-6\3>مدیریت موجودی انبار</h1>
             <p className="text-muted-foreground mt-2">قطعات و مواد مصرفی</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

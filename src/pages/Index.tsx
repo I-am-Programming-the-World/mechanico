@@ -8,7 +8,7 @@ const Index = () => {
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
             پلتفرم مدیریت تعمیرگاه مکانیکو
           </span>
-          <h1 className="text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+          \1\2 font-display text-balance mb-4 md:mb-6\3>
             کنترل کامل عملیات تعمیرگاه با داشبوردهای زنده و داده‌های فارسی
           </h1>
           <p className="text-lg text-muted-foreground">

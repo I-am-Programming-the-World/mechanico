@@ -15,6 +15,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { DollarSign, TrendingUp, TrendingDown, FileText, Plus, Download, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import { useData } from '@/contexts/DataContext';
 import { formatCurrency, formatMillions } from '@/lib/utils';
 
@@ -99,7 +100,7 @@ const Accounting = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold">حسابداری مالی</h1>
+            <h1 className="text-3xl font-bold font-display text-balance">حسابداری مالی</h1>
             <p className="text-muted-foreground mt-2">مدیریت درآمد، هزینه‌ها و صورتحساب‌ها</p>
           </div>
           <Button className="gap-2">
@@ -109,7 +110,7 @@ const Accounting = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-4">
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">درآمد کل</CardTitle>
               <TrendingUp className="h-5 w-5 text-success" />
@@ -120,7 +121,7 @@ const Accounting = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">هزینه‌ها</CardTitle>
               <TrendingDown className="h-5 w-5 text-destructive" />
@@ -131,7 +132,7 @@ const Accounting = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">سود خالص</CardTitle>
               <DollarSign className="h-5 w-5 text-primary" />
@@ -142,7 +143,7 @@ const Accounting = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">در انتظار دریافت</CardTitle>
               <FileText className="h-5 w-5 text-warning" />
@@ -155,12 +156,13 @@ const Accounting = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="shadow-card">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
             <CardHeader>
               <CardTitle>روند مالی ماهانه</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ChartContainer>
+        <ResponsiveContainer width="100%" height={300}>
                 {/*
                   Render the line chart in a left‑to‑right context to prevent
                   tooltip misplacement in RTL containers. We set
@@ -170,24 +172,26 @@ const Accounting = () => {
                 */}
                 <LineChart data={monthlyData} style={{ direction: 'ltr' }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" reversed />
-                  <YAxis tickFormatter={formatCurrency} orientation="right" />
+                  <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
+                  <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
-                  <Legend />
+                  <Legend verticalAlign="top" align="right" />
                   <Line type="monotone" dataKey="income" stroke="hsl(var(--success))" strokeWidth={2} name="درآمد" />
                   <Line type="monotone" dataKey="expense" stroke="hsl(var(--destructive))" strokeWidth={2} name="هزینه" />
                   <Line type="monotone" dataKey="profit" stroke="hsl(var(--primary))" strokeWidth={2} name="سود" />
                 </LineChart>
               </ResponsiveContainer>
+      </ChartContainer>
             </CardContent>
           </Card>
 
-          <Card className="shadow-card">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
             <CardHeader>
               <CardTitle>مقایسه درآمد و هزینه</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ChartContainer>
+        <ResponsiveContainer width="100%" height={300}>
                 {/*
                   Bar chart adjusted for RTL: set `direction: 'ltr'` on the
                   container to fix internal tooltip positioning, reverse the
@@ -195,14 +199,15 @@ const Accounting = () => {
                 */}
                 <BarChart data={monthlyData} style={{ direction: 'ltr' }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" reversed />
-                  <YAxis tickFormatter={formatCurrency} orientation="right" />
+                  <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
+                  <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
-                  <Legend />
+                  <Legend verticalAlign="top" align="right" />
                   <Bar dataKey="income" fill="hsl(var(--success))" name="درآمد" radius={[8, 8, 0, 0]} />
                   <Bar dataKey="expense" fill="hsl(var(--destructive))" name="هزینه" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
+      </ChartContainer>
             </CardContent>
           </Card>
         </div>
@@ -221,7 +226,7 @@ const Accounting = () => {
           </TabsList>
 
           <TabsContent value="invoices">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader>
                 <CardTitle>صورتحساب‌ها</CardTitle>
               </CardHeader>
@@ -277,7 +282,7 @@ const Accounting = () => {
           </TabsContent>
 
           <TabsContent value="expenses">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader className="flex flex-wrap items-center justify-between gap-4">
                 <CardTitle>هزینه‌ها</CardTitle>
                 <Dialog>

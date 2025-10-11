@@ -125,7 +125,7 @@ const Bookings = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">رزروها</h1>
+          <h1 className="text-3xl font-bold font-display text-balance">رزروها</h1>
           <p className="text-muted-foreground mt-2">
             مدیریت و پیگیری رزروهای {user?.role === 'customer' ? 'شما' : 'مشتریان'}
           </p>

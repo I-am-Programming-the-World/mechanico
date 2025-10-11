@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Lalezar&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/vazirmatn@33.003/dist/font-face.min.css");
 
 @tailwind base;
@@ -162,3 +163,19 @@ All colors MUST be HSL.
     50% { transform: translateY(-10px); }
   }
 }
+
+
+@layer utilities {
+<<<<<<< HEAD
+  .font-display { font-family: "Lalezar","Vazirmatn",system-ui,sans-serif; }
+  .text-balance { text-wrap: balance; }
+}
+
+=======
+  .font-display { font-family: "Lalezar", "Vazirmatn", system-ui, sans-serif; }
+}
+
+
+/* Ensure RTL spacing and alignment defaults */
+>>>>>>> af232987d5fee2c20011d4a03b53699889e9f792
+html[dir="rtl"] body { direction: rtl; }

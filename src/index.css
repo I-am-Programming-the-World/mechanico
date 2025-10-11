@@ -1,0 +1,153 @@
+@import url("https://cdn.jsdelivr.net/npm/vazirmatn@33.003/dist/font-face.min.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 210 98% 48%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 210 98% 65%;
+
+    --secondary: 280 65% 60%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 150 60% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 210 98% 48%;
+
+    --radius: 0.75rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(210 98% 48%), hsl(280 65% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 98% 48% / 0.9), hsl(280 65% 60% / 0.9));
+    --shadow-primary: 0 10px 40px -10px hsl(210 98% 48% / 0.3);
+    --shadow-card: 0 4px 20px hsl(222 47% 11% / 0.08);
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 13%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 13%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 98% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 210 98% 70%;
+
+    --secondary: 280 65% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 217 33% 18%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 150 60% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --success: 142 76% 42%;
+    --warning: 38 92% 55%;
+    --destructive: 0 63% 31%;
+
+    --border: 217 33% 18%;
+    --input: 217 33% 18%;
+    --ring: 210 98% 55%;
+
+    --shadow-primary: 0 10px 40px -10px hsl(210 98% 55% / 0.4);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    direction: rtl;
+    font-family: "Vazirmatn", "IRANSans", "Segoe UI", Tahoma, sans-serif;
+    font-feature-settings: "ss02" 1, "cv10" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: 9999px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: none;
+  box-shadow: 0 0 0 4px hsl(var(--ring) / 0.4);
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-primary {
+    box-shadow: var(--shadow-primary);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+}

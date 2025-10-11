@@ -95,38 +95,34 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isReady, setIsReady] = useState(false);
 
+  const loadAllData = () => {
+    setUsers(getUsers());
+    setVehicles(getVehicles());
+    setServices(getServices());
+    setBookings(getBookings());
+    setInvoices(getInvoices());
+    setExpenses(getExpenses());
+    setEmployees(getEmployees());
+    setInventory(getInventory());
+    setReviews(getReviews());
+    setTransactions(getTransactions());
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
 
     initializeDummyData();
-    const loadAll = () => {
-      setUsers(getUsers());
-      setVehicles(getVehicles());
-      setServices(getServices());
-      setBookings(getBookings());
-      setInvoices(getInvoices());
-      setExpenses(getExpenses());
-      setEmployees(getEmployees());
-      setInventory(getInventory());
-      setReviews(getReviews());
-      setTransactions(getTransactions());
-    };
-
-    loadAll();
+    loadAllData();
     setIsReady(true);
 
     const handleStorage = (event: StorageEvent) => {
-      if (!event.key) {
-        loadAll();
-        return;
-      }
-      loadAll();
+      // A full reload is simpler than checking which key changed
+      loadAllData();
     };
 
     window.addEventListener("storage", handleStorage);
-
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
@@ -137,6 +133,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const persistEmployees = useMemo(() => createPersistedSetter(setEmployees, saveEmployees), []);
   const persistInventory = useMemo(() => createPersistedSetter(setInventory, saveInventory), []);
   const persistVehicles = useMemo(() => createPersistedSetter(setVehicles, saveVehicles), []);
+
   const value = useMemo<DataContextValue>(() => {
     const addBooking = (payload: BookingPayload): Booking => {
       const newBooking: Booking = {
@@ -251,16 +248,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
     const resetDemoData = () => {
       resetStorage();
-      setUsers(getUsers());
-      setVehicles(getVehicles());
-      setServices(getServices());
-      setBookings(getBookings());
-      setInvoices(getInvoices());
-      setExpenses(getExpenses());
-      setEmployees(getEmployees());
-      setInventory(getInventory());
-      setReviews(getReviews());
-      setTransactions(getTransactions());
+      loadAllData();
     };
 
     return {

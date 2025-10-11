@@ -81,7 +81,6 @@ export default function SmartNav({ items, className, reserveEnd = 92 }: SmartNav
           className
         )}
         dir="rtl"
-      >
         {visible.map((item) => (
           <li key={item.to}>
             <NavPill to={item.to} active={location.pathname === item.to}>
@@ -110,7 +109,6 @@ function NavPill({ to, active, children }: { to: string; active?: boolean; child
         "bg-transparent hover:bg-accent/50",
         active ? "text-primary-foreground bg-primary" : "text-foreground"
       )}
-    >
       {children}
     </Link>
   )
@@ -133,7 +131,6 @@ function OverflowMenu({ items }: { items: NavItem[] }) {
                 "flex items-center gap-2 py-2",
                 location.pathname === item.to ? "text-primary" : "text-muted-foreground"
               )}
-            >
               {item.icon && <span className="ml-2">{item.icon}</span>}
               <span className="truncate">{item.label}</span>
             </Link>

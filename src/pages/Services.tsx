@@ -143,7 +143,6 @@ const Services = () => {
                           <Select
                             value={bookingForm.vehicleId}
                             onValueChange={(value) => setBookingForm({ ...bookingForm, vehicleId: value })}
-                          >
                             <SelectTrigger>
                               <SelectValue placeholder="خودرو را انتخاب کنید" />
                             </SelectTrigger>

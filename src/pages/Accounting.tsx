@@ -266,9 +266,7 @@ const Accounting = () => {
                                 className="gap-1"
                                 onClick=
 </Button>
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
-                              >
                                 <CheckCircle2 className="h-4 w-4" />
                                 تسویه
                               </Button>

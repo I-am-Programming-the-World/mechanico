@@ -91,8 +91,6 @@ const Auth = () => {
               type="submit"
               className="w-full"
               disabled=
-            >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
               {isLoading ? 'در حال ورود...' : 'ورود'}
             </Button>
@@ -107,8 +105,6 @@ const Auth = () => {
                 variant="outline"
                 size="sm"
                 onClick=
-              >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                 مدیر
               </Button>
@@ -116,8 +112,6 @@ const Auth = () => {
                 variant="outline"
                 size="sm"
                 onClick=
-              >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                 مکانیک
               </Button>
@@ -125,8 +119,6 @@ const Auth = () => {
                 variant="outline"
                 size="sm"
                 onClick=
-              >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                 مشتری
               </Button>

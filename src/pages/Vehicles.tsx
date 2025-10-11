@@ -192,14 +192,14 @@ const Vehicles = () => {
                       {vehicle.make} {vehicle.model}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Button size="sm" variant="outline" onClick= aria-label={`ویرایش ${vehicle.make} ${vehicle.model}`}>
+                      <Button size="sm" variant="outline" onClick= aria-label= ${vehicle.model}`}>
   {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                         <Edit className="h-4 w-4" />
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button size="sm" variant="outline" aria-label= ${vehicle.model}`}>
+                          <Button size="sm" variant="outline" aria-label= $`}>
   {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                             <Trash2 className="h-4 w-4" />

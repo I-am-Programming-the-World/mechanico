@@ -167,7 +167,6 @@ const Bookings = () => {
                       <Select
                         value={formState.customerId}
                         onValueChange={(value) => setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))}
-                      >
                         <SelectTrigger id="customerId">
                           <SelectValue placeholder="انتخاب مشتری" />
                         </SelectTrigger>
@@ -188,7 +187,6 @@ const Bookings = () => {
                       <Select
                         value={formState.providerId}
                         onValueChange={(value) => setFormState((prev) => ({ ...prev, providerId: value }))}
-                      >
                         <SelectTrigger id="providerId">
                           <SelectValue placeholder="انتخاب ارائه‌دهنده" />
                         </SelectTrigger>
@@ -215,7 +213,6 @@ const Bookings = () => {
                           price: service ? service.basePrice.toString() : prev.price,
                         }));
                       }}
-                    >
                       <SelectTrigger id="serviceId">
                         <SelectValue placeholder="انتخاب خدمت" />
                       </SelectTrigger>
@@ -234,7 +231,6 @@ const Bookings = () => {
                     <Select
                       value={formState.vehicleId}
                       onValueChange={(value) => setFormState((prev) => ({ ...prev, vehicleId: value }))}
-                    >
                       <SelectTrigger id="vehicleId">
                         <SelectValue placeholder="انتخاب خودرو" />
                       </SelectTrigger>
@@ -348,8 +344,6 @@ const Bookings = () => {
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive"
                                 aria-label=`}
-                              >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -431,8 +425,6 @@ const Bookings = () => {
                         <Button
                           size="sm"
                           onClick=
-                        >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                           تأیید رزرو
                         </Button>
@@ -440,8 +432,6 @@ const Bookings = () => {
                           size="sm"
                           variant="outline"
                           onClick=
-                        >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                           رد کردن
                         </Button>
@@ -452,8 +442,6 @@ const Bookings = () => {
                       <Button
                         size="sm"
                         onClick=
-                      >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                         شروع خدمت
                       </Button>
@@ -463,8 +451,6 @@ const Bookings = () => {
                       <Button
                         size="sm"
                         onClick=
-                      >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                         اتمام خدمت
                       </Button>

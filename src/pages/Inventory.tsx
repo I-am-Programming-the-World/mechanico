@@ -260,8 +260,7 @@ const Inventory = () => {
                               size="icon"
                               variant="outline"
                               onClick=
-                              aria-label={`کاهش موجودی ${item.name}`}
-                            >
+                              aria-label=`}
   {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                               <Minus className="h-4 w-4" />
@@ -269,8 +268,7 @@ const Inventory = () => {
                             <Button
                               size="icon"
                               onClick=
-                              aria-label={`افزایش موجودی ${item.name}`}
-                            >
+                              aria-label=`}
   {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                               <Plus className="h-4 w-4" />

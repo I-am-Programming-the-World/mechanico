@@ -265,7 +265,6 @@ const Reports = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                      >
                         {customerSegments.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}

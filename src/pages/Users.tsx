@@ -150,8 +150,6 @@ const Users = () => {
                               size="sm"
                               variant="outline"
                               onClick=
-                            >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                               تأیید
                             </Button>
@@ -161,8 +159,6 @@ const Users = () => {
                               size="sm"
                               variant="outline"
                               onClick=
-                            >
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
 
                               لغو تأیید
                             </Button>

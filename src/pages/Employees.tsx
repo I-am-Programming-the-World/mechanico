@@ -246,7 +246,6 @@ const Employees = () => {
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
-                  >
                     {departmentData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
@@ -333,7 +332,6 @@ const Employees = () => {
                         <Select
                           value={employee.status}
                           onValueChange={(value: EmployeeRecord['status']) => updateEmployeeStatus(employee.id, value)}
-                        >
                           <SelectTrigger className="w-32">
                             <SelectValue>
                               <Badge variant={getStatusBadge(employee.status)}>

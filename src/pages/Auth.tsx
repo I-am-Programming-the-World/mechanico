@@ -90,11 +90,12 @@ const Auth = () => {
             <Button
               type="submit"
               className="w-full"
-              disabled={isLoading}
-              
-            
-  {isLoading ? 'در حال ورود...' : 'ورود'}
-</Button>
+              disabled=
+            >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
+              {isLoading ? 'در حال ورود...' : 'ورود'}
+            </Button>
           </form>
 
           <div className="space-y-2">
@@ -105,19 +106,28 @@ const Auth = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => fillDemoCredentials('admin')}
+                onClick=
+              >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                 مدیر
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => fillDemoCredentials('provider')}
+                onClick=
+              >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                 مکانیک
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => fillDemoCredentials('customer')}
+                onClick=
+              >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                 مشتری
               </Button>
             </div>

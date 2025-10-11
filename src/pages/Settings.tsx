@@ -43,7 +43,7 @@ const Settings = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-           font-display text-balance mb-4 md:mb-6>
+          <h1 className="text-3xl font-bold flex items-center gap-2 font-display text-balance">
             <SettingsIcon className="h-8 w-8" />
             تنظیمات
           </h1>
@@ -108,7 +108,9 @@ const Settings = () => {
                   <Label>بیوگرافی</Label>
                   <Input placeholder="درباره خود بنویسید..." />
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick= className="ml-auto block">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -174,7 +176,9 @@ const Settings = () => {
                     </div>
                   </div>
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick= className="ml-auto block">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -261,7 +265,9 @@ const Settings = () => {
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick= className="ml-auto block">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -350,7 +356,9 @@ const Settings = () => {
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick= className="ml-auto block">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>

@@ -61,7 +61,7 @@ const Reports = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">گزارشات و تحلیل‌ها</h1>
+            <h1 className="text-3xl font-bold font-display text-balance">گزارشات و تحلیل‌ها</h1>
             <p className="text-muted-foreground mt-2">گزارش‌های جامع کسب‌وکار</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -161,13 +161,7 @@ const Reports = () => {
                     vertical axis is moved to the right.
                   */}
                   <LineChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={salesData} style={{ direction: 'ltr' }}>
-                    <defs>
-  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
-    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-  </linearGradient>
-</defs>
-<CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                     <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                     <Tooltip formatter={(value: number) => `${formatNumber(value)} تومان`} />
@@ -193,13 +187,7 @@ const Reports = () => {
                       order, and move the Y axis to the right.
                     */}
                     <BarChart data={salesData} style={{ direction: 'ltr' }}>
-                      <defs>
-  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
-    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-  </linearGradient>
-</defs>
-<CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" />
                       <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                       <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
@@ -218,13 +206,7 @@ const Reports = () => {
                   <ChartContainer>
         <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={salesData} style={{ direction: 'ltr' }}>
-                      <defs>
-  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
-    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-  </linearGradient>
-</defs>
-<CartesianGrid strokeDasharray="3 3" />
+                      <CartesianGrid strokeDasharray="3 3" />
                       <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                       <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
@@ -246,13 +228,7 @@ const Reports = () => {
                 <ChartContainer>
         <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={servicePerformance} style={{ direction: 'ltr' }}>
-                    <defs>
-  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
-    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-  </linearGradient>
-</defs>
-<CartesianGrid strokeDasharray="3 3" />
+                    <CartesianGrid strokeDasharray="3 3" />
                     <XAxis tick={{ textAnchor: "end" }} dataKey="service" reversed />
                     <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                     <Tooltip
@@ -289,6 +265,7 @@ const Reports = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
+                      >
                         {customerSegments.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}

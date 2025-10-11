@@ -8,7 +8,9 @@ const Index = () => {
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
             پلتفرم مدیریت تعمیرگاه مکانیکو
           </span>
-          <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">کنترل کامل عملیات تعمیرگاه با داشبوردهای زنده و داده‌های فارسی</h1>
+          <h1 className="text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+            کنترل کامل عملیات تعمیرگاه با داشبوردهای زنده و داده‌های فارسی
+          </h1>
           <p className="text-lg text-muted-foreground">
             برای استفاده از نسخه نمایشی، وارد حساب کاربری خود شوید و از جریان کامل رزرو تا صدور فاکتور، مدیریت موجودی، اعلان‌ها و گزارش‌های حسابداری بهره ببرید.
           </p>
@@ -16,11 +18,13 @@ const Index = () => {
             <Link
               to="/auth"
               className="rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-primary transition hover:bg-primary/90"
+            >
               ورود / ثبت‌نام
             </Link>
             <Link
               to="/dashboard"
               className="rounded-full border border-border px-6 py-3 text-base font-semibold text-foreground transition hover:border-primary hover:text-primary"
+            >
               مشاهده داشبورد نمونه
             </Link>
           </div>

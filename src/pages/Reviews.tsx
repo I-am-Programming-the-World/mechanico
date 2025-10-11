@@ -43,7 +43,7 @@ const Reviews = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">نظرات و امتیازها</h1>
+          <h1 className="text-3xl font-bold">نظرات و امتیازها</h1>
           <p className="text-muted-foreground mt-2">
             {user?.role === 'provider' 
               ? 'نظرات مشتریان درباره خدمات شما'

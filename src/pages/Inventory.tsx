@@ -76,7 +76,7 @@ const Inventory = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">مدیریت موجودی انبار</h1>
+            <h1 className="text-3xl font-bold">مدیریت موجودی انبار</h1>
             <p className="text-muted-foreground mt-2">قطعات و مواد مصرفی</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -129,7 +129,9 @@ const Inventory = () => {
                   <Input value={newItem.location} onChange={(event) => setNewItem((prev) => ({ ...prev, location: event.target.value }))} />
                 </div>
 
-                <Button onClick={handleAddInventoryItem} className="w-full">
+                <Button onClick= className="w-full">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                   ثبت قطعه
                 </Button>
               </div>
@@ -257,14 +259,20 @@ const Inventory = () => {
                             <Button
                               size="icon"
                               variant="outline"
-                              onClick={() => adjustInventoryQuantity(item.id, -1)}
+                              onClick=
                               aria-label={`کاهش موجودی ${item.name}`}
+                            >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                               <Minus className="h-4 w-4" />
                             </Button>
                             <Button
                               size="icon"
-                              onClick={() => adjustInventoryQuantity(item.id, 1)}
+                              onClick=
                               aria-label={`افزایش موجودی ${item.name}`}
+                            >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>

@@ -58,7 +58,7 @@ const Users = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">مدیریت کاربران</h1>
+          <h1 className="text-3xl font-bold">مدیریت کاربران</h1>
           <p className="text-muted-foreground mt-2">
             مدیریت و تأیید کاربران پلتفرم
           </p>
@@ -149,7 +149,10 @@ const Users = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleApprove(user.id)}
+                              onClick=
+                            >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                               تأیید
                             </Button>
                           )}
@@ -157,7 +160,10 @@ const Users = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick={() => handleReject(user.id)}
+                              onClick=
+                            >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                               لغو تأیید
                             </Button>
                           )}

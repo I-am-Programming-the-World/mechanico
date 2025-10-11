@@ -114,7 +114,7 @@ const Employees = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">مدیریت کارکنان</h1>
+            <h1 className="text-3xl font-bold font-display text-balance">مدیریت کارکنان</h1>
             <p className="text-muted-foreground mt-2">اطلاعات و عملکرد کارکنان</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -172,7 +172,9 @@ const Employees = () => {
                   <Textarea rows={3} value={newEmployee.skills} onChange={(event) => setNewEmployee((prev) => ({ ...prev, skills: event.target.value }))} />
                 </div>
 
-                <Button onClick={handleAddEmployee} className="w-full">
+                <Button onClick= className="w-full">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                   ثبت کارمند
                 </Button>
               </div>
@@ -244,6 +246,7 @@ const Employees = () => {
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
+                  >
                     {departmentData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
@@ -330,6 +333,7 @@ const Employees = () => {
                         <Select
                           value={employee.status}
                           onValueChange={(value: EmployeeRecord['status']) => updateEmployeeStatus(employee.id, value)}
+                        >
                           <SelectTrigger className="w-32">
                             <SelectValue>
                               <Badge variant={getStatusBadge(employee.status)}>

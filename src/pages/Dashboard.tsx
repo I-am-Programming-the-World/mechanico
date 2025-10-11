@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { motion } from 'framer-motion';
 
 const Sparkline: React.FC<{ data: any[]; dataKey: string }> = ({ data, dataKey }) => (
   <div className="h-10 w-24">
@@ -97,7 +96,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-<h1 className="font-display text-balance text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">
+           font-display text-balance>
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -105,7 +104,8 @@ const Dashboard = () => {
           </p>
         </div>
 
-        <motion.div initial={{opacity:0, y:8}} animate={{opacity:1, y:0}} transition={{duration:0.35}}><Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کل رزروها' : 'رزروهای من'}
@@ -122,7 +122,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">درآمد کل</CardTitle>
               <DollarSign className="h-5 w-5 text-success" />
@@ -137,7 +137,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کاربران' : user?.role === 'customer' ? 'خودروهای من' : 'مشتریان'}
@@ -162,7 +162,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین امتیاز</CardTitle>
               <Star className="h-5 w-5 text-warning" />
@@ -176,10 +176,11 @@ const Dashboard = () => {
                 از {formatNumberFa(user?.role === 'admin' ? reviews.length : userReviews.length)} نظر
               </p>
             </CardContent>
-          </Card></motion.div>
+          </Card>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" aria-hidden />
@@ -214,7 +215,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
             <CardHeader>
               <CardTitle>وضعیت رزروها</CardTitle>
             </CardHeader>
@@ -234,6 +235,7 @@ const Dashboard = () => {
                       dataKey="value"
                       stroke="hsl(var(--background))"
                       strokeWidth={2}
+                    >
                       {statusData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.fill} />
                       ))}
@@ -246,7 +248,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg transition hover:-translate-y-0.5 hover:shadow-lg shadow-card md:col-span-2">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card md:col-span-2">
             <CardHeader>
               <CardTitle>محبوب‌ترین خدمات</CardTitle>
             </CardHeader>
@@ -263,12 +265,14 @@ const Dashboard = () => {
                     dataKey="count"
                     fill="hsl(var(--secondary))"
                     name="تعداد رزرو"
-                    radius={[8, 8, 0, 0]} />
+                    radius={[8, 8, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
       </ChartContainer>
             </CardContent>
-          </Card></motion.div>
+          </Card>
+        </div>
       </div>
     </Layout>
   );

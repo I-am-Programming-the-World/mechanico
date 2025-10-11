@@ -100,7 +100,7 @@ const Accounting = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">حسابداری مالی</h1>
+            <h1 className="text-3xl font-bold font-display text-balance">حسابداری مالی</h1>
             <p className="text-muted-foreground mt-2">مدیریت درآمد، هزینه‌ها و صورتحساب‌ها</p>
           </div>
           <Button className="gap-2">
@@ -171,13 +171,7 @@ const Accounting = () => {
                   Y axis is moved to the right side using `orientation="right"`.
                 */}
                 <LineChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={monthlyData} style={{ direction: 'ltr' }}>
-                  <defs>
-  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
-    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-  </linearGradient>
-</defs>
-<CartesianGrid strokeDasharray="3 3" />
+                  <CartesianGrid strokeDasharray="3 3" />
                   <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                   <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
@@ -204,13 +198,7 @@ const Accounting = () => {
                   horizontal axis and move the vertical axis to the right.
                 */}
                 <BarChart data={monthlyData} style={{ direction: 'ltr' }}>
-                  <defs>
-  <linearGradient id="gradPrimary" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.35" />
-    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0.05" />
-  </linearGradient>
-</defs>
-<CartesianGrid strokeDasharray="3 3" />
+                  <CartesianGrid strokeDasharray="3 3" />
                   <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                   <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
@@ -276,8 +264,11 @@ const Accounting = () => {
                               <Button
                                 size="sm"
                                 className="gap-1"
-                                onClick={() => handleMarkInvoiceAsPaid(invoice.id)}
+                                onClick=
 </Button>
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
+                              >
                                 <CheckCircle2 className="h-4 w-4" />
                                 تسویه
                               </Button>
@@ -356,7 +347,9 @@ const Accounting = () => {
                           </SelectContent>
                         </Select>
                       </div>
-                      <Button onClick={handleAddExpense} className="w-full">
+                      <Button onClick= className="w-full">
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                         ثبت هزینه
                       </Button>
                     </div>

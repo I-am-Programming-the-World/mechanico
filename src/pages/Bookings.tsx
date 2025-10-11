@@ -125,7 +125,7 @@ const Bookings = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance font-display text-balance">رزروها</h1>
+          <h1 className="text-3xl font-bold font-display text-balance">رزروها</h1>
           <p className="text-muted-foreground mt-2">
             مدیریت و پیگیری رزروهای {user?.role === 'customer' ? 'شما' : 'مشتریان'}
           </p>
@@ -167,6 +167,7 @@ const Bookings = () => {
                       <Select
                         value={formState.customerId}
                         onValueChange={(value) => setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))}
+                      >
                         <SelectTrigger id="customerId">
                           <SelectValue placeholder="انتخاب مشتری" />
                         </SelectTrigger>
@@ -187,6 +188,7 @@ const Bookings = () => {
                       <Select
                         value={formState.providerId}
                         onValueChange={(value) => setFormState((prev) => ({ ...prev, providerId: value }))}
+                      >
                         <SelectTrigger id="providerId">
                           <SelectValue placeholder="انتخاب ارائه‌دهنده" />
                         </SelectTrigger>
@@ -213,6 +215,7 @@ const Bookings = () => {
                           price: service ? service.basePrice.toString() : prev.price,
                         }));
                       }}
+                    >
                       <SelectTrigger id="serviceId">
                         <SelectValue placeholder="انتخاب خدمت" />
                       </SelectTrigger>
@@ -231,6 +234,7 @@ const Bookings = () => {
                     <Select
                       value={formState.vehicleId}
                       onValueChange={(value) => setFormState((prev) => ({ ...prev, vehicleId: value }))}
+                    >
                       <SelectTrigger id="vehicleId">
                         <SelectValue placeholder="انتخاب خودرو" />
                       </SelectTrigger>
@@ -290,10 +294,14 @@ const Bookings = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button className="flex-1" onClick={handleCreateBooking}>
+                    <Button className="flex-1" onClick=>
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                       ثبت رزرو
                     </Button>
-                    <Button type="button" variant="outline" className="flex-1" onClick={resetForm}>
+                    <Button type="button" variant="outline" className="flex-1" onClick=>
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                       پاک‌سازی فرم
                     </Button>
                   </div>
@@ -339,7 +347,10 @@ const Bookings = () => {
                                 variant="ghost"
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive"
-                                aria-label={`حذف رزرو ${booking.id}`}
+                                aria-label=`}
+                              >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -419,13 +430,19 @@ const Bookings = () => {
                       <div className="flex gap-2 pt-2">
                         <Button
                           size="sm"
-                          onClick={() => handleStatusChange(booking.id, 'confirmed')}
+                          onClick=
+                        >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                           تأیید رزرو
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                          onClick=
+                        >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                           رد کردن
                         </Button>
                       </div>
@@ -434,7 +451,10 @@ const Bookings = () => {
                     {user?.role === 'provider' && booking.status === 'confirmed' && (
                       <Button
                         size="sm"
-                        onClick={() => handleStatusChange(booking.id, 'in-progress')}
+                        onClick=
+                      >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                         شروع خدمت
                       </Button>
                     )}
@@ -442,7 +462,10 @@ const Bookings = () => {
                     {user?.role === 'provider' && booking.status === 'in-progress' && (
                       <Button
                         size="sm"
-                        onClick={() => handleStatusChange(booking.id, 'completed')}
+                        onClick=
+                      >
+  {isLoading ? \'در حال ورود...\' : \'ورود\'}
+
                         اتمام خدمت
                       </Button>
                     )}

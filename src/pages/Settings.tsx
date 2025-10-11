@@ -9,6 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Settings as SettingsIcon, User, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 import { useData } from '@/contexts/DataContext';
@@ -24,6 +25,16 @@ const Settings = () => {
 
   const handleSave = () => {
     toast.success('تنظیمات با موفقیت ذخیره شد');
+  };
+
+  const handleResetData = () => {
+    resetDemoData();
+    toast.success('داده‌های نمونه بازنشانی شد و صفحه دوباره بارگذاری می‌شود.', {
+      description: 'لطفاً چند لحظه صبر کنید...',
+      duration: 3000,
+      onDismiss: () => window.location.reload(),
+      onAutoClose: () => window.location.reload(),
+    });
   };
 
   return (
@@ -313,18 +324,29 @@ const Settings = () => {
                 <div className="space-y-2">
                   <Label>بازنشانی داده‌های آزمایشی</Label>
                   <p className="text-sm text-muted-foreground">
-                    با این گزینه می‌توانید تمام داده‌های نمونه ذخیره‌شده در مرورگر را پاک کرده و از ابتدا شروع کنید.
+                    تمام داده‌های نمونه ذخیره‌شده در مرورگر را پاک کرده و از ابتدا شروع کنید.
                   </p>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={() => {
-                      resetDemoData();
-                      toast.success('داده‌های نمونه بازنشانی شد');
-                    }}
-                  >
-                    بازنشانی داده‌ها
-                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button type="button" variant="destructive">
+                        بازنشانی داده‌ها
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>آیا مطمئن هستید؟</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          این عمل تمام داده‌های برنامه را حذف و با مقادیر اولیه جایگزین می‌کند. این کار قابل بازگشت نیست.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>انصراف</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleResetData}>
+                          بله، بازنشانی کن
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
                 <Button onClick={handleSave}>ذخیره تغییرات</Button>
               </CardContent>

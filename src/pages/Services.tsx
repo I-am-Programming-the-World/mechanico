@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import type { Booking } from '@/lib/storage';
 import Layout from '@/components/Layout';
@@ -28,6 +29,8 @@ const Services = () => {
     scheduledTime: '',
     notes: '',
   });
+
+  const navigate = useNavigate();
 
   const userVehicles = vehicles.filter(v => v.ownerId === user?.id);
 
@@ -197,9 +200,11 @@ const Services = () => {
                           </div>
                         </div>
 
-                        <Button onClick= className="w-full">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                        {/*
+                         * Submit the booking form. We call `handleBookService` to
+                         * validate and create a new booking.
+                         */
+                        <Button onClick={handleBookService} className="w-full">
                           تأیید رزرو
                         </Button>
                       </div>
@@ -218,9 +223,11 @@ const Services = () => {
               <p className="text-sm text-muted-foreground">
                 برای رزرو خدمات، ابتدا باید خودرو خود را اضافه کنید
               </p>
-              <Button variant="outline" className="mt-4" onClick=>
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+              <Button
+                variant="outline"
+                className="mt-4"
+                onClick={() => navigate('/vehicles')}
+              >
                 افزودن خودرو
               </Button>
             </CardContent>

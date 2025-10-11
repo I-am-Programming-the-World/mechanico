@@ -129,9 +129,15 @@ const Inventory = () => {
                   <Input value={newItem.location} onChange={(event) => setNewItem((prev) => ({ ...prev, location: event.target.value }))} />
                 </div>
 
-                <Button onClick= className="w-full">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                {/*
+                 * When submitting a new inventory item we call our helper function
+                 * `handleAddInventoryItem` which validates the form and persists
+                 * the data. The button spans the full width of the form and
+                 * displays a clear call‑to‑action. We avoid any spurious
+                 * `isLoading` placeholders here since this component doesn’t
+                 * implement a loading state.
+                 */
+                <Button onClick={handleAddInventoryItem} className="w-full">
                   ثبت قطعه
                 </Button>
               </div>
@@ -255,22 +261,28 @@ const Inventory = () => {
                           {new Date(item.lastRestocked).toLocaleDateString('fa-IR')}
                         </TableCell>
                         <TableCell>
+                          {/*
+                           * The actions column contains two icon buttons for
+                           * decrementing and incrementing the quantity of a
+                           * given item. These handlers call
+                           * `adjustInventoryQuantity` with the item id and a
+                           * delta of ‑1 or +1. We set appropriate aria labels
+                           * for accessibility.
+                           */
                           <div className="flex items-center gap-2">
                             <Button
                               size="icon"
                               variant="outline"
-                              onClick=
-                              aria-label=`}
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                              onClick={() => adjustInventoryQuantity(item.id, -1)}
+                              aria-label="کاهش موجودی"
+                            >
                               <Minus className="h-4 w-4" />
                             </Button>
                             <Button
                               size="icon"
-                              onClick=
-                              aria-label=`}
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                              onClick={() => adjustInventoryQuantity(item.id, 1)}
+                              aria-label="افزایش موجودی"
+                            >
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>

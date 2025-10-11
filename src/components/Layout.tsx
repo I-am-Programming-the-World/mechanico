@@ -72,6 +72,7 @@ const Layout = ({ children }: LayoutProps) => {
                   size="icon"
                   className="md:hidden"
                   aria-label="باز کردن منوی ناوبری"
+                >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -95,6 +96,7 @@ const Layout = ({ children }: LayoutProps) => {
                         }
                         aria-label={item.label}
                         onClick={() => setIsMobileMenuOpen(false)}
+                      >
                         <span className="flex items-center gap-3">
                           <Icon className="h-4 w-4" />
                           {item.label}
@@ -120,7 +122,12 @@ const Layout = ({ children }: LayoutProps) => {
                 {user?.role === 'admin' ? 'مدیر' : user?.role === 'provider' ? 'ارائه‌دهنده' : 'مشتری'}
               </p>
             </div>
-            <Button variant="outline" size="sm" onClick= className="gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleLogout}
+              className="gap-2"
+            >
               <LogOut className="h-4 w-4" />
               خروج
             </Button>

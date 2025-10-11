@@ -164,9 +164,12 @@ const Vehicles = () => {
                     onChange={(e) => setFormData({ ...formData, mileage: parseInt(e.target.value) })}
                   />
                 </div>
-                <Button onClick= className="w-full">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                {/*
+                 * Save button calls `handleSave` which either updates the
+                 * selected vehicle or creates a new one based on the
+                 * `editingVehicle` state. We avoid undefined loading logic.
+                 */
+                <Button onClick={handleSave} className="w-full">
                   {editingVehicle ? 'به‌روزرسانی' : 'افزودن'}
                 </Button>
               </div>
@@ -192,16 +195,21 @@ const Vehicles = () => {
                       {vehicle.make} {vehicle.model}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Button size="sm" variant="outline" onClick= aria-label= ${vehicle.model}`}>
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleEdit(vehicle)}
+                        aria-label={`ویرایش ${vehicle.make} ${vehicle.model}`}
+                      >
                         <Edit className="h-4 w-4" />
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button size="sm" variant="outline" aria-label= $`}>
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            aria-label={`حذف ${vehicle.make} ${vehicle.model}`}
+                          >
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </AlertDialogTrigger>

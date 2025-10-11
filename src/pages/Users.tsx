@@ -149,8 +149,8 @@ const Users = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick=
-
+                              onClick={() => handleApprove(user.id)}
+                            >
                               تأیید
                             </Button>
                           )}
@@ -158,8 +158,8 @@ const Users = () => {
                             <Button
                               size="sm"
                               variant="outline"
-                              onClick=
-
+                              onClick={() => handleReject(user.id)}
+                            >
                               لغو تأیید
                             </Button>
                           )}

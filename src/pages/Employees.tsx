@@ -172,9 +172,11 @@ const Employees = () => {
                   <Textarea rows={3} value={newEmployee.skills} onChange={(event) => setNewEmployee((prev) => ({ ...prev, skills: event.target.value }))} />
                 </div>
 
-                <Button onClick= className="w-full">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                {/*
+                 * Submits the new employee form. We call `handleAddEmployee`
+                 * which validates the inputs and persists the employee.
+                 */
+                <Button onClick={handleAddEmployee} className="w-full">
                   ثبت کارمند
                 </Button>
               </div>

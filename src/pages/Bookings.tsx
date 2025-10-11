@@ -290,14 +290,20 @@ const Bookings = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button className="flex-1" onClick=>
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                    {/*
+                     * Trigger booking creation with our `handleCreateBooking` helper. We
+                     * avoid injecting any undefined loading states here. The flex
+                     * container ensures the buttons take equal width.
+                     */
+                    <Button className="flex-1" onClick={handleCreateBooking}>
                       ثبت رزرو
                     </Button>
-                    <Button type="button" variant="outline" className="flex-1" onClick=>
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="flex-1"
+                      onClick={resetForm}
+                    >
                       پاک‌سازی فرم
                     </Button>
                   </div>
@@ -343,8 +349,8 @@ const Bookings = () => {
                                 variant="ghost"
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive"
-                                aria-label=`}
-
+                                aria-label="حذف رزرو"
+                              >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -424,15 +430,15 @@ const Bookings = () => {
                       <div className="flex gap-2 pt-2">
                         <Button
                           size="sm"
-                          onClick=
-
+                          onClick={() => handleStatusChange(booking.id, 'confirmed')}
+                        >
                           تأیید رزرو
                         </Button>
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick=
-
+                          onClick={() => handleStatusChange(booking.id, 'cancelled')}
+                        >
                           رد کردن
                         </Button>
                       </div>
@@ -441,8 +447,8 @@ const Bookings = () => {
                     {user?.role === 'provider' && booking.status === 'confirmed' && (
                       <Button
                         size="sm"
-                        onClick=
-
+                        onClick={() => handleStatusChange(booking.id, 'in-progress')}
+                      >
                         شروع خدمت
                       </Button>
                     )}
@@ -450,8 +456,8 @@ const Bookings = () => {
                     {user?.role === 'provider' && booking.status === 'in-progress' && (
                       <Button
                         size="sm"
-                        onClick=
-
+                        onClick={() => handleStatusChange(booking.id, 'completed')}
+                      >
                         اتمام خدمت
                       </Button>
                     )}

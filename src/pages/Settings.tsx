@@ -108,9 +108,14 @@ const Settings = () => {
                   <Label>بیوگرافی</Label>
                   <Input placeholder="درباره خود بنویسید..." />
                 </div>
-                <Button onClick= className="ml-auto block">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-ذخیره تغییرات</Button>
+                {/*
+                 * Persist profile changes. We reuse the generic `handleSave`
+                 * handler which shows a success toast. Remove any
+                 * undefined loading references.
+                 */
+                <Button onClick={handleSave} className="ml-auto block">
+                  ذخیره تغییرات
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -176,9 +181,9 @@ const Settings = () => {
                     </div>
                   </div>
                 </div>
-                <Button onClick= className="ml-auto block">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">
+                  ذخیره تغییرات
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -265,9 +270,9 @@ const Settings = () => {
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Button onClick= className="ml-auto block">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">
+                  ذخیره تغییرات
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>
@@ -356,9 +361,9 @@ const Settings = () => {
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
-                <Button onClick= className="ml-auto block">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">
+                  ذخیره تغییرات
+                </Button>
               </CardContent>
             </Card>
           </TabsContent>

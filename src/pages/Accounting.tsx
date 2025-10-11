@@ -259,14 +259,13 @@ const Accounting = () => {
                           <div className="flex items-center gap-2">
                             <Button size="sm" variant="outline">
                               مشاهده
-                            
-  {invoice.status !== 'paid' && (
+                            </Button>
+                            {invoice.status !== 'paid' && (
                               <Button
                                 size="sm"
                                 className="gap-1"
-                                onClick=
-</Button>
-
+                                onClick={() => handleMarkInvoiceAsPaid(invoice.id)}
+                              >
                                 <CheckCircle2 className="h-4 w-4" />
                                 تسویه
                               </Button>
@@ -345,9 +344,13 @@ const Accounting = () => {
                           </SelectContent>
                         </Select>
                       </div>
-                      <Button onClick= className="w-full">
-  {isLoading ? \'در حال ورود...\' : \'ورود\'}
-
+                      {/*
+                       * Submits the new expense form. We invoke
+                       * `handleAddExpense` which performs validation and
+                       * persists the entry. The button spans the full
+                       * container width for emphasis.
+                       */
+                      <Button onClick={handleAddExpense} className="w-full">
                         ثبت هزینه
                       </Button>
                     </div>

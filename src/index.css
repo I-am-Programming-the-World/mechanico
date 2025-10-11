@@ -166,8 +166,16 @@ All colors MUST be HSL.
 
 
 @layer utilities {
+<<<<<<< HEAD
   .font-display { font-family: "Lalezar","Vazirmatn",system-ui,sans-serif; }
   .text-balance { text-wrap: balance; }
 }
 
+=======
+  .font-display { font-family: "Lalezar", "Vazirmatn", system-ui, sans-serif; }
+}
+
+
+/* Ensure RTL spacing and alignment defaults */
+>>>>>>> af232987d5fee2c20011d4a03b53699889e9f792
 html[dir="rtl"] body { direction: rtl; }

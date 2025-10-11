@@ -30,7 +30,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
       className,
     )}
     {...props}
-  >
+
     {children}
     {/*
       In RTL contexts the submenu arrow should point toward the left and be
@@ -112,7 +112,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     )}
     checked={checked}
     {...props}
-  >
+
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
         <Check className="h-4 w-4" />
@@ -137,7 +137,7 @@ const DropdownMenuRadioItem = React.forwardRef<
       className,
     )}
     {...props}
-  >
+
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <DropdownMenuPrimitive.ItemIndicator>
         <Circle className="h-2 w-2 fill-current" />

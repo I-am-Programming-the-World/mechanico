@@ -61,7 +61,7 @@ const Reports = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            \1\2 font-display text-balance mb-4 md:mb-6\3>گزارشات و تحلیل‌ها</h1>
+            >گزارشات و تحلیل‌ها</h1>
             <p className="text-muted-foreground mt-2">گزارش‌های جامع کسب‌وکار</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -203,7 +203,7 @@ const Reports = () => {
                       <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                       <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
-                      <Bar dataKey="bookings" fill="hsl(var(--secondary))" name="رزروها" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
+                      <Bar dataKey="bookings" fill="hsl(var(--secondary))" name="رزروها" radius={[8, 8, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
       </ChartContainer>
@@ -228,7 +228,7 @@ const Reports = () => {
                       <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
                       <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
-                      <Bar dataKey="customers" fill="hsl(var(--accent))" name="مشتریان" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
+                      <Bar dataKey="customers" fill="hsl(var(--accent))" name="مشتریان" radius={[8, 8, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
       </ChartContainer>
@@ -261,8 +261,8 @@ const Reports = () => {
                       }
                     />
                     <Legend verticalAlign="top" align="right" />
-                    <Bar dataKey="revenue" fill="hsl(var(--primary))" name="درآمد" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
-                    <Bar dataKey="count" fill="hsl(var(--secondary))" name="تعداد" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
+                    <Bar dataKey="revenue" fill="hsl(var(--primary))" name="درآمد" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="count" fill="hsl(var(--secondary))" name="تعداد" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
       </ChartContainer>
@@ -289,7 +289,7 @@ const Reports = () => {
                         outerRadius={100}
                         fill="#8884d8"
                         dataKey="value"
-                      >
+
                         {customerSegments.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.color} />
                         ))}

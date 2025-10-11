@@ -58,7 +58,7 @@ const Users = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          \1\2 font-display text-balance mb-4 md:mb-6\3>مدیریت کاربران</h1>
+          >مدیریت کاربران</h1>
           <p className="text-muted-foreground mt-2">
             مدیریت و تأیید کاربران پلتفرم
           </p>
@@ -150,7 +150,7 @@ const Users = () => {
                               size="sm"
                               variant="outline"
                               onClick={() => handleApprove(user.id)}
-                            >
+
                               تأیید
                             </Button>
                           )}
@@ -159,7 +159,7 @@ const Users = () => {
                               size="sm"
                               variant="outline"
                               onClick={() => handleReject(user.id)}
-                            >
+
                               لغو تأیید
                             </Button>
                           )}

@@ -84,7 +84,7 @@ const Vehicles = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            \1\2 font-display text-balance mb-4 md:mb-6\3>خودروهای من</h1>
+            >خودروهای من</h1>
             <p className="text-muted-foreground mt-2">
               مدیریت اطلاعات خودروهای خود
             </p>

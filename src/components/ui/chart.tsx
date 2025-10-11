@@ -25,7 +25,7 @@ export const ChartContainer = React.forwardRef<HTMLDivElement, React.HTMLAttribu
             className
           )}
           {...props}
-        >
+
           {children}
         </div>
       </ChartContext.Provider>

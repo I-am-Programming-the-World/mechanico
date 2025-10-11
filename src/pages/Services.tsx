@@ -84,7 +84,7 @@ const Services = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          \1\2 font-display text-balance mb-4 md:mb-6\3>خدمات</h1>
+          >خدمات</h1>
           <p className="text-muted-foreground mt-2">
             {user?.role === 'customer' 
               ? 'انتخاب و رزرو خدمات مورد نیاز'
@@ -143,7 +143,7 @@ const Services = () => {
                           <Select
                             value={bookingForm.vehicleId}
                             onValueChange={(value) => setBookingForm({ ...bookingForm, vehicleId: value })}
-                          >
+
                             <SelectTrigger>
                               <SelectValue placeholder="خودرو را انتخاب کنید" />
                             </SelectTrigger>

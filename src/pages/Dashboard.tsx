@@ -97,7 +97,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-<h1 className="font-display text-balance text-2xl md:text-3xl font-bold">
+<h1 className="font-display text-balance text-2xl md:text-3xl font-bold font-display text-balance">
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -234,7 +234,7 @@ const Dashboard = () => {
                       dataKey="value"
                       stroke="hsl(var(--background))"
                       strokeWidth={2}
-                    >
+
                       {statusData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.fill} />
                       ))}
@@ -269,8 +269,7 @@ const Dashboard = () => {
               </ResponsiveContainer>
       </ChartContainer>
             </CardContent>
-          </Card>
-        </div>
+          </Card></motion.div>
       </div>
     </Layout>
   );

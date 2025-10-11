@@ -114,7 +114,7 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
           canScrollPrev,
           canScrollNext,
         }}
-      >
+
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
@@ -122,7 +122,7 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
           role="region"
           aria-roledescription="carousel"
           {...props}
-        >
+
           {children}
         </div>
       </CarouselContext.Provider>
@@ -184,7 +184,7 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
         disabled={!canScrollPrev}
         onClick={scrollPrev}
         {...props}
-      >
+
         <ArrowLeft className="h-4 w-4" />
         <span className="sr-only">Previous slide</span>
       </Button>
@@ -212,7 +212,7 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
         disabled={!canScrollNext}
         onClick={scrollNext}
         {...props}
-      >
+
         <ArrowRight className="h-4 w-4" />
         <span className="sr-only">Next slide</span>
       </Button>

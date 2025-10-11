@@ -17,7 +17,7 @@ const LoadingOverlay = ({
       )}
       role="status"
       aria-live="polite"
-    >
+
       <div className="relative h-14 w-14">
         <div className="absolute inset-0 rounded-full border-4 border-muted" aria-hidden />
         <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin" aria-hidden />

@@ -76,7 +76,7 @@ const Inventory = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            \1\2 font-display text-balance mb-4 md:mb-6\3>مدیریت موجودی انبار</h1>
+            >مدیریت موجودی انبار</h1>
             <p className="text-muted-foreground mt-2">قطعات و مواد مصرفی</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -259,14 +259,14 @@ const Inventory = () => {
                               variant="outline"
                               onClick={() => adjustInventoryQuantity(item.id, -1)}
                               aria-label={`کاهش موجودی ${item.name}`}
-                            >
+
                               <Minus className="h-4 w-4" />
                             </Button>
                             <Button
                               size="icon"
                               onClick={() => adjustInventoryQuantity(item.id, 1)}
                               aria-label={`افزایش موجودی ${item.name}`}
-                            >
+
                               <Plus className="h-4 w-4" />
                             </Button>
                           </div>

@@ -8,6 +8,7 @@ import type { BadgeProps } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, Clock, Car, User, Phone, DollarSign, Plus, Trash2 } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
@@ -310,7 +311,7 @@ const Bookings = () => {
           {userBookings.length === 0 ? (
             <Card>
               <CardContent className="py-12 text-center">
-                <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <img src="/placeholder.svg" alt="No bookings" className="mx-auto h-24 w-24 text-muted-foreground opacity-50 mb-4" />
                 <p className="text-muted-foreground">هنوز رزروی ثبت نشده است</p>
               </CardContent>
             </Card>
@@ -336,15 +337,32 @@ const Bookings = () => {
                       <div className="flex items-center gap-2">
                         {getStatusBadge(booking.status)}
                         {(user?.role === 'admin' || user?.id === booking.customerId) && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="text-muted-foreground hover:text-destructive"
-                            onClick={() => handleDeleteBooking(booking.id)}
-                            aria-label={`حذف رزرو ${booking.id}`}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-muted-foreground hover:text-destructive"
+                                aria-label={`حذف رزرو ${booking.id}`}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>آیا مطمئن هستید؟</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  این عمل قابل بازگشت نیست. این رزرو برای همیشه حذف خواهد شد.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>انصراف</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleDeleteBooking(booking.id)}>
+                                  حذف
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         )}
                       </div>
                     </div>

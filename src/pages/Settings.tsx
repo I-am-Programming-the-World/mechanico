@@ -9,13 +9,16 @@ import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Settings as SettingsIcon, User, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 import { useData } from '@/contexts/DataContext';
+import { useTheme } from '@/components/ThemeProvider';
 
 const Settings = () => {
   const { user } = useAuth();
   const { resetDemoData } = useData();
+  const { theme, setTheme } = useTheme();
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
@@ -24,6 +27,16 @@ const Settings = () => {
 
   const handleSave = () => {
     toast.success('تنظیمات با موفقیت ذخیره شد');
+  };
+
+  const handleResetData = () => {
+    resetDemoData();
+    toast.success('داده‌های نمونه بازنشانی شد و صفحه دوباره بارگذاری می‌شود.', {
+      description: 'لطفاً چند لحظه صبر کنید...',
+      duration: 3000,
+      onDismiss: () => window.location.reload(),
+      onAutoClose: () => window.location.reload(),
+    });
   };
 
   return (
@@ -38,7 +51,7 @@ const Settings = () => {
         </div>
 
         <Tabs defaultValue="profile" className="space-y-4">
-          <TabsList className="flex flex-wrap gap-2">
+          <TabsList className="flex flex-wrap gap-2 h-auto justify-start">
             <TabsTrigger value="profile" className="gap-2">
               <User className="h-4 w-4" />
               پروفایل
@@ -63,11 +76,11 @@ const Settings = () => {
 
           <TabsContent value="profile" className="space-y-4">
             <Card className="shadow-card">
-              <CardHeader>
+              <CardHeader className="text-right">
                 <CardTitle>اطلاعات شخصی</CardTitle>
                 <CardDescription>به‌روزرسانی اطلاعات پروفایل</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 text-right">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label>نام کامل</Label>
@@ -75,11 +88,11 @@ const Settings = () => {
                   </div>
                   <div className="space-y-2">
                     <Label>ایمیل</Label>
-                    <Input type="email" defaultValue={user?.email} />
+                    <Input type="email" defaultValue={user?.email} dir="ltr" />
                   </div>
                   <div className="space-y-2">
                     <Label>شماره تلفن</Label>
-                    <Input defaultValue={user?.phone} />
+                    <Input defaultValue={user?.phone} dir="ltr" />
                   </div>
                   <div className="space-y-2">
                     <Label>نقش</Label>
@@ -95,20 +108,20 @@ const Settings = () => {
                   <Label>بیوگرافی</Label>
                   <Input placeholder="درباره خود بنویسید..." />
                 </div>
-                <Button onClick={handleSave}>ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="notifications" className="space-y-4">
             <Card className="shadow-card">
-              <CardHeader>
+              <CardHeader className="text-right">
                 <CardTitle>تنظیمات اعلان‌ها</CardTitle>
                 <CardDescription>مدیریت نحوه دریافت اعلان‌ها</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-0.5">
+                  <div className="space-y-0.5 text-right">
                     <Label>اعلان‌های ایمیل</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌ها از طریق ایمیل</p>
                   </div>
@@ -119,7 +132,7 @@ const Settings = () => {
                 </div>
                 <Separator />
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-0.5">
+                  <div className="space-y-0.5 text-right">
                     <Label>اعلان‌های پیامکی</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌ها از طریق پیامک</p>
                   </div>
@@ -130,7 +143,7 @@ const Settings = () => {
                 </div>
                 <Separator />
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-0.5">
+                  <div className="space-y-0.5 text-right">
                     <Label>اعلان‌های Push</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌های فوری در مرورگر</p>
                   </div>
@@ -140,7 +153,7 @@ const Settings = () => {
                   />
                 </div>
                 <Separator />
-                <div className="space-y-4">
+                <div className="space-y-4 text-right">
                   <h4 className="font-medium">اعلان درباره:</h4>
                   <div className="space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -161,18 +174,18 @@ const Settings = () => {
                     </div>
                   </div>
                 </div>
-                <Button onClick={handleSave}>ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="security" className="space-y-4">
             <Card className="shadow-card">
-              <CardHeader>
+              <CardHeader className="text-right">
                 <CardTitle>امنیت حساب</CardTitle>
                 <CardDescription>مدیریت رمز عبور و امنیت</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 text-right">
                 <div className="space-y-2">
                   <Label>رمز عبور فعلی</Label>
                   <Input type="password" placeholder="رمز عبور فعلی" />
@@ -185,14 +198,14 @@ const Settings = () => {
                   <Label>تکرار رمز عبور جدید</Label>
                   <Input type="password" placeholder="تکرار رمز عبور جدید" />
                 </div>
-                <Button>تغییر رمز عبور</Button>
+                <Button className="ml-auto block">تغییر رمز عبور</Button>
                 <Separator />
                 <div className="space-y-4">
                   <h4 className="font-medium">احراز هویت دو مرحله‌ای</h4>
                   <p className="text-sm text-muted-foreground">
                     امنیت حساب خود را با فعال‌سازی احراز هویت دو مرحله‌ای افزایش دهید
                   </p>
-                  <Button variant="outline">فعال‌سازی</Button>
+                  <Button variant="outline" className="ml-auto block">فعال‌سازی</Button>
                 </div>
                 <Separator />
                 <div className="space-y-4">
@@ -200,7 +213,7 @@ const Settings = () => {
                   <p className="text-sm text-muted-foreground">
                     دستگاه‌هایی که در حال حاضر به حساب شما متصل هستند
                   </p>
-                  <Button variant="destructive">خروج از همه دستگاه‌ها</Button>
+                  <Button variant="destructive" className="ml-auto block">خروج از همه دستگاه‌ها</Button>
                 </div>
               </CardContent>
             </Card>
@@ -208,21 +221,21 @@ const Settings = () => {
 
           <TabsContent value="appearance" className="space-y-4">
             <Card className="shadow-card">
-              <CardHeader>
+              <CardHeader className="text-right">
                 <CardTitle>تنظیمات ظاهری</CardTitle>
                 <CardDescription>سفارشی‌سازی ظاهر برنامه</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 text-right">
                 <div className="space-y-2">
                   <Label>تم رنگی</Label>
-                  <Select defaultValue="light">
+                  <Select value={theme} onValueChange={setTheme}>
                     <SelectTrigger>
-                      <SelectValue />
+                      <SelectValue placeholder="انتخاب تم" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="light">روشن</SelectItem>
                       <SelectItem value="dark">تیره</SelectItem>
-                      <SelectItem value="auto">خودکار</SelectItem>
+                      <SelectItem value="system">خودکار (سیستم)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -248,18 +261,18 @@ const Settings = () => {
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Button onClick={handleSave}>ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="system" className="space-y-4">
             <Card className="shadow-card">
-              <CardHeader>
+              <CardHeader className="text-right">
                 <CardTitle>تنظیمات سیستم</CardTitle>
                 <CardDescription>تنظیمات عمومی سیستم</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 text-right">
                 <div className="space-y-2">
                   <Label>زبان</Label>
                   <Select defaultValue="fa">
@@ -313,20 +326,31 @@ const Settings = () => {
                 <div className="space-y-2">
                   <Label>بازنشانی داده‌های آزمایشی</Label>
                   <p className="text-sm text-muted-foreground">
-                    با این گزینه می‌توانید تمام داده‌های نمونه ذخیره‌شده در مرورگر را پاک کرده و از ابتدا شروع کنید.
+                    تمام داده‌های نمونه ذخیره‌شده در مرورگر را پاک کرده و از ابتدا شروع کنید.
                   </p>
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    onClick={() => {
-                      resetDemoData();
-                      toast.success('داده‌های نمونه بازنشانی شد');
-                    }}
-                  >
-                    بازنشانی داده‌ها
-                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button type="button" variant="destructive">
+                        بازنشانی داده‌ها
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>آیا مطمئن هستید؟</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          این عمل تمام داده‌های برنامه را حذف و با مقادیر اولیه جایگزین می‌کند. این کار قابل بازگشت نیست.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>انصراف</AlertDialogCancel>
+                        <AlertDialogAction onClick={handleResetData}>
+                          بله، بازنشانی کن
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
-                <Button onClick={handleSave}>ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>

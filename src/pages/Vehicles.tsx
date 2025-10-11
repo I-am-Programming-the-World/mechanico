@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Car, Plus, Edit, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useData } from '@/contexts/DataContext';
@@ -107,16 +108,18 @@ const Vehicles = () => {
               <div className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>سازنده</Label>
+                    <Label htmlFor="make">سازنده</Label>
                     <Input
+                      id="make"
                       value={formData.make}
                       onChange={(e) => setFormData({ ...formData, make: e.target.value })}
                       placeholder="ایران خودرو"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>مدل</Label>
+                    <Label htmlFor="model">مدل</Label>
                     <Input
+                      id="model"
                       value={formData.model}
                       onChange={(e) => setFormData({ ...formData, model: e.target.value })}
                       placeholder="پژو ۲۰۶"
@@ -125,16 +128,18 @@ const Vehicles = () => {
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label>سال ساخت</Label>
+                    <Label htmlFor="year">سال ساخت</Label>
                     <Input
+                      id="year"
                       type="number"
                       value={formData.year}
                       onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>رنگ</Label>
+                    <Label htmlFor="color">رنگ</Label>
                     <Input
+                      id="color"
                       value={formData.color}
                       onChange={(e) => setFormData({ ...formData, color: e.target.value })}
                       placeholder="سفید"
@@ -142,16 +147,18 @@ const Vehicles = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>پلاک</Label>
+                  <Label htmlFor="licensePlate">پلاک</Label>
                   <Input
+                    id="licensePlate"
                     value={formData.licensePlate}
                     onChange={(e) => setFormData({ ...formData, licensePlate: e.target.value })}
                     placeholder="۱۲ ب ۳۴۵ ایران ۶۷"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label>کارکرد (کیلومتر)</Label>
+                  <Label htmlFor="mileage">کارکرد (کیلومتر)</Label>
                   <Input
+                    id="mileage"
                     type="number"
                     value={formData.mileage}
                     onChange={(e) => setFormData({ ...formData, mileage: parseInt(e.target.value) })}
@@ -169,7 +176,7 @@ const Vehicles = () => {
           {userVehicles.length === 0 ? (
             <Card className="md:col-span-2">
               <CardContent className="py-12 text-center">
-                <Car className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <img src="/placeholder.svg" alt="No vehicles" className="mx-auto h-24 w-24 text-muted-foreground opacity-50 mb-4" />
                 <p className="text-muted-foreground">هنوز خودرویی اضافه نشده است</p>
               </CardContent>
             </Card>
@@ -183,16 +190,30 @@ const Vehicles = () => {
                       {vehicle.make} {vehicle.model}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      <Button size="sm" variant="outline" onClick={() => handleEdit(vehicle)}>
+                      <Button size="sm" variant="outline" onClick={() => handleEdit(vehicle)} aria-label={`ویرایش ${vehicle.make} ${vehicle.model}`}>
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleDelete(vehicle.id)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button size="sm" variant="outline" aria-label={`حذف ${vehicle.make} ${vehicle.model}`}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>آیا مطمئن هستید؟</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              این عمل قابل بازگشت نیست. این خودرو برای همیشه حذف خواهد شد.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>انصراف</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => handleDelete(vehicle.id)}>
+                              حذف
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </div>
                   </CardTitle>
                 </CardHeader>

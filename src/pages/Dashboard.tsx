@@ -1,19 +1,16 @@
-import { useId, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, DollarSign, Users, Star, TrendingUp, Car } from 'lucide-react';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import Layout from '@/components/Layout';
 import { formatMillions, formatNumber } from '@/lib/utils';
 
 const Dashboard = () => {
   const { user } = useAuth();
   const { bookings, services, users, reviews, vehicles } = useData();
-  const statusSummaryId = useId();
-  const monthlySummaryId = useId();
 
-  // Calculate statistics
   const totalBookings = bookings.length;
   const completedBookings = bookings.filter(b => b.status === 'completed').length;
   const totalRevenue = bookings.filter(b => b.status === 'completed').reduce((sum, b) => sum + b.price, 0);
@@ -21,7 +18,6 @@ const Dashboard = () => {
     ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
     : 0;
 
-  // User-specific stats
   const userBookings = bookings.filter(b =>
     user?.role === 'customer' ? b.customerId === user.id : b.providerId === user.id
   );
@@ -30,16 +26,13 @@ const Dashboard = () => {
     user?.role === 'provider' ? r.providerId === user.id : r.customerId === user.id
   );
 
-  // Chart data
   const statusData = useMemo(() => ([
-    { name: 'در انتظار', value: bookings.filter(b => b.status === 'pending').length },
-    { name: 'تأیید شده', value: bookings.filter(b => b.status === 'confirmed').length },
-    { name: 'در حال انجام', value: bookings.filter(b => b.status === 'in-progress').length },
-    { name: 'انجام شده', value: bookings.filter(b => b.status === 'completed').length },
-    { name: 'لغو شده', value: bookings.filter(b => b.status === 'cancelled').length },
+    { name: 'در انتظار', value: bookings.filter(b => b.status === 'pending').length, fill: 'hsl(var(--warning))' },
+    { name: 'تأیید شده', value: bookings.filter(b => b.status === 'confirmed').length, fill: 'hsl(var(--primary))' },
+    { name: 'در حال انجام', value: bookings.filter(b => b.status === 'in-progress').length, fill: 'hsl(var(--secondary))' },
+    { name: 'انجام شده', value: bookings.filter(b => b.status === 'completed').length, fill: 'hsl(var(--success))' },
+    { name: 'لغو شده', value: bookings.filter(b => b.status === 'cancelled').length, fill: 'hsl(var(--destructive))' },
   ]), [bookings]);
-
-  const COLORS = ['#f59e0b', '#3b82f6', '#8b5cf6', '#10b981', '#ef4444'];
 
   const monthlyData = useMemo(() => ([
     { month: 'فروردین', bookings: 12, revenue: 15000000 },
@@ -57,10 +50,37 @@ const Dashboard = () => {
     })).sort((a, b) => b.count - a.count).slice(0, 5)
   ), [bookings, services]);
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="rounded-lg border bg-background p-2 shadow-sm">
+          <p className="font-medium">{label}</p>
+          {payload.map((p: any) => (
+            <p key={p.dataKey} style={{ color: p.color }}>
+              {`${p.name}: ${formatNumber(p.value)}`}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+  
+  const PieCustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="rounded-lg border bg-background p-2 shadow-sm">
+          <p className="font-medium">{`${data.name}: ${formatNumber(data.value)} (${formatNumber((payload[0].percent * 100), { maximumFractionDigits: 0 })}٪)`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <Layout>
       <div className="space-y-8">
-        {/* Header */}
         <div>
           <h1 className="text-3xl font-bold">
             خوش آمدید، {user?.fullName}
@@ -70,9 +90,8 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کل رزروها' : 'رزروهای من'}
@@ -89,14 +108,14 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">درآمد کل</CardTitle>
               <DollarSign className="h-5 w-5 text-success" />
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-success">
-                {formatMillions(user?.role === 'admin' ? totalRevenue : userRevenue)} میلیون
+                {formatMillions(user?.role === 'admin' ? totalRevenue : userRevenue)} م
               </div>
               <p className="text-xs text-muted-foreground mt-1">
                 تومان
@@ -104,7 +123,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کاربران' : user?.role === 'customer' ? 'خودروهای من' : 'مشتریان'}
@@ -129,7 +148,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین امتیاز</CardTitle>
               <Star className="h-5 w-5 text-warning" />
@@ -146,7 +165,6 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Charts */}
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="shadow-card">
             <CardHeader>
@@ -156,27 +174,28 @@ const Dashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <figure aria-labelledby={monthlySummaryId}>
-                <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={monthlyData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis tickFormatter={value => formatNumber(value)} />
-                  <Tooltip formatter={(value: number) => `${formatNumber(value)} تومان`} />
-                    <Legend />
-                    <Line
-                      type="monotone"
-                      dataKey="bookings"
-                      stroke="hsl(var(--primary))"
-                      strokeWidth={2}
-                      name="تعداد رزرو"
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-                <figcaption id={monthlySummaryId} className="sr-only">
-                  روند رزروهای ماهانه بین ۱۲ تا ۲۵ رزرو در هر ماه با بیشترین مقدار در مرداد ثبت شده است.
-                </figcaption>
-              </figure>
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={monthlyData}>
+                  <defs>
+                    <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area
+                    type="monotone"
+                    dataKey="bookings"
+                    stroke="hsl(var(--primary))"
+                    fill="url(#colorRevenue)"
+                    strokeWidth={2}
+                    name="تعداد رزرو"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
@@ -185,30 +204,29 @@ const Dashboard = () => {
               <CardTitle>وضعیت رزروها</CardTitle>
             </CardHeader>
             <CardContent>
-              <figure aria-labelledby={statusSummaryId}>
-                <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
                       data={statusData}
                       cx="50%"
                       cy="50%"
                       labelLine={false}
-                      label={(entry) => `${entry.name}: ${formatNumber(entry.value)}`}
                       outerRadius={100}
+                      innerRadius={70}
+                      paddingAngle={5}
                       fill="#8884d8"
                       dataKey="value"
+                      stroke="hsl(var(--background))"
+                      strokeWidth={2}
                     >
                       {statusData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
                       ))}
                     </Pie>
-                    <Tooltip formatter={(value: number) => formatNumber(value)} />
+                    <Tooltip content={<PieCustomTooltip />} />
+                    <Legend />
                   </PieChart>
-                </ResponsiveContainer>
-                <figcaption id={statusSummaryId} className="mt-4 text-sm text-muted-foreground">
-                  {statusData.map((item) => `${item.name}: ${formatNumber(item.value)} مورد`).join('، ')}
-                </figcaption>
-              </figure>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
@@ -219,10 +237,10 @@ const Dashboard = () => {
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={servicePopularity}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis tickFormatter={value => formatNumber(value)} />
-                  <Tooltip formatter={(value: number) => formatNumber(value)} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
                   <Legend />
                   <Bar
                     dataKey="count"
@@ -232,13 +250,6 @@ const Dashboard = () => {
                   />
                 </BarChart>
               </ResponsiveContainer>
-              <p className="sr-only">
-                {servicePopularity.length === 0
-                  ? 'داده‌ای برای خدمات محبوب موجود نیست.'
-                  : servicePopularity
-                      .map((service) => `${service.name} با ${formatNumber(service.count)} رزرو`)
-                      .join('، ')}
-              </p>
             </CardContent>
           </Card>
         </div>

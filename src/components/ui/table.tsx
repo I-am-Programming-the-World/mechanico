@@ -46,7 +46,14 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
     <th
       ref={ref}
       className={cn(
-        "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        // Align table headings to the right for RTL layouts. Previously headings
+        // defaulted to left alignment which caused Persian headers to be
+        // misaligned and visually inconsistent. The px padding remains intact.
+        // Remove right padding when a checkbox is present so that checkboxes
+        // align flush to the right edge in RTL. For LTR this happens to
+        // remove the leftmost padding, which is acceptable because the base
+        // direction on the table cell controls alignment.
+        "h-12 px-4 text-right align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
         className,
       )}
       {...props}
@@ -57,7 +64,18 @@ TableHead.displayName = "TableHead";
 
 const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(
   ({ className, ...props }, ref) => (
-    <td ref={ref} className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)} {...props} />
+    <td
+      ref={ref}
+      className={cn(
+        // Use consistent padding and alignment. We avoid forcing
+        // text-right here so that the `dir` attribute on parent
+        // containers naturally controls alignment; callers can still
+        // override alignment via className.
+        "p-4 align-middle [&:has([role=checkbox])]:pr-0",
+        className,
+      )}
+      {...props}
+    />
   ),
 );
 TableCell.displayName = "TableCell";

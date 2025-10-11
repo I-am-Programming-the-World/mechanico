@@ -29,7 +29,17 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  // Base styles for all sheets. We replace the plain background with a
+  // glassmorphic panel: a semi‑transparent card background with a subtle
+  // border and backdrop blur. Glassmorphism adds depth and hierarchy by
+  // making panels appear to float above the page【172484293626487†L130-L167】. The
+  // `bg-card/75` uses a translucent card colour (75% opacity) and
+  // `backdrop-blur-md` applies a medium blur to whatever is behind the
+  // sheet. We also include a 1px border (`border border-border/40`) and a
+  // dark-mode variant (`dark:bg-card/50 dark:border-border/30`) for
+  // consistent contrast. These tweaks modernize the sheet component and
+  // align it with the glassmorphism trend【172484293626487†L159-L167】.
+  "fixed z-50 gap-4 border border-border/40 bg-card/75 backdrop-blur-md p-6 shadow-lg transition ease-in-out dark:bg-card/50 dark:border-border/30 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
       side: {
@@ -68,12 +78,26 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
+  <div
+    // Use text-right on small screens to better align RTL titles and
+    // descriptions. Previously the header used `sm:text-left` which left
+    // headings misaligned for Persian content.
+    className={cn("flex flex-col space-y-2 text-center sm:text-right", className)}
+    {...props}
+  />
 );
 SheetHeader.displayName = "SheetHeader";
 
 const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)} {...props} />
+  <div
+    // Reverse the order of footer buttons horizontally for RTL layouts. We use
+    // flex-row-reverse so the primary action appears at the visual right. The
+    // `space-x-reverse` utility flips horizontal spacing so buttons maintain
+    // consistent gaps. On mobile (default), the stack order is preserved via
+    // flex-col-reverse.
+    className={cn("flex flex-col-reverse sm:flex-row-reverse sm:justify-start sm:space-x-2 sm:space-x-reverse", className)}
+    {...props}
+  />
 );
 SheetFooter.displayName = "SheetFooter";
 

@@ -16,6 +16,10 @@ import {
   DollarSign,
   Package,
   Menu,
+  Wrench,
+  BarChart3,
+  UserCog,
+  Building2,
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -34,15 +38,22 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   const menuItems = [
+    // Core Operations
     { icon: LayoutDashboard, label: 'داشبورد', path: '/dashboard', roles: ['customer', 'provider', 'admin'] },
     { icon: Calendar, label: 'رزروها', path: '/bookings', roles: ['customer', 'provider', 'admin'] },
-    { icon: DollarSign, label: 'حسابداری', path: '/accounting', roles: ['provider', 'admin'] },
-    { icon: FileText, label: 'گزارشات', path: '/reports', roles: ['provider', 'admin'] },
-    { icon: Users, label: 'کارکنان', path: '/employees', roles: ['admin'] },
-    { icon: Package, label: 'موجودی انبار', path: '/inventory', roles: ['provider', 'admin'] },
+    { icon: Wrench, label: 'خدمات', path: '/services', roles: ['customer', 'provider', 'admin'] },
     { icon: Car, label: 'خودروها', path: '/vehicles', roles: ['customer', 'admin'] },
-    { icon: SettingsIcon, label: 'خدمات', path: '/services', roles: ['customer', 'provider', 'admin'] },
-    { icon: Users, label: 'کاربران', path: '/users', roles: ['admin'] },
+
+    // Management & Finance
+    { icon: DollarSign, label: 'حسابداری', path: '/accounting', roles: ['provider', 'admin'] },
+    { icon: Package, label: 'موجودی انبار', path: '/inventory', roles: ['provider', 'admin'] },
+    { icon: BarChart3, label: 'گزارشات', path: '/reports', roles: ['provider', 'admin'] },
+
+    // Administration
+    { icon: UserCog, label: 'کاربران', path: '/users', roles: ['admin'] },
+    { icon: Building2, label: 'کارکنان', path: '/employees', roles: ['admin'] },
+    
+    // General
     { icon: Star, label: 'نظرات', path: '/reviews', roles: ['provider', 'admin'] },
     { icon: SettingsIcon, label: 'تنظیمات', path: '/settings', roles: ['customer', 'provider', 'admin'] },
   ];

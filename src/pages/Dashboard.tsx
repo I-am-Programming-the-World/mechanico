@@ -234,7 +234,7 @@ const Dashboard = () => {
                       dataKey="value"
                       stroke="hsl(var(--background))"
                       strokeWidth={2}
-
+                    >
                       {statusData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.fill} />
                       ))}
@@ -269,7 +269,8 @@ const Dashboard = () => {
               </ResponsiveContainer>
       </ChartContainer>
             </CardContent>
-          </Card></motion.div>
+          </Card>
+        </div>
       </div>
     </Layout>
   );

@@ -72,7 +72,7 @@ const Layout = ({ children }: LayoutProps) => {
                   size="icon"
                   className="md:hidden"
                   aria-label="باز کردن منوی ناوبری"
-
+                >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -96,7 +96,7 @@ const Layout = ({ children }: LayoutProps) => {
                         }
                         aria-label={item.label}
                         onClick={() => setIsMobileMenuOpen(false)}
-
+                      >
                         <span className="flex items-center gap-3">
                           <Icon className="h-4 w-4" />
                           {item.label}
@@ -107,7 +107,7 @@ const Layout = ({ children }: LayoutProps) => {
                 </nav>
               </SheetContent>
             </Sheet>
-            <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent font-display text-balance">
+            <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
               مکانیکو
             </h1>
             <nav className="w-full" aria-label="منوی اصلی">

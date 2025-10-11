@@ -43,7 +43,7 @@ const Settings = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-
+           font-display text-balance mb-4 md:mb-6>
             <SettingsIcon className="h-8 w-8" />
             تنظیمات
           </h1>

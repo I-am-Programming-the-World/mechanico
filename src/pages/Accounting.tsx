@@ -100,7 +100,7 @@ const Accounting = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            >حسابداری مالی</h1>
+            <h1 className="font-display text-balance mb-4 md:mb-6 text-2xl md:text-3xl font-bold font-display text-balance">حسابداری مالی</h1>
             <p className="text-muted-foreground mt-2">مدیریت درآمد، هزینه‌ها و صورتحساب‌ها</p>
           </div>
           <Button className="gap-2">
@@ -215,8 +215,8 @@ const Accounting = () => {
                   <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatCurrency} orientation="right" />
                   <Tooltip formatter={(value: number) => `${formatCurrency(value)} تومان`} />
                   <Legend verticalAlign="top" align="right" />
-                  <Bar dataKey="income" fill="hsl(var(--success))" name="درآمد" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="expense" fill="hsl(var(--destructive))" name="هزینه" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="income" fill="hsl(var(--success))" name="درآمد" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
+                  <Bar dataKey="expense" fill="hsl(var(--destructive))" name="هزینه" radius={[8, 8, 0, 0]}  radius=[8, 8, 0, 0] />
                 </BarChart>
               </ResponsiveContainer>
       </ChartContainer>
@@ -277,7 +277,7 @@ const Accounting = () => {
                                 size="sm"
                                 className="gap-1"
                                 onClick={() => handleMarkInvoiceAsPaid(invoice.id)}
-
+                              >
                                 <CheckCircle2 className="h-4 w-4" />
                                 تسویه
                               </Button>

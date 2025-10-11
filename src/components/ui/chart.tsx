@@ -18,6 +18,7 @@ export const ChartContainer = React.forwardRef<HTMLDivElement, React.HTMLAttribu
         <div
           data-chart={chartId}
           ref={ref}
+          style={{ direction: "ltr" }}
           className={cn(
             "flex aspect-video justify-center rounded-xl border bg-card/50 p-3 text-xs",
             "[&_.recharts-surface]:outline-none [&_.recharts-sector]:outline-none [&_.recharts-curve]:outline-none",

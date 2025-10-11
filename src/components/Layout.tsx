@@ -110,7 +110,7 @@ const Layout = ({ children }: LayoutProps) => {
             <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
               مکانیکو
             </h1>
-            <nav className="hidden md:flex flex-row-reverse items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 whitespace-nowrap" aria-label="منوی اصلی">
+            <nav className="hidden md:flex overflow-x-auto no-scrollbar flex-row-reverse items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 whitespace-nowrap" aria-label="منوی اصلی">
               {filteredMenu.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -149,7 +149,7 @@ const Layout = ({ children }: LayoutProps) => {
         </div>
       </header>
       
-      <main id="main-content" className="container mx-auto px-3 py-8 sm:px-4">
+      <main id="main-content" className="container overflow-x-hidden mx-auto px-3 py-8 sm:px-4">
         {children}
       </main>
 

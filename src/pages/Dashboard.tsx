@@ -177,7 +177,7 @@ const Dashboard = () => {
             <CardContent>
               <ChartContainer>
         <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={monthlyData}>
+                <AreaChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={monthlyData}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>

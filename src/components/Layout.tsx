@@ -62,11 +62,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen bg-background" dir="rtl">
       <a href="#main-content" className="skip-link">پرش به محتوای اصلی</a>
       <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-<<<<<<< HEAD
         <div className="container flex h-16  items-center justify-between gap-4 px-3 sm:px-4">
-=======
-        <div className="container flex h-16 items-center justify-between gap-3 sm:gap-4 px-3 sm:px-4">
->>>>>>> af232987d5fee2c20011d4a03b53699889e9f792
           <div className="flex items-center gap-4">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>

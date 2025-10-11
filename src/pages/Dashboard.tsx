@@ -185,8 +185,8 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis tick={{ textAnchor: "end" }} dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis tick={{ textAnchor: "end" }} tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="month" axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -244,8 +244,8 @@ const Dashboard = () => {
         <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={servicePopularity}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis tick={{ textAnchor: "end" }} dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis tick={{ textAnchor: "end" }} tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="name" axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
                   <Legend verticalAlign="top" align="right" />
                   <Bar

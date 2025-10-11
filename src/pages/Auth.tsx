@@ -92,7 +92,9 @@ const Auth = () => {
               className="w-full"
               disabled={isLoading}
               
-            </Button>{isLoading ? 'در حال ورود...' : 'ورود'}
+            
+  {isLoading ? 'در حال ورود...' : 'ورود'}
+</Button>
           </form>
 
           <div className="space-y-2">

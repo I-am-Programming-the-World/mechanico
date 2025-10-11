@@ -19,6 +19,7 @@ import { ResponsiveContainer as RC2, Area as A2, AreaChart as AC2 } from 'rechar
 import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import Layout from '@/components/Layout';
 import { formatMillions, formatNumber } from '@/lib/utils';
+import { formatNumberFa, formatCurrencyFa } from '@/lib/intl';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -70,7 +71,7 @@ const Dashboard = () => {
           <p className="font-medium">{label}</p>
           {payload.map((p: any) => (
             <p key={p.dataKey} style={{ color: p.color }}>
-              {`${p.name}: ${formatNumber(p.value)}`}
+              {`${p.name}: ${formatNumberFa(p.value)}`}
             </p>
           ))}
         </div>
@@ -84,7 +85,7 @@ const Dashboard = () => {
       const data = payload[0].payload;
       return (
         <div className="rounded-lg border bg-background p-2 shadow-sm">
-          <p className="font-medium">{`${data.name}: ${formatNumber(data.value)} (${formatNumber((payload[0].percent * 100), { maximumFractionDigits: 0 })}٪)`}</p>
+          <p className="font-medium">{`${data.name}: ${formatNumberFa(data.value)} (${formatNumberFa((payload[0].percent * 100), { maximumFractionDigits: 0 })}٪)`}</p>
         </div>
       );
     }
@@ -95,7 +96,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold font-display text-balance">
+          \1\2 font-display text-balance\3>
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -113,10 +114,10 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
-                {formatNumber(user?.role === 'admin' ? totalBookings : userBookings.length)}
+                {formatNumberFa(user?.role === 'admin' ? totalBookings : userBookings.length)}
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                {formatNumber(completedBookings)} رزرو انجام شده
+                {formatNumberFa(completedBookings)} رزرو انجام شده
               </p>
             </CardContent>
           </Card>
@@ -149,7 +150,7 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-secondary">
-                {formatNumber(user?.role === 'admin'
+                {formatNumberFa(user?.role === 'admin'
                   ? users.length
                   : user?.role === 'customer'
                     ? vehicles.filter(v => v.ownerId === user.id).length
@@ -168,11 +169,11 @@ const Dashboard = () => {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-warning flex items-center gap-1">
-                {formatNumber(averageRatingValue, { maximumFractionDigits: 1, minimumFractionDigits: 1 })}
+                {formatNumberFa(averageRatingValue, { maximumFractionDigits: 1, minimumFractionDigits: 1 })}
                 <Star className="h-6 w-6 fill-warning" />
               </div>
               <p className="text-xs text-muted-foreground mt-1">
-                از {formatNumber(user?.role === 'admin' ? reviews.length : userReviews.length)} نظر
+                از {formatNumberFa(user?.role === 'admin' ? reviews.length : userReviews.length)} نظر
               </p>
             </CardContent>
           </Card>
@@ -198,7 +199,7 @@ const Dashboard = () => {
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                   <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="month" axisLine={false} tickLine={false}  />
-                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumberFa(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -257,7 +258,7 @@ const Dashboard = () => {
                 <BarChart data={servicePopularity}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
                   <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="name" axisLine={false} tickLine={false}  />
-                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumberFa(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
                   <Legend verticalAlign="top" align="right" />
                   <Bar

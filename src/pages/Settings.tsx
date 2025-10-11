@@ -13,10 +13,12 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Settings as SettingsIcon, User, Bell, Shield, Palette, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 import { useData } from '@/contexts/DataContext';
+import { useTheme } from '@/components/ThemeProvider';
 
 const Settings = () => {
   const { user } = useAuth();
   const { resetDemoData } = useData();
+  const { theme, setTheme } = useTheme();
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
@@ -226,14 +228,14 @@ const Settings = () => {
               <CardContent className="space-y-6">
                 <div className="space-y-2">
                   <Label>تم رنگی</Label>
-                  <Select defaultValue="light">
+                  <Select value={theme} onValueChange={setTheme}>
                     <SelectTrigger>
-                      <SelectValue />
+                      <SelectValue placeholder="انتخاب تم" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="light">روشن</SelectItem>
                       <SelectItem value="dark">تیره</SelectItem>
-                      <SelectItem value="auto">خودکار</SelectItem>
+                      <SelectItem value="system">خودکار (سیستم)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

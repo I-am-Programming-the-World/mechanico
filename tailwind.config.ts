@@ -64,8 +64,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Vazirmatn"', 'system-ui', 'sans-serif'],
-        display: ['"Lalezar"','"Vazirmatn"','system-ui','sans-serif'],
+        sans: ['"Vazirmatn"', '"IRANSans"', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

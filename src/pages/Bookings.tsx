@@ -166,7 +166,10 @@ const Bookings = () => {
                       <Label htmlFor="customerId">مشتری</Label>
                       <Select
                         value={formState.customerId}
-                        onValueChange={(value) => setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))}
+                        onValueChange={(value) =>
+                          setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))
+                        }
+                      >
                         <SelectTrigger id="customerId">
                           <SelectValue placeholder="انتخاب مشتری" />
                         </SelectTrigger>
@@ -186,7 +189,10 @@ const Bookings = () => {
                       <Label htmlFor="providerId">ارائه‌دهنده</Label>
                       <Select
                         value={formState.providerId}
-                        onValueChange={(value) => setFormState((prev) => ({ ...prev, providerId: value }))}
+                        onValueChange={(value) =>
+                          setFormState((prev) => ({ ...prev, providerId: value }))
+                        }
+                      >
                         <SelectTrigger id="providerId">
                           <SelectValue placeholder="انتخاب ارائه‌دهنده" />
                         </SelectTrigger>
@@ -213,6 +219,7 @@ const Bookings = () => {
                           price: service ? service.basePrice.toString() : prev.price,
                         }));
                       }}
+                    >
                       <SelectTrigger id="serviceId">
                         <SelectValue placeholder="انتخاب خدمت" />
                       </SelectTrigger>
@@ -230,7 +237,10 @@ const Bookings = () => {
                     <Label htmlFor="vehicleId">خودرو</Label>
                     <Select
                       value={formState.vehicleId}
-                      onValueChange={(value) => setFormState((prev) => ({ ...prev, vehicleId: value }))}
+                      onValueChange={(value) =>
+                        setFormState((prev) => ({ ...prev, vehicleId: value }))
+                      }
+                    >
                       <SelectTrigger id="vehicleId">
                         <SelectValue placeholder="انتخاب خودرو" />
                       </SelectTrigger>

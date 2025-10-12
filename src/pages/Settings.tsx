@@ -113,7 +113,7 @@ const Settings = () => {
                  * handler which shows a success toast. Remove any
                  * undefined loading references.
                  */}
-                <Button onClick={handleSave} className="ms-auto block">
+                <Button onClick={handleSave} className="ml-auto block">
                   ذخیره تغییرات
                 </Button>
               </CardContent>
@@ -181,7 +181,7 @@ const Settings = () => {
                     </div>
                   </div>
                 </div>
-                <Button onClick={handleSave} className="ms-auto block">
+                <Button onClick={handleSave} className="ml-auto block">
                   ذخیره تغییرات
                 </Button>
               </CardContent>
@@ -207,14 +207,14 @@ const Settings = () => {
                   <Label>تکرار رمز عبور جدید</Label>
                   <Input type="password" placeholder="تکرار رمز عبور جدید" />
                 </div>
-                <Button className="ms-auto block">تغییر رمز عبور</Button>
+                <Button className="ml-auto block">تغییر رمز عبور</Button>
                 <Separator />
                 <div className="space-y-4">
                   <h4 className="font-medium">احراز هویت دو مرحله‌ای</h4>
                   <p className="text-sm text-muted-foreground">
                     امنیت حساب خود را با فعال‌سازی احراز هویت دو مرحله‌ای افزایش دهید
                   </p>
-                  <Button variant="outline" className="ms-auto block">فعال‌سازی</Button>
+                  <Button variant="outline" className="ml-auto block">فعال‌سازی</Button>
                 </div>
                 <Separator />
                 <div className="space-y-4">
@@ -222,7 +222,7 @@ const Settings = () => {
                   <p className="text-sm text-muted-foreground">
                     دستگاه‌هایی که در حال حاضر به حساب شما متصل هستند
                   </p>
-                  <Button variant="destructive" className="ms-auto block">خروج از همه دستگاه‌ها</Button>
+                  <Button variant="destructive" className="ml-auto block">خروج از همه دستگاه‌ها</Button>
                 </div>
               </CardContent>
             </Card>
@@ -270,7 +270,7 @@ const Settings = () => {
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Button onClick={handleSave} className="ms-auto block">
+                <Button onClick={handleSave} className="ml-auto block">
                   ذخیره تغییرات
                 </Button>
               </CardContent>
@@ -361,7 +361,7 @@ const Settings = () => {
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
-                <Button onClick={handleSave} className="ms-auto block">
+                <Button onClick={handleSave} className="ml-auto block">
                   ذخیره تغییرات
                 </Button>
               </CardContent>

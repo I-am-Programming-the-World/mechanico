@@ -4,6 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+// SmartNav provides a responsive navigation bar that collapses overflowing items into a dropdown.
+import SmartNav from '@/components/SmartNav';
 import {
   LayoutDashboard,
   Calendar,
@@ -58,6 +60,17 @@ const Layout = ({ children }: LayoutProps) => {
 
   const filteredMenu = menuItems.filter(item => user && item.roles.includes(user.role));
 
+  // Build navigation items for SmartNav.  Each item contains a path, label and icon element.
+  const navItems = filteredMenu.map((item) => {
+    const Icon = item.icon;
+    return {
+      to: item.path,
+      label: item.label,
+      // Render the icon as a React element.  We set the size classes here so SmartNav can display them consistently.
+      icon: <Icon className="h-4 w-4" />,
+    };
+  });
+
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 skip-link">پرش به محتوای اصلی</a>
@@ -111,8 +124,8 @@ const Layout = ({ children }: LayoutProps) => {
               مکانیکو
             </h1>
             <nav className="w-full" aria-label="منوی اصلی">
-  <SmartNav items={navItems} reserveEnd={120} />
-</nav>
+              <SmartNav items={navItems} reserveEnd={120} />
+            </nav>
           </div>
 
           <div className="flex items-center gap-4">

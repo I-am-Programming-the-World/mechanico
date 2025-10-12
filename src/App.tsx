@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route, NavLink, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import LoadingOverlay from "./components/LoadingOverlay";
 
@@ -52,8 +53,12 @@ export default function App() {
     <HashRouter>
       <Layout>
         <Routes>
+          {/* Public login page */}
+          <Route path="/auth" element={<Auth />} />
+          {/* Protected dashboard; in a real app wrap this with an auth guard */}
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          {/* Redirect the root to the login page */}
+          <Route path="/" element={<Navigate to="/auth" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>

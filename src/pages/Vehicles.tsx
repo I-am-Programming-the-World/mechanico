@@ -168,7 +168,7 @@ const Vehicles = () => {
                  * Save button calls `handleSave` which either updates the
                  * selected vehicle or creates a new one based on the
                  * `editingVehicle` state. We avoid undefined loading logic.
-                 */
+                 */}
                 <Button onClick={handleSave} className="w-full">
                   {editingVehicle ? 'به‌روزرسانی' : 'افزودن'}
                 </Button>

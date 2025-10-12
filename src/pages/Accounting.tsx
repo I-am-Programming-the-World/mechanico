@@ -349,7 +349,7 @@ const Accounting = () => {
                        * `handleAddExpense` which performs validation and
                        * persists the entry. The button spans the full
                        * container width for emphasis.
-                       */
+                       */}
                       <Button onClick={handleAddExpense} className="w-full">
                         ثبت هزینه
                       </Button>

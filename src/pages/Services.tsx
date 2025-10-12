@@ -206,7 +206,7 @@ const Services = () => {
                         {/*
                          * Submit the booking form. We call `handleBookService` to
                          * validate and create a new booking.
-                         */
+                         */}
                         <Button onClick={handleBookService} className="w-full">
                           تأیید رزرو
                         </Button>

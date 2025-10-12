@@ -136,7 +136,7 @@ const Inventory = () => {
                  * displays a clear call‑to‑action. We avoid any spurious
                  * `isLoading` placeholders here since this component doesn’t
                  * implement a loading state.
-                 */
+                 */}
                 <Button onClick={handleAddInventoryItem} className="w-full">
                   ثبت قطعه
                 </Button>
@@ -268,7 +268,7 @@ const Inventory = () => {
                            * `adjustInventoryQuantity` with the item id and a
                            * delta of ‑1 or +1. We set appropriate aria labels
                            * for accessibility.
-                           */
+                           */}
                           <div className="flex items-center gap-2">
                             <Button
                               size="icon"

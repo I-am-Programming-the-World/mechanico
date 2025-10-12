@@ -175,7 +175,7 @@ const Employees = () => {
                 {/*
                  * Submits the new employee form. We call `handleAddEmployee`
                  * which validates the inputs and persists the employee.
-                 */
+                 */}
                 <Button onClick={handleAddEmployee} className="w-full">
                   ثبت کارمند
                 </Button>

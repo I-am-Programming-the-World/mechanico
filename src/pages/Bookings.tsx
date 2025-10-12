@@ -304,7 +304,7 @@ const Bookings = () => {
                      * Trigger booking creation with our `handleCreateBooking` helper. We
                      * avoid injecting any undefined loading states here. The flex
                      * container ensures the buttons take equal width.
-                     */
+                     */}
                     <Button className="flex-1" onClick={handleCreateBooking}>
                       ثبت رزرو
                     </Button>

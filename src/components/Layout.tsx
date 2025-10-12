@@ -4,8 +4,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
-// SmartNav provides a responsive navigation bar that collapses overflowing items into a dropdown.
-import SmartNav from '@/components/SmartNav';
 import {
   LayoutDashboard,
   Calendar,
@@ -60,17 +58,6 @@ const Layout = ({ children }: LayoutProps) => {
 
   const filteredMenu = menuItems.filter(item => user && item.roles.includes(user.role));
 
-  // Build navigation items for SmartNav.  Each item contains a path, label and icon element.
-  const navItems = filteredMenu.map((item) => {
-    const Icon = item.icon;
-    return {
-      to: item.path,
-      label: item.label,
-      // Render the icon as a React element.  We set the size classes here so SmartNav can display them consistently.
-      icon: <Icon className="h-4 w-4" />,
-    };
-  });
-
   return (
     <div className="min-h-screen bg-background" dir="rtl">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 skip-link">پرش به محتوای اصلی</a>
@@ -123,8 +110,27 @@ const Layout = ({ children }: LayoutProps) => {
             <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
               مکانیکو
             </h1>
-            <nav className="w-full" aria-label="منوی اصلی">
-              <SmartNav items={navItems} reserveEnd={120} />
+            <nav className="hidden md:flex overflow-x-auto no-scrollbar pl-24 flex-row-reverse items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 whitespace-nowrap" aria-label="منوی اصلی">
+              {filteredMenu.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      cn(
+                        'flex items-center gap-2 rounded-full flex-row-reverse px-3 py-2 text-sm md:text-[0.95rem] transition-colors',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+                        isActive ? 'bg-primary text-primary-foreground shadow-sm' : 'hover:bg-muted text-foreground'
+                      )
+                    }
+                    aria-label={item.label}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="max-w-[12ch] overflow-hidden text-ellipsis">{item.label}</span>
+                  </NavLink>
+                );
+              })}
             </nav>
           </div>
 
@@ -135,12 +141,7 @@ const Layout = ({ children }: LayoutProps) => {
                 {user?.role === 'admin' ? 'مدیر' : user?.role === 'provider' ? 'ارائه‌دهنده' : 'مشتری'}
               </p>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleLogout}
-              className="gap-2"
-            >
+            <Button variant="outline" size="sm" onClick={handleLogout} className="gap-2">
               <LogOut className="h-4 w-4" />
               خروج
             </Button>

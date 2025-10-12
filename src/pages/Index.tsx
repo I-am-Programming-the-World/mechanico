@@ -18,11 +18,13 @@ const Index = () => {
             <Link
               to="/auth"
               className="rounded-full bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-primary transition hover:bg-primary/90"
+            >
               ورود / ثبت‌نام
             </Link>
             <Link
               to="/dashboard"
               className="rounded-full border border-border px-6 py-3 text-base font-semibold text-foreground transition hover:border-primary hover:text-primary"
+            >
               مشاهده داشبورد نمونه
             </Link>
           </div>

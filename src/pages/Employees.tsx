@@ -172,10 +172,6 @@ const Employees = () => {
                   <Textarea rows={3} value={newEmployee.skills} onChange={(event) => setNewEmployee((prev) => ({ ...prev, skills: event.target.value }))} />
                 </div>
 
-                {/*
-                 * Submits the new employee form. We call `handleAddEmployee`
-                 * which validates the inputs and persists the employee.
-                 */}
                 <Button onClick={handleAddEmployee} className="w-full">
                   ثبت کارمند
                 </Button>
@@ -239,7 +235,7 @@ const Employees = () => {
               <ChartContainer>
         <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
-                    <Pie
+                  <Pie
                     data={departmentData}
                     cx="50%"
                     cy="50%"
@@ -248,11 +244,11 @@ const Employees = () => {
                     outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
-                    >
-                      {departmentData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
+                  >
+                    {departmentData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
                   <Tooltip formatter={(value: number) => formatNumber(value)} />
                   <Legend verticalAlign="top" align="right" />
                 </PieChart>
@@ -334,9 +330,7 @@ const Employees = () => {
                       <TableCell>
                         <Select
                           value={employee.status}
-                          onValueChange={(value: EmployeeRecord['status']) =>
-                            updateEmployeeStatus(employee.id, value)
-                          }
+                          onValueChange={(value: EmployeeRecord['status']) => updateEmployeeStatus(employee.id, value)}
                         >
                           <SelectTrigger className="w-32">
                             <SelectValue>

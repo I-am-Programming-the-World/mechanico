@@ -119,6 +119,7 @@ const SidebarProvider = React.forwardRef<
           className={cn("group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar", className)}
           ref={ref}
           {...props}
+        >
           {children}
         </div>
       </TooltipProvider>
@@ -143,6 +144,7 @@ const Sidebar = React.forwardRef<
         className={cn("flex h-full w-[--sidebar-width] flex-col bg-sidebar text-sidebar-foreground", className)}
         ref={ref}
         {...props}
+      >
         {children}
       </div>
     );
@@ -161,6 +163,7 @@ const Sidebar = React.forwardRef<
             } as React.CSSProperties
           }
           side={side}
+        >
           <div className="flex h-full w-full flex-col">{children}</div>
         </SheetContent>
       </Sheet>
@@ -175,6 +178,7 @@ const Sidebar = React.forwardRef<
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
       data-side={side}
+    >
       {/* This is what handles the sidebar gap on desktop */}
       <div
         className={cn(
@@ -199,9 +203,11 @@ const Sidebar = React.forwardRef<
           className,
         )}
         {...props}
+      >
         <div
           data-sidebar="sidebar"
           className="flex h-full w-full flex-col bg-sidebar group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:border-sidebar-border group-data-[variant=floating]:shadow"
+        >
           {children}
         </div>
       </div>
@@ -216,7 +222,7 @@ const SidebarTrigger = React.forwardRef<React.ElementRef<typeof Button>, React.C
 
     return (
       <Button
-        ref=
+        ref={ref}
         data-sidebar="trigger"
         variant="ghost"
         size="icon"
@@ -226,6 +232,7 @@ const SidebarTrigger = React.forwardRef<React.ElementRef<typeof Button>, React.C
           toggleSidebar();
         }}
         {...props}
+      >
         <PanelLeft />
         <span className="sr-only">Toggle Sidebar</span>
       </Button>
@@ -535,6 +542,7 @@ const SidebarMenuSkeleton = React.forwardRef<
       data-sidebar="menu-skeleton"
       className={cn("flex h-8 items-center gap-2 rounded-md px-2", className)}
       {...props}
+    >
       {showIcon && <Skeleton className="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />}
       <Skeleton
         className="h-4 max-w-[--skeleton-width] flex-1"

@@ -1,17 +1,33 @@
 <!doctype html>
+<!--
+  We set the language to Persian (fa) and the direction to rtl on the html element.
+  This ensures that browser defaults such as text alignment and element flow follow
+  right‑to‑left semantics. Without this the UI can render with an incorrect
+  left‑to‑right layout causing misaligned components and charts.  See the
+  components under `/src/pages` for further RTL fixes.
+-->
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>مکانیکو - پلتفرم جامع خدمات خودرو</title>
-    <meta name="description" content="پلتفرم دیجیتال مکانیکو - خدمات خودرو با اعتماد و شفافیت" />
-    <!-- Fonts: Lalezar (display) + Vazirmatn (body fallback) -->
+    <meta name="description" content="پلتفرم دیجیتال مکانیکو - وصل شو، تعمیر شو، برو. خدمات خودرو با اعتماد و شفافیت" />
+    <meta name="author" content="Mechanico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.003/dist/font-face.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <meta property="og:title" content="مکانیکو - پلتفرم جامع خدمات خودرو" />
+    <meta property="og:description" content="پلتفرم دیجیتال مکانیکو برای اتصال صاحبان خودرو به ارائه‌دهندگان خدمات" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
   </head>
-  <body class="bg-background text-foreground">
+
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

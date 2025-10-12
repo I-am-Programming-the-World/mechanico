@@ -166,9 +166,7 @@ const Bookings = () => {
                       <Label htmlFor="customerId">مشتری</Label>
                       <Select
                         value={formState.customerId}
-                        onValueChange={(value) =>
-                          setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))
-                        }
+                        onValueChange={(value) => setFormState((prev) => ({ ...prev, customerId: value, vehicleId: '' }))}
                       >
                         <SelectTrigger id="customerId">
                           <SelectValue placeholder="انتخاب مشتری" />
@@ -189,9 +187,7 @@ const Bookings = () => {
                       <Label htmlFor="providerId">ارائه‌دهنده</Label>
                       <Select
                         value={formState.providerId}
-                        onValueChange={(value) =>
-                          setFormState((prev) => ({ ...prev, providerId: value }))
-                        }
+                        onValueChange={(value) => setFormState((prev) => ({ ...prev, providerId: value }))}
                       >
                         <SelectTrigger id="providerId">
                           <SelectValue placeholder="انتخاب ارائه‌دهنده" />
@@ -237,9 +233,7 @@ const Bookings = () => {
                     <Label htmlFor="vehicleId">خودرو</Label>
                     <Select
                       value={formState.vehicleId}
-                      onValueChange={(value) =>
-                        setFormState((prev) => ({ ...prev, vehicleId: value }))
-                      }
+                      onValueChange={(value) => setFormState((prev) => ({ ...prev, vehicleId: value }))}
                     >
                       <SelectTrigger id="vehicleId">
                         <SelectValue placeholder="انتخاب خودرو" />
@@ -300,20 +294,10 @@ const Bookings = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    {/*
-                     * Trigger booking creation with our `handleCreateBooking` helper. We
-                     * avoid injecting any undefined loading states here. The flex
-                     * container ensures the buttons take equal width.
-                     */}
                     <Button className="flex-1" onClick={handleCreateBooking}>
                       ثبت رزرو
                     </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="flex-1"
-                      onClick={resetForm}
-                    >
+                    <Button type="button" variant="outline" className="flex-1" onClick={resetForm}>
                       پاک‌سازی فرم
                     </Button>
                   </div>
@@ -359,7 +343,7 @@ const Bookings = () => {
                                 variant="ghost"
                                 size="icon"
                                 className="text-muted-foreground hover:text-destructive"
-                                aria-label="حذف رزرو"
+                                aria-label={`حذف رزرو ${booking.id}`}
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>

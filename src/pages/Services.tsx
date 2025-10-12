@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import type { Booking } from '@/lib/storage';
 import Layout from '@/components/Layout';
@@ -29,8 +28,6 @@ const Services = () => {
     scheduledTime: '',
     notes: '',
   });
-
-  const navigate = useNavigate();
 
   const userVehicles = vehicles.filter(v => v.ownerId === user?.id);
 
@@ -145,9 +142,7 @@ const Services = () => {
                           <Label>انتخاب خودرو</Label>
                           <Select
                             value={bookingForm.vehicleId}
-                            onValueChange={(value) =>
-                              setBookingForm({ ...bookingForm, vehicleId: value })
-                            }
+                            onValueChange={(value) => setBookingForm({ ...bookingForm, vehicleId: value })}
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="خودرو را انتخاب کنید" />
@@ -203,10 +198,6 @@ const Services = () => {
                           </div>
                         </div>
 
-                        {/*
-                         * Submit the booking form. We call `handleBookService` to
-                         * validate and create a new booking.
-                         */}
                         <Button onClick={handleBookService} className="w-full">
                           تأیید رزرو
                         </Button>
@@ -226,11 +217,7 @@ const Services = () => {
               <p className="text-sm text-muted-foreground">
                 برای رزرو خدمات، ابتدا باید خودرو خود را اضافه کنید
               </p>
-              <Button
-                variant="outline"
-                className="mt-4"
-                onClick={() => navigate('/vehicles')}
-              >
+              <Button variant="outline" className="mt-4" onClick={() => window.location.href = '/vehicles'}>
                 افزودن خودرو
               </Button>
             </CardContent>

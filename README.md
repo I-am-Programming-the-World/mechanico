@@ -1,61 +1,32 @@
-# Welcome
+# Mechanico (مکانیکو)
 
-## Project info
+یک بازنویسی سبک و مینیمال روی فرانت‌اند موجود تا خطاهای بیلد برطرف شود و رابط کاربری راست‌به‌چپ (RTL) و فونت **Lalezar** فعال گردد.
 
-## How can I edit this code?
+## What changed?
 
-There are several ways of editing your application.
+- ✅ Fixed Vite build error (invalid JSX in `LoadingOverlay.tsx`)
+- ✅ Removed stray `...` tokens from critical files by replacing them entirely
+- ✅ Global **RTL** (`lang="fa" dir="rtl"`) and right-aligned content
+- ✅ Display font **Lalezar** + body font **Vazirmatn**
+- ✅ Modern, padded navbar & RTL tabs
+- ✅ Minimal cards and sample chart block with smooth animation
+- ✅ Fully responsive (fluid grid, buttons, layout)
 
-**Use**
+## Where to edit
 
-**Use your preferred IDE**
+- `index.html` – fonts + RTL
+- `src/index.css` – design tokens & utilities
+- `src/App.tsx` – router + layout + navbar
+- `src/components/LoadingOverlay.tsx` – overlay spinner
+- `src/pages/Dashboard.tsx`, `src/pages/NotFound.tsx` – example screens
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Dev
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
+```bash
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
+# or
+npm run build && npm run preview
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domains
+> Note: Many original files under `src/components/ui` & some pages contained truncated `...`. They are left untouched and **not imported**. You can gradually restore/regenerate them (e.g. via shadcn) while keeping this app compiling.

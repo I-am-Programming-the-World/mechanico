@@ -10,7 +10,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Progress } from '@/components/ui/progress';
 import { Users, UserPlus, TrendingUp, Award, Clock } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -114,7 +113,7 @@ const Employees = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold font-display text-balance">مدیریت کارکنان</h1>
+            <h1 className="text-3xl font-bold">مدیریت کارکنان</h1>
             <p className="text-muted-foreground mt-2">اطلاعات و عملکرد کارکنان</p>
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -181,7 +180,7 @@ const Employees = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-4">
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">کل کارکنان</CardTitle>
               <Users className="h-5 w-5 text-primary" />
@@ -192,7 +191,7 @@ const Employees = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین عملکرد</CardTitle>
               <TrendingUp className="h-5 w-5 text-success" />
@@ -203,7 +202,7 @@ const Employees = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">هزینه حقوق ماهانه</CardTitle>
               <Award className="h-5 w-5 text-warning" />
@@ -214,7 +213,7 @@ const Employees = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all">
+          <Card className="shadow-card hover:shadow-primary transition-all">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین سابقه</CardTitle>
               <Clock className="h-5 w-5 text-secondary" />
@@ -227,13 +226,12 @@ const Employees = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+          <Card className="shadow-card">
             <CardHeader>
               <CardTitle>توزیع بخش‌ها</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={300}>
                 <PieChart>
                   <Pie
                     data={departmentData}
@@ -250,14 +248,13 @@ const Employees = () => {
                     ))}
                   </Pie>
                   <Tooltip formatter={(value: number) => formatNumber(value)} />
-                  <Legend verticalAlign="top" align="right" />
+                  <Legend />
                 </PieChart>
               </ResponsiveContainer>
-      </ChartContainer>
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+          <Card className="shadow-card">
             <CardHeader>
               <CardTitle>عملکرد کارکنان</CardTitle>
             </CardHeader>
@@ -278,7 +275,7 @@ const Employees = () => {
           </Card>
         </div>
 
-        <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+        <Card className="shadow-card">
           <CardHeader>
             <CardTitle>لیست کارکنان</CardTitle>
           </CardHeader>

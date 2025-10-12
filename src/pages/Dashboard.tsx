@@ -2,21 +2,8 @@ import { useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useData } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-const Sparkline: React.FC<{ data: any[]; dataKey: string }> = ({ data, dataKey }) => (
-  <div className="h-10 w-24">
-    <RC2 width="100%" height="100%">
-      <AC2 data={data}>
-        <A2 type="monotone" dataKey={dataKey} stroke="hsl(var(--primary))" fill="hsl(var(--primary))/30" />
-      </AC2>
-    </RC2>
-  </div>
-)
-
 import { Calendar, DollarSign, Users, Star, TrendingUp, Car } from 'lucide-react';
 import { BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ResponsiveContainer as RC2, Area as A2, AreaChart as AC2 } from 'recharts';
-import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import Layout from '@/components/Layout';
 import { formatMillions, formatNumber } from '@/lib/utils';
 
@@ -95,7 +82,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold font-display text-balance">
+          <h1 className="text-3xl font-bold">
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -104,7 +91,7 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کل رزروها' : 'رزروهای من'}
@@ -121,7 +108,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">درآمد کل</CardTitle>
               <DollarSign className="h-5 w-5 text-success" />
@@ -136,7 +123,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کاربران' : user?.role === 'customer' ? 'خودروهای من' : 'مشتریان'}
@@ -161,7 +148,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین امتیاز</CardTitle>
               <Star className="h-5 w-5 text-warning" />
@@ -179,7 +166,7 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+          <Card className="shadow-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" aria-hidden />
@@ -187,9 +174,8 @@ const Dashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
-                <AreaChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={monthlyData}>
+              <ResponsiveContainer width="100%" height={300}>
+                <AreaChart data={monthlyData}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
@@ -197,8 +183,8 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="month" axisLine={false} tickLine={false}  />
-                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
+                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -210,17 +196,15 @@ const Dashboard = () => {
                   />
                 </AreaChart>
               </ResponsiveContainer>
-      </ChartContainer>
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+          <Card className="shadow-card">
             <CardHeader>
               <CardTitle>وضعیت رزروها</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
                       data={statusData}
@@ -240,26 +224,24 @@ const Dashboard = () => {
                       ))}
                     </Pie>
                     <Tooltip content={<PieCustomTooltip />} />
-                    <Legend verticalAlign="top" align="right" />
+                    <Legend />
                   </PieChart>
               </ResponsiveContainer>
-      </ChartContainer>
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card md:col-span-2">
+          <Card className="shadow-card md:col-span-2">
             <CardHeader>
               <CardTitle>محبوب‌ترین خدمات</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
+              <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={servicePopularity}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="name" axisLine={false} tickLine={false}  />
-                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
-                  <Legend verticalAlign="top" align="right" />
+                  <Legend />
                   <Bar
                     dataKey="count"
                     fill="hsl(var(--secondary))"
@@ -268,7 +250,6 @@ const Dashboard = () => {
                   />
                 </BarChart>
               </ResponsiveContainer>
-      </ChartContainer>
             </CardContent>
           </Card>
         </div>

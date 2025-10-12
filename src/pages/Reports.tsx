@@ -6,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Download, TrendingUp, Users, Star, DollarSign } from 'lucide-react';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import { useData } from '@/contexts/DataContext';
 import { formatMillions, formatNumber, formatPercentage, formatRating } from '@/lib/utils';
 
@@ -61,7 +60,7 @@ const Reports = () => {
       <div className="space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold font-display text-balance">گزارشات و تحلیل‌ها</h1>
+            <h1 className="text-3xl font-bold">گزارشات و تحلیل‌ها</h1>
             <p className="text-muted-foreground mt-2">گزارش‌های جامع کسب‌وکار</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -84,7 +83,7 @@ const Reports = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-4">
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all" aria-label="گزارش فروش کل">
+          <Card className="shadow-card hover:shadow-primary transition-all" aria-label="گزارش فروش کل">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">فروش کل</CardTitle>
               <TrendingUp className="h-5 w-5 text-success" />
@@ -95,7 +94,7 @@ const Reports = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all" aria-label="تعداد مشتریان">
+          <Card className="shadow-card hover:shadow-primary transition-all" aria-label="تعداد مشتریان">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">کل مشتریان</CardTitle>
               <Users className="h-5 w-5 text-primary" />
@@ -106,7 +105,7 @@ const Reports = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all" aria-label="میانگین رضایت">
+          <Card className="shadow-card hover:shadow-primary transition-all" aria-label="میانگین رضایت">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین امتیاز</CardTitle>
               <Star className="h-5 w-5 text-warning" />
@@ -117,7 +116,7 @@ const Reports = () => {
             </CardContent>
           </Card>
 
-          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card hover:shadow-primary transition-all" aria-label="نرخ بازگشت مشتری">
+          <Card className="shadow-card hover:shadow-primary transition-all" aria-label="نرخ بازگشت مشتری">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">نرخ تکرار</CardTitle>
               <DollarSign className="h-5 w-5 text-secondary" />
@@ -146,13 +145,12 @@ const Reports = () => {
             <div className="rounded-lg border border-border bg-card/40 p-4 text-sm text-muted-foreground">
               درآمد خالص این دوره برابر با {formatNumber(totalRevenue - totalExpensesValue)} تومان است؛ مجموع هزینه‌ها {formatNumber(totalExpensesValue)} تومان و درآمد تایید شده {formatNumber(totalRevenue)} تومان بوده است.
             </div>
-            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+            <Card className="shadow-card">
               <CardHeader>
                 <CardTitle>روند فروش و درآمد</CardTitle>
               </CardHeader>
               <CardContent>
-                <ChartContainer>
-        <ResponsiveContainer width="100%" height={350}>
+                <ResponsiveContainer width="100%" height={350}>
                   {/*
                     Line chart adjusted for RTL contexts. The internal SVG is
                     forced into a left‑to‑right direction to ensure tooltips
@@ -160,27 +158,25 @@ const Reports = () => {
                     reversed so the first month appears at the far right. The
                     vertical axis is moved to the right.
                   */}
-                  <LineChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={salesData} style={{ direction: 'ltr' }}>
+                  <LineChart data={salesData} style={{ direction: 'ltr' }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
-                    <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
+                    <XAxis dataKey="month" reversed />
+                    <YAxis tickFormatter={formatNumber} orientation="right" />
                     <Tooltip formatter={(value: number) => `${formatNumber(value)} تومان`} />
-                    <Legend verticalAlign="top" align="right" />
+                    <Legend />
                     <Line type="monotone" dataKey="revenue" stroke="hsl(var(--primary))" strokeWidth={3} name="درآمد" />
                   </LineChart>
                 </ResponsiveContainer>
-      </ChartContainer>
               </CardContent>
             </Card>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+              <Card className="shadow-card">
                 <CardHeader>
                   <CardTitle>تعداد رزروها</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={300}>
                     {/*
                       Bar chart adjusted for RTL: set LTR direction on the
                       internal SVG to correct tooltip positioning, reverse the X axis
@@ -188,73 +184,67 @@ const Reports = () => {
                     */}
                     <BarChart data={salesData} style={{ direction: 'ltr' }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
-                      <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
+                      <XAxis dataKey="month" reversed />
+                      <YAxis tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
                       <Bar dataKey="bookings" fill="hsl(var(--secondary))" name="رزروها" radius={[8, 8, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
-      </ChartContainer>
                 </CardContent>
               </Card>
 
-              <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+              <Card className="shadow-card">
                 <CardHeader>
                   <CardTitle>مشتریان جدید</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={salesData} style={{ direction: 'ltr' }}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis tick={{ textAnchor: "end" }} dataKey="month" reversed />
-                      <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
+                      <XAxis dataKey="month" reversed />
+                      <YAxis tickFormatter={formatNumber} orientation="right" />
                       <Tooltip formatter={(value: number) => formatNumber(value)} />
                       <Bar dataKey="customers" fill="hsl(var(--accent))" name="مشتریان" radius={[8, 8, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
-      </ChartContainer>
                 </CardContent>
               </Card>
             </div>
           </TabsContent>
 
           <TabsContent value="services" className="space-y-6">
-            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+            <Card className="shadow-card">
               <CardHeader>
                 <CardTitle>عملکرد خدمات</CardTitle>
               </CardHeader>
               <CardContent>
-                <ChartContainer>
-        <ResponsiveContainer width="100%" height={350}>
+                <ResponsiveContainer width="100%" height={350}>
                   <BarChart data={servicePerformance} style={{ direction: 'ltr' }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis tick={{ textAnchor: "end" }} dataKey="service" reversed />
-                    <YAxis tick={{ textAnchor: "end" }} tickFormatter={formatNumber} orientation="right" />
+                    <XAxis dataKey="service" reversed />
+                    <YAxis tickFormatter={formatNumber} orientation="right" />
                     <Tooltip
                       formatter={(value: number, name: string) =>
                         name === 'درآمد' ? `${formatNumber(value)} تومان` : formatNumber(value)
                       }
                     />
-                    <Legend verticalAlign="top" align="right" />
+                    <Legend />
                     <Bar dataKey="revenue" fill="hsl(var(--primary))" name="درآمد" radius={[8, 8, 0, 0]} />
                     <Bar dataKey="count" fill="hsl(var(--secondary))" name="تعداد" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
-      </ChartContainer>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="customers" className="space-y-6">
             <div className="grid gap-6 md:grid-cols-2">
-              <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+              <Card className="shadow-card">
                 <CardHeader>
                   <CardTitle>تقسیم‌بندی مشتریان</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer>
-        <ResponsiveContainer width="100%" height={300}>
+                  <ResponsiveContainer width="100%" height={300}>
                     <PieChart>
                       <Pie
                         data={customerSegments}
@@ -273,11 +263,10 @@ const Reports = () => {
                       <Tooltip formatter={(value: number) => `${formatNumber(value)}٪`} />
                     </PieChart>
                   </ResponsiveContainer>
-      </ChartContainer>
                 </CardContent>
               </Card>
 
-              <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+              <Card className="shadow-card">
                 <CardHeader>
                   <CardTitle>آمار رضایت مشتریان</CardTitle>
                 </CardHeader>
@@ -324,7 +313,7 @@ const Reports = () => {
           </TabsContent>
 
           <TabsContent value="providers" className="space-y-6">
-            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
+            <Card className="shadow-card">
               <CardHeader>
                 <CardTitle>عملکرد ارائه‌دهندگان</CardTitle>
               </CardHeader>

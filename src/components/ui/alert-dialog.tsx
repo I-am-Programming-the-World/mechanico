@@ -54,7 +54,7 @@ const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDiv
     // Align alert dialog headings to the right for RTL users. The previous
     // implementation used `sm:text-left`, causing Persian text to align
     // incorrectly.
-    className={cn("flex flex-col space-y-2 text-center sm:text-right max-h-[85vh] overflow-y-auto", className)}
+    className={cn("flex flex-col space-y-2 text-center sm:text-right", className)}
     {...props}
   />
 );

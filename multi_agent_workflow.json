@@ -1,0 +1,125 @@
+{
+  "name": "SAST Multi-Agent Automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": 1,
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "command": "python3 /content/multi_agent_scripts/agent1_download.py --query 'vulnerability proof of concept' --max_repos 50 --out_dir /content/drive/MyDrive/poc_dataset",
+        "shell": "bash"
+      },
+      "id": 2,
+      "name": "Download PoCs",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [250, 0]
+    },
+    {
+      "parameters": {
+        "command": "python3 /content/multi_agent_scripts/agent2_preprocess.py --data_dir /content/drive/MyDrive/poc_dataset",
+        "shell": "bash"
+      },
+      "id": 3,
+      "name": "Preprocess Dataset",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [500, 0]
+    },
+    {
+      "parameters": {
+        "command": "python3 /content/multi_agent_scripts/agent3_finetune.py --train_file /content/drive/MyDrive/poc_dataset/finetune_data.jsonl --output_dir /content/drive/MyDrive/codellama-sast-finetune-checkpoints --num_train_epochs 3 --per_device_batch_size 2 --gradient_accumulation_steps 8 --learning_rate 5e-5 --lr_scheduler_type cosine --warmup_steps 100 --lora_r 16 --lora_alpha 32",
+        "shell": "bash"
+      },
+      "id": 4,
+      "name": "Fine-Tune Model",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [750, 0]
+    },
+    {
+      "parameters": {
+        "command": "python3 /content/multi_agent_scripts/agent4_rag.py --kb_dir /content/drive/MyDrive/security_corpus --index_dir /content/drive/MyDrive/rag_index --build_index --adapter_dir /content/drive/MyDrive/codellama-sast-finetune-checkpoints --model_name codellama/CodeLlama-7b-Instruct-hf",
+        "shell": "bash"
+      },
+      "id": 5,
+      "name": "Build RAG & Generate Response",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1000, 0]
+    },
+    {
+      "parameters": {
+        "command": "python3 /content/multi_agent_scripts/agent5_generate_markdown.py --input_text_file /content/response.txt --output_md_file /content/final_report.md --language english",
+        "shell": "bash"
+      },
+      "id": 6,
+      "name": "Generate Markdown Report",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1250, 0]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download PoCs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download PoCs": {
+      "main": [
+        [
+          {
+            "node": "Preprocess Dataset",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preprocess Dataset": {
+      "main": [
+        [
+          {
+            "node": "Fine-Tune Model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fine-Tune Model": {
+      "main": [
+        [
+          {
+            "node": "Build RAG & Generate Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build RAG & Generate Response": {
+      "main": [
+        [
+          {
+            "node": "Generate Markdown Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

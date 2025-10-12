@@ -4,6 +4,7 @@ import { useData } from '@/contexts/DataContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar, DollarSign, Users, Star, TrendingUp, Car } from 'lucide-react';
 import { BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import Layout from '@/components/Layout';
 import { formatMillions, formatNumber } from '@/lib/utils';
 
@@ -82,7 +83,7 @@ const Dashboard = () => {
     <Layout>
       <div className="space-y-8">
         <div>
-          <h1 className="text-3xl font-bold">
+          <h1 className="text-3xl font-bold font-display text-balance">
             خوش آمدید، {user?.fullName}
           </h1>
           <p className="text-muted-foreground mt-2">
@@ -91,7 +92,7 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کل رزروها' : 'رزروهای من'}
@@ -108,7 +109,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">درآمد کل</CardTitle>
               <DollarSign className="h-5 w-5 text-success" />
@@ -123,7 +124,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {user?.role === 'admin' ? 'کاربران' : user?.role === 'customer' ? 'خودروهای من' : 'مشتریان'}
@@ -148,7 +149,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card transition-all hover:scale-[1.02] hover:shadow-primary">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">میانگین امتیاز</CardTitle>
               <Star className="h-5 w-5 text-warning" />
@@ -166,7 +167,7 @@ const Dashboard = () => {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="shadow-card">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-primary" aria-hidden />
@@ -174,8 +175,9 @@ const Dashboard = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={monthlyData}>
+              <ChartContainer>
+        <ResponsiveContainer width="100%" height={300}>
+                <AreaChart margin={{ right: 24, left: 8, top: 8, bottom: 0 }} data={monthlyData}>
                   <defs>
                     <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
@@ -183,8 +185,8 @@ const Dashboard = () => {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="month" axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} />
                   <Area
                     type="monotone"
@@ -196,15 +198,17 @@ const Dashboard = () => {
                   />
                 </AreaChart>
               </ResponsiveContainer>
+      </ChartContainer>
             </CardContent>
           </Card>
 
-          <Card className="shadow-card">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
             <CardHeader>
               <CardTitle>وضعیت رزروها</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ChartContainer>
+        <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
                       data={statusData}
@@ -224,24 +228,26 @@ const Dashboard = () => {
                       ))}
                     </Pie>
                     <Tooltip content={<PieCustomTooltip />} />
-                    <Legend />
+                    <Legend verticalAlign="top" align="right" />
                   </PieChart>
               </ResponsiveContainer>
+      </ChartContainer>
             </CardContent>
           </Card>
 
-          <Card className="shadow-card md:col-span-2">
+          <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card md:col-span-2">
             <CardHeader>
               <CardTitle>محبوب‌ترین خدمات</CardTitle>
             </CardHeader>
             <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+              <ChartContainer>
+        <ResponsiveContainer width="100%" height={300}>
                 <BarChart data={servicePopularity}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                  <YAxis tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
+                  <XAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  dataKey="name" axisLine={false} tickLine={false}  />
+                  <YAxis tick={{textAnchor: "end", fill: 'hsl(var(--muted-foreground))'}}  tickFormatter={value => formatNumber(value)} axisLine={false} tickLine={false}  />
                   <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--muted))' }}/>
-                  <Legend />
+                  <Legend verticalAlign="top" align="right" />
                   <Bar
                     dataKey="count"
                     fill="hsl(var(--secondary))"
@@ -250,6 +256,7 @@ const Dashboard = () => {
                   />
                 </BarChart>
               </ResponsiveContainer>
+      </ChartContainer>
             </CardContent>
           </Card>
         </div>

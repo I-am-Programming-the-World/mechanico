@@ -43,7 +43,7 @@ const Settings = () => {
     <Layout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold flex items-center gap-2">
+          <h1 className="text-3xl font-bold flex items-center gap-2 font-display text-balance">
             <SettingsIcon className="h-8 w-8" />
             تنظیمات
           </h1>
@@ -75,7 +75,7 @@ const Settings = () => {
           </TabsList>
 
           <TabsContent value="profile" className="space-y-4">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader className="text-right">
                 <CardTitle>اطلاعات شخصی</CardTitle>
                 <CardDescription>به‌روزرسانی اطلاعات پروفایل</CardDescription>
@@ -114,7 +114,7 @@ const Settings = () => {
           </TabsContent>
 
           <TabsContent value="notifications" className="space-y-4">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader className="text-right">
                 <CardTitle>تنظیمات اعلان‌ها</CardTitle>
                 <CardDescription>مدیریت نحوه دریافت اعلان‌ها</CardDescription>
@@ -180,7 +180,7 @@ const Settings = () => {
           </TabsContent>
 
           <TabsContent value="security" className="space-y-4">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader className="text-right">
                 <CardTitle>امنیت حساب</CardTitle>
                 <CardDescription>مدیریت رمز عبور و امنیت</CardDescription>
@@ -220,7 +220,7 @@ const Settings = () => {
           </TabsContent>
 
           <TabsContent value="appearance" className="space-y-4">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader className="text-right">
                 <CardTitle>تنظیمات ظاهری</CardTitle>
                 <CardDescription>سفارشی‌سازی ظاهر برنامه</CardDescription>
@@ -267,7 +267,7 @@ const Settings = () => {
           </TabsContent>
 
           <TabsContent value="system" className="space-y-4">
-            <Card className="shadow-card">
+            <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
               <CardHeader className="text-right">
                 <CardTitle>تنظیمات سیستم</CardTitle>
                 <CardDescription>تنظیمات عمومی سیستم</CardDescription>

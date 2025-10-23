@@ -76,11 +76,11 @@ const Settings = () => {
 
           <TabsContent value="profile" className="space-y-4">
             <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
-              <CardHeader className="text-right">
+              <CardHeader className="text-end">
                 <CardTitle>اطلاعات شخصی</CardTitle>
                 <CardDescription>به‌روزرسانی اطلاعات پروفایل</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 text-right">
+              <CardContent className="space-y-4 text-end">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label>نام کامل</Label>
@@ -108,20 +108,20 @@ const Settings = () => {
                   <Label>بیوگرافی</Label>
                   <Input placeholder="درباره خود بنویسید..." />
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ms-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="notifications" className="space-y-4">
             <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
-              <CardHeader className="text-right">
+              <CardHeader className="text-end">
                 <CardTitle>تنظیمات اعلان‌ها</CardTitle>
                 <CardDescription>مدیریت نحوه دریافت اعلان‌ها</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-0.5 text-right">
+                  <div className="space-y-0.5 text-end">
                     <Label>اعلان‌های ایمیل</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌ها از طریق ایمیل</p>
                   </div>
@@ -132,7 +132,7 @@ const Settings = () => {
                 </div>
                 <Separator />
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-0.5 text-right">
+                  <div className="space-y-0.5 text-end">
                     <Label>اعلان‌های پیامکی</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌ها از طریق پیامک</p>
                   </div>
@@ -143,7 +143,7 @@ const Settings = () => {
                 </div>
                 <Separator />
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="space-y-0.5 text-right">
+                  <div className="space-y-0.5 text-end">
                     <Label>اعلان‌های Push</Label>
                     <p className="text-sm text-muted-foreground">دریافت اعلان‌های فوری در مرورگر</p>
                   </div>
@@ -153,7 +153,7 @@ const Settings = () => {
                   />
                 </div>
                 <Separator />
-                <div className="space-y-4 text-right">
+                <div className="space-y-4 text-end">
                   <h4 className="font-medium">اعلان درباره:</h4>
                   <div className="space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -174,18 +174,18 @@ const Settings = () => {
                     </div>
                   </div>
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ms-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="security" className="space-y-4">
             <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
-              <CardHeader className="text-right">
+              <CardHeader className="text-end">
                 <CardTitle>امنیت حساب</CardTitle>
                 <CardDescription>مدیریت رمز عبور و امنیت</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 text-right">
+              <CardContent className="space-y-4 text-end">
                 <div className="space-y-2">
                   <Label>رمز عبور فعلی</Label>
                   <Input type="password" placeholder="رمز عبور فعلی" />
@@ -198,14 +198,14 @@ const Settings = () => {
                   <Label>تکرار رمز عبور جدید</Label>
                   <Input type="password" placeholder="تکرار رمز عبور جدید" />
                 </div>
-                <Button className="ml-auto block">تغییر رمز عبور</Button>
+                <Button className="ms-auto block">تغییر رمز عبور</Button>
                 <Separator />
                 <div className="space-y-4">
                   <h4 className="font-medium">احراز هویت دو مرحله‌ای</h4>
                   <p className="text-sm text-muted-foreground">
                     امنیت حساب خود را با فعال‌سازی احراز هویت دو مرحله‌ای افزایش دهید
                   </p>
-                  <Button variant="outline" className="ml-auto block">فعال‌سازی</Button>
+                  <Button variant="outline" className="ms-auto block">فعال‌سازی</Button>
                 </div>
                 <Separator />
                 <div className="space-y-4">
@@ -213,7 +213,7 @@ const Settings = () => {
                   <p className="text-sm text-muted-foreground">
                     دستگاه‌هایی که در حال حاضر به حساب شما متصل هستند
                   </p>
-                  <Button variant="destructive" className="ml-auto block">خروج از همه دستگاه‌ها</Button>
+                  <Button variant="destructive" className="ms-auto block">خروج از همه دستگاه‌ها</Button>
                 </div>
               </CardContent>
             </Card>
@@ -221,11 +221,11 @@ const Settings = () => {
 
           <TabsContent value="appearance" className="space-y-4">
             <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
-              <CardHeader className="text-right">
+              <CardHeader className="text-end">
                 <CardTitle>تنظیمات ظاهری</CardTitle>
                 <CardDescription>سفارشی‌سازی ظاهر برنامه</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6 text-right">
+              <CardContent className="space-y-6 text-end">
                 <div className="space-y-2">
                   <Label>تم رنگی</Label>
                   <Select value={theme} onValueChange={setTheme}>
@@ -261,18 +261,18 @@ const Settings = () => {
                   </div>
                   <Switch defaultChecked />
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ms-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="system" className="space-y-4">
             <Card className="transition hover:-translate-y-0.5 hover:shadow-lg shadow-card">
-              <CardHeader className="text-right">
+              <CardHeader className="text-end">
                 <CardTitle>تنظیمات سیستم</CardTitle>
                 <CardDescription>تنظیمات عمومی سیستم</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6 text-right">
+              <CardContent className="space-y-6 text-end">
                 <div className="space-y-2">
                   <Label>زبان</Label>
                   <Select defaultValue="fa">
@@ -350,7 +350,7 @@ const Settings = () => {
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
-                <Button onClick={handleSave} className="ml-auto block">ذخیره تغییرات</Button>
+                <Button onClick={handleSave} className="ms-auto block">ذخیره تغییرات</Button>
               </CardContent>
             </Card>
           </TabsContent>

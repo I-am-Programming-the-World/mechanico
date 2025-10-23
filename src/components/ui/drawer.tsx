@@ -45,9 +45,9 @@ DrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    // Align drawer headers to the right on small+ screens. Previously
+    // Align drawer headers to the inline-end on small+ screens. Previously
     // `sm:text-left` resulted in left‑aligned titles within RTL layouts.
-    className={cn("grid gap-1.5 p-4 text-center sm:text-right", className)}
+    className={cn("grid gap-1.5 p-4 text-center sm:text-end", className)}
     {...props}
   />
 );

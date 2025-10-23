@@ -53,7 +53,8 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
         // align flush to the right edge in RTL. For LTR this happens to
         // remove the leftmost padding, which is acceptable because the base
         // direction on the table cell controls alignment.
-        "h-12 px-4 text-right align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        // Use text-end for RTL support
+        "h-12 px-4 text-end align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pe-0",
         className,
       )}
       {...props}

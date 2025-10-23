@@ -87,12 +87,8 @@ const Auth = () => {
               />
             </div>
 
-            <Button disabled={isLoading}
-              type="submit"
-              className="w-full"
-              disabled={isLoading}
-            >
-  {isLoading ? 'در حال ورود...' : 'ورود'}
+            <Button type="submit" className="w-full" disabled={isLoading}>
+{isLoading ? 'در حال ورود...' : 'ورود'}
 </Button>
           </form>
 

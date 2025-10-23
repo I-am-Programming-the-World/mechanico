@@ -257,16 +257,19 @@ const Accounting = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
-{invoice.status !== 'paid' && (
-  <Button
-    size="sm"
-    className="gap-1"
-    onClick={() => handleMarkInvoiceAsPaid(invoice.id)}
-  >
-    <CheckCircle2 className="h-4 w-4" />
-    تسویه
-  </Button>
-)}
+                            <Button size="sm" variant="outline">
+                              مشاهده
+                            </Button>
+                            {invoice.status !== 'paid' && (
+                              <Button
+                                size="sm"
+                                className="gap-1"
+                                onClick={() => handleMarkInvoiceAsPaid(invoice.id)}
+                              >
+                                <CheckCircle2 className="h-4 w-4" />
+                                تسویه
+                              </Button>
+                            )}
                           </div>
                         </TableCell>
                       </TableRow>

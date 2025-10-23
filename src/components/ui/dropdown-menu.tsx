@@ -24,7 +24,8 @@ const DropdownMenuSubTrigger = React.forwardRef<
 >(({ className, inset, children, ...props }, ref) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
-    className={cn("flex flex-row-reverse cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[state=open]:bg-accent focus:bg-accent text-right,
+    className={cn(
+      "flex flex-row-reverse cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm text-right outline-none data-[state=open]:bg-accent focus:bg-accent",
       inset && "pr-8",
       className,
     )}
@@ -67,7 +68,7 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground text-right shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         className,
       )}
       {...props}
@@ -104,7 +105,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     className={cn(
       // For RTL layouts we place the checkbox indicator on the right and
       // reverse the padding so text flows correctly. Without swapping
-      // `pr-8` and `pr-2` the checkboxes appear on the wrong side and the
+      // `pl-8` and `pr-2` the checkboxes appear on the wrong side and the
       // label runs into the icon.
       "relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
       className,
@@ -155,7 +156,7 @@ const DropdownMenuLabel = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
     ref={ref}
-    className={cn("px-2 py-1.5 text-sm font-semibold text-right", inset && "pr-8", className)}
+    className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pr-8", className)}
     {...props}
   />
 ));

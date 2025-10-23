@@ -63,7 +63,7 @@ const Layout = ({ children }: LayoutProps) => {
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 skip-link">پرش به محتوای اصلی</a>
       <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
         <div className="container flex h-16  items-center justify-between gap-4 px-3 sm:px-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-row-reverse items-center justify-end gap-4">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button
@@ -71,7 +71,7 @@ const Layout = ({ children }: LayoutProps) => {
                   variant="ghost"
                   size="icon"
                   className="md:hidden"
-                  aria-label="باز کردن منوی ناوبری" title="باز کردن منوی ناوبری"
+                  aria-label="باز کردن منوی ناوبری"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>
@@ -80,7 +80,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <SheetHeader>
                   <SheetTitle>ناوبری</SheetTitle>
                 </SheetHeader>
-                <nav className="mt-6 flex flex-col items-end gap-2" aria-label="منوی موبایل">
+                <nav className="mt-6 flex flex-col items-end gap-2 text-right" aria-label="منوی موبایل">
                   {filteredMenu.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -89,8 +89,7 @@ const Layout = ({ children }: LayoutProps) => {
                         to={item.path}
                         dir="rtl"
                         className={({ isActive }) =>
-                          cn(
-                            'flex items-center justify-end rounded-lg px-4 py-2 text-base transition-colors text-right',
+                          cn('flex items-center gap-2 rounded-full flex-row-reverse justify-end px-3 py-2 text-sm md:text-[0.95rem] transition-colors text-right',
                             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                             isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-muted text-foreground'
                           )
@@ -98,7 +97,7 @@ const Layout = ({ children }: LayoutProps) => {
                         aria-label={item.label}
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
-                        <span className="flex flex-row-reverse items-center gap-3 text-right">
+                        <span className="flex flex-row-reverse items-center justify-end gap-3 text-right">
                           <Icon className="h-4 w-4" />
                           {item.label}
                         </span>
@@ -108,16 +107,14 @@ const Layout = ({ children }: LayoutProps) => {
                 </nav>
               </SheetContent>
             </Sheet>
-            <h1 className="text-2xl font-bold gradient-primary bg-clip-text text-transparent">
-              مکانیکو
-            </h1>
-            <nav className="hidden md:flex flex-row-reverse justify-end text-right overflow-x-auto no-scrollbar flex-row-reverse items-center gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 whitespace-nowrap" aria-label="منوی اصلی">
+<nav className="hidden md:flex flex-row-reverse items-center justify-end text-right whitespace-nowrap gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6" aria-label="منوی اصلی">
               {filteredMenu.map((item) => {
                 const Icon = item.icon;
                 return (
                   <NavLink
                     key={item.path}
                     to={item.path}
+                        dir="rtl"
                     className={({ isActive }) =>
                       cn('flex items-center gap-2 rounded-full flex-row-reverse justify-end px-3 py-2 text-sm md:text-[0.95rem] transition-colors text-right',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
@@ -127,14 +124,14 @@ const Layout = ({ children }: LayoutProps) => {
                     aria-label={item.label}
                   >
                     <Icon className="h-4 w-4" />
-                    <span className="max-w-[12ch] overflow-hidden text-ellipsis text-right">{item.label}</span>
+                    <span className="max-w-[12ch] overflow-hidden text-ellipsis text-end">{item.label}</span>
                   </NavLink>
                 );
               })}
             </nav>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-row-reverse items-center justify-end gap-4">
             <div className="text-sm text-right">
               <p className="font-medium" aria-live="polite">{user?.fullName}</p>
               <p className="text-xs text-muted-foreground">

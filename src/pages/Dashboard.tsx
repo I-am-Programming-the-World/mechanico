@@ -54,7 +54,7 @@ const Dashboard = () => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div dir="rtl" className="rounded-lg border bg-background p-2 shadow-sm">
+        <div className="rounded-lg border bg-background p-2 shadow-sm">
           <p className="font-medium">{label}</p>
           {payload.map((p: any) => (
             <p key={p.dataKey} style={{ color: p.color }}>

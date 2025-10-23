@@ -71,7 +71,7 @@ const Layout = ({ children }: LayoutProps) => {
                   variant="ghost"
                   size="icon"
                   className="md:hidden"
-                  aria-label="باز کردن منوی ناوبری"
+                  aria-label="باز title="باز کردن منوی ناوبری"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>

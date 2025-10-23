@@ -15,7 +15,7 @@ export const ChartContainer = React.forwardRef<HTMLDivElement, React.HTMLAttribu
     const chartId = `chart-${id || uid.replace(/:/g, "")}`
     return (
       <ChartContext.Provider value={{ config }}>
-        <div
+        <div dir="rtl"
           data-chart={chartId}
           ref={ref}
           style={{ direction: "ltr" }}

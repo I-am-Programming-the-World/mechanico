@@ -115,3 +115,23 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
 /* Hide horizontal scrollbar for nav scroller (keeps scrollability) */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+
+@layer base {
+  :root {
+    --font-display: "Lalezar","Vazirmatn",system-ui,Arial,sans-serif;
+    --font-body: "Vazirmatn",system-ui,Arial,sans-serif;
+    --heading-1: 2rem;
+    --heading-2: 1.5rem;
+    --heading-3: 1.25rem;
+    --body: 1rem;
+    --leading-tight: 1.2;
+    --leading-normal: 1.6;
+  }
+  html, body { font-family: var(--font-body); line-height: var(--leading-normal); }
+  h1,h2,h3,.heading { font-family: var(--font-display); letter-spacing: .2px; }
+  h1 { font-size: var(--heading-1); line-height: var(--leading-tight); }
+  h2 { font-size: var(--heading-2); line-height: var(--leading-tight); }
+  h3 { font-size: var(--heading-3); line-height: var(--leading-tight); }
+}
+

@@ -118,8 +118,7 @@ const Layout = ({ children }: LayoutProps) => {
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) =>
-                      cn(
-                        'flex items-center gap-2 rounded-full flex-row-reverse px-3 py-2 text-sm md:text-[0.95rem] transition-colors text-right',
+                      cn('flex items-center gap-2 rounded-full flex-row-reverse justify-end px-3 py-2 text-sm md:text-[0.95rem] transition-colors text-right',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                         isActive ? 'bg-primary text-primary-foreground shadow-sm' : 'hover:bg-muted text-foreground'
                       )

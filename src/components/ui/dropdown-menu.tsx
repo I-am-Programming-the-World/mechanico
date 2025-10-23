@@ -24,9 +24,8 @@ const DropdownMenuSubTrigger = React.forwardRef<
 >(({ className, inset, children, ...props }, ref) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
-    className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[state=open]:bg-accent focus:bg-accent",
-      inset && "pl-8",
+    className={cn("flex flex-row-reverse cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[state=open]:bg-accent focus:bg-accent text-right,
+      inset && "pr-8",
       className,
     )}
     {...props}
@@ -86,7 +85,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
+      "relative flex cursor-default select-none items-center justify-end rounded-sm px-2 py-1.5 text-sm text-right outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
       // For RTL indent the inset on the right instead of the left
       inset && "pr-8",
       className,
@@ -105,7 +104,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     className={cn(
       // For RTL layouts we place the checkbox indicator on the right and
       // reverse the padding so text flows correctly. Without swapping
-      // `pl-8` and `pr-2` the checkboxes appear on the wrong side and the
+      // `pr-8` and `pr-2` the checkboxes appear on the wrong side and the
       // label runs into the icon.
       "relative flex cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50 focus:bg-accent focus:text-accent-foreground",
       className,
@@ -156,7 +155,7 @@ const DropdownMenuLabel = React.forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
     ref={ref}
-    className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
+    className={cn("px-2 py-1.5 text-sm font-semibold text-right", inset && "pr-8", className)}
     {...props}
   />
 ));

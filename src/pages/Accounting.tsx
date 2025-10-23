@@ -257,7 +257,6 @@ const Accounting = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
-                            <Button size="sm" variant="outline">
 {invoice.status !== 'paid' && (
   <Button
     size="sm"

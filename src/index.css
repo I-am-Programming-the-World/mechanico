@@ -135,3 +135,29 @@ html, body, #root { max-width: 100%; overflow-x: hidden; }
   h3 { font-size: var(--heading-3); line-height: var(--leading-tight); }
 }
 
+
+
+/* --- RTL Nav Alignment Overrides --- */
+[dir="rtl"] nav[aria-label="منوی اصلی"] {
+  direction: rtl;
+  justify-content: flex-end;
+}
+[dir="rtl"] nav[aria-label="منوی اصلی"] a {
+  direction: rtl;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  text-align: right;
+}
+[dir="rtl"] nav[aria-label="منوی موبایل"] {
+  direction: rtl;
+  align-items: end;
+}
+[dir="rtl"] nav[aria-label="منوی موبایل"] a {
+  direction: rtl;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  text-align: right;
+}
+

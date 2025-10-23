@@ -87,6 +87,7 @@ const Layout = ({ children }: LayoutProps) => {
                       <NavLink
                         key={item.path}
                         to={item.path}
+                        dir="rtl"
                         className={({ isActive }) =>
                           cn(
                             'flex items-center justify-end rounded-lg px-4 py-2 text-base transition-colors text-right',
